@@ -1,0 +1,73 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: SSH Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+
+            REPO_URL="https://github.com/HammerOfSteel/livlust_website.git"
+            DEPLOY_DIR="/opt/livlust"
+            DOMAIN="livslust.dancingsalamanders.com"
+            NGINX_SITE="/etc/nginx/sites-available/${DOMAIN}"
+            NGINX_ENABLED="/etc/nginx/sites-enabled/${DOMAIN}"
+
+            # ── 1. Clone or pull latest code ────────────────────────────
+            if [ ! -d "${DEPLOY_DIR}/.git" ]; then
+              sudo git clone "${REPO_URL}" "${DEPLOY_DIR}"
+            else
+              cd "${DEPLOY_DIR}"
+              sudo git fetch origin main
+              sudo git reset --hard origin/main
+            fi
+
+            cd "${DEPLOY_DIR}"
+
+            # ── 2. Ensure production .env exists ────────────────────────
+            if [ ! -f "${DEPLOY_DIR}/.env" ]; then
+              echo "ERROR: ${DEPLOY_DIR}/.env not found."
+              echo "Create it from .env.example with production values before deploying."
+              exit 1
+            fi
+
+            # ── 3. Build and start production containers ─────────────────
+            sudo docker compose -f docker-compose.prod.yml up --build -d
+
+            # ── 4. Install nginx site config (first deploy only) ─────────
+            if [ ! -f "${NGINX_SITE}" ]; then
+              sudo cp "${DEPLOY_DIR}/deploy/nginx-livslust.conf" "${NGINX_SITE}"
+              sudo ln -sf "${NGINX_SITE}" "${NGINX_ENABLED}"
+              sudo nginx -t
+              sudo systemctl reload nginx
+              echo "Nginx site installed."
+            fi
+
+            # ── 5. Obtain TLS certificate (first deploy only) ────────────
+            if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
+              ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
+              sudo certbot --nginx \
+                -d "${DOMAIN}" \
+                --non-interactive \
+                --agree-tos \
+                --email "${ADMIN_EMAIL:-admin@livlust.se}"
+              echo "Certificate obtained and nginx updated by Certbot."
+            fi
+
+            # ── 6. Remove dangling images ────────────────────────────────
+            sudo docker image prune -f
+
+            echo "Deployment complete: https://${DOMAIN}"

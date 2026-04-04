@@ -1,0 +1,77 @@
+# Production Docker Compose
+# Run with: sudo docker compose -f docker-compose.prod.yml up --build -d
+# Ports: frontend on 127.0.0.1:3005, directus on 127.0.0.1:8055 (host nginx terminates SSL)
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # No port exposed — internal only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  directus:
+    image: directus/directus:10.13.3
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8055:8055"
+    env_file: .env
+    environment:
+      KEY: ${DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET}
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      PUBLIC_URL: "https://livslust.dancingsalamanders.com/cms"
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "https://livslust.dancingsalamanders.com"
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_POINTS: "250"
+      RATE_LIMITER_DURATION: "15"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - directus_uploads:/directus/uploads
+
+  directus-init:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./directus:/app
+    command: node /app/seed.mjs
+    environment:
+      DIRECTUS_URL: http://directus:8055
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+    depends_on:
+      - directus
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_CMS_URL: "https://livslust.dancingsalamanders.com/cms"
+        VITE_THEME: "${VITE_THEME:-ocean}"
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3005:80"
+    depends_on:
+      - directus
+
+volumes:
+  postgres_data:
+  directus_uploads:
