@@ -15,7 +15,7 @@ export default function Offer() {
         <p className="section-intro">
           {isEn
             ? 'Join us for walks, talks and gatherings. Everyone is welcome regardless of how long ago the loss happened.'
-            : 'Kom och delta i promenader, samtal och treffar. Alla ar valkomna oavsett nar forlusten hande.'}
+            : 'Kom och delta i promenader, samtal och träffar. Alla är välkomna oavsett när förlusten hände.'}
         </p>
 
         <div className="event-cards">
@@ -24,7 +24,7 @@ export default function Offer() {
             target="_blank"
             rel="noopener noreferrer"
             className="event-card"
-            aria-label={isEn ? 'Read more about Knata and Prata' : 'Las mer om Knata och Prata'}
+            aria-label={isEn ? 'Read more about Knata and Prata' : 'Läs mer om Knata och Prata'}
           >
             <div className="event-card-header">
               <span className="event-badge">{isEn ? 'Free' : 'Gratis'}</span>
@@ -37,7 +37,7 @@ export default function Offer() {
             <p className="event-tagline">
               {isEn
                 ? 'For survivors of suicide loss'
-                : 'For efterlevande till suicid'}
+                : 'För efterlevande till suicid'}
             </p>
 
             <ul className="event-meta">
@@ -47,7 +47,7 @@ export default function Offer() {
               </li>
               <li>
                 <span className="event-meta-icon" aria-hidden="true">📍</span>
-                <span>Hotell Ostersund, Kyrkgatan 70, Ostersund</span>
+                <span>Hotell Östersund, Kyrkgatan 70, Östersund</span>
               </li>
               <li>
                 <span className="event-meta-icon" aria-hidden="true">👥</span>
@@ -58,11 +58,11 @@ export default function Offer() {
             <p className="event-description">
               {isEn
                 ? 'A walk and talk session for those who have lost someone to suicide. Hosted by Micke and Sune, both founders of Livslust and suicide loss survivors themselves. Walk at your own pace and share as much or as little as you like. Warmly welcome!'
-                : 'En promenad och samtal for dig som mist nagon i suicid. Mikke och Sune, bada grundare av Livslust och sjalva efterlevande, leder traeffen. Ga i din takt och dela sa mycket eller lite du vill. Varmt valkommen!'}
+                : 'En promenad och samtal för dig som mist någon i suicid. Micke och Sune, båda grundare av Livslust och själva efterlevande, leder träffen. Gå i din takt och dela så mycket eller lite du vill. Varmt välkommen!'}
             </p>
 
             <span className="event-cta-link">
-              {isEn ? 'Sign up and read more' : 'Anmal dig och las mer'} &rarr;
+              {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
             </span>
           </a>
         </div>
