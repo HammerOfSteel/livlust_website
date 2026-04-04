@@ -1,12 +1,25 @@
 import { useTranslation } from 'react-i18next';
+import { useSiteContent } from '../hooks/useSiteContent';
+import './About.css';
 
 export default function About() {
   const { t } = useTranslation();
+  const cms = useSiteContent();
+
   return (
     <section id="about">
-      <div className="container">
-        <h2>{t('about.heading')}</h2>
-        <p>{t('about.body')}</p>
+      <div className="container about-grid">
+        <div className="about-text">
+          <h2>{cms.about_heading ?? t('about.heading')}</h2>
+          <p className="section-intro">{cms.about_body ?? t('about.body')}</p>
+          <blockquote className="about-quote">
+            "Sorgen bevisar kärlekens storlek.<br />Vi bär den tillsammans."
+          </blockquote>
+        </div>
+        <div className="about-badge">
+          <span className="about-icon" aria-hidden="true">🤍</span>
+          <p>Grundad av efterlevande,<br />för efterlevande.</p>
+        </div>
       </div>
     </section>
   );

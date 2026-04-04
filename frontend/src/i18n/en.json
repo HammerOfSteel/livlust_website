@@ -1,41 +1,49 @@
 {
   "hero": {
-    "title": "Livslust och hållbart stöd",
-    "subtitle": "We are here for you who have lost a loved one to suicide."
+    "title": "You are not alone in your grief",
+    "subtitle": "We are a non-profit organisation supporting suicide loss survivors — family members, friends and loved ones who have lost someone to suicide.",
+    "cta": "Get in touch"
   },
   "about": {
     "heading": "About us",
-    "body": "We are a non-profit organisation offering support, community, and resources to suicide loss survivors. You don't have to carry the grief alone — we understand and we are here."
+    "body": "Livslust och hållbart stöd was founded by survivors for survivors. We know from experience how overwhelming grief can feel, and how important it is to meet people who truly understand. Our organisation offers a safe place to share, heal and find a way forward — at your own pace, without expectations."
   },
   "offer": {
     "heading": "What we offer",
-    "body": "We offer support groups, counselling, and information for those grieving a suicide loss. Everyone is welcome, regardless of how long ago it happened."
+    "groups_heading": "Support groups",
+    "groups_body": "Regular support groups in Stockholm and online, where you can meet others in similar situations.",
+    "talk_heading": "One-on-one support",
+    "talk_body": "Individual conversations with a volunteer supporter who listens without judgement and understands the loss.",
+    "resources_heading": "Resources & information",
+    "resources_body": "Book recommendations, articles and guides on grief and suicide loss."
+  },
+  "crisis": {
+    "heading": "Need crisis help right now?",
+    "mind": "Mind Crisis Helpline: 90101 (24/7, anonymous — available in Swedish)",
+    "vardguiden": "1177 Vårdguiden — call 1177 for medical advice (in Sweden)",
+    "note": "If there is immediate danger, call 112."
   },
   "contact": {
     "heading": "Contact us",
-    "intro": "Reach out to us – we are here for you.",
+    "intro": "Reach out to us — we will reply as soon as we can. You do not need to have all the words ready. We listen.",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "submit": "Send",
-    "success": "Thank you! We will get back to you as soon as we can.",
-    "error": "Something went wrong. Please try again later.",
+    "message_placeholder": "Write your message here…",
+    "submit": "Send message",
+    "sending": "Sending…",
+    "success": "Thank you for your message. We will get back to you as soon as we can.",
+    "error": "Something went wrong. Please try again in a moment.",
     "address": "Stockholm, Sweden",
     "emailAddress": "info@livlust.se"
   },
   "footer": {
     "adminLink": "Admin",
-    "rights": "© {{year}} Livslust och hållbart stöd"
+    "rights": "© {{year}} Livslust och hållbart stöd. Non-profit organisation."
   },
-  "admin": {
-    "loginHeading": "Admin Login",
-    "emailLabel": "Email",
-    "passwordLabel": "Password",
-    "loginButton": "Log in",
-    "loginError": "Incorrect email or password.",
-    "dashboard": "Dashboard",
-    "content": "Edit content",
-    "users": "Manage users",
-    "logout": "Log out"
+  "nav": {
+    "about": "About",
+    "offer": "Support",
+    "contact": "Contact"
   }
 }

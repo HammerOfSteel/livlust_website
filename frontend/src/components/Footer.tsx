@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import './Footer.css';
+
+const CMS_URL = import.meta.env.VITE_CMS_URL ?? 'http://localhost:8055';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -9,7 +10,14 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container footer-inner">
         <p>{t('footer.rights', { year })}</p>
-        <Link to="/admin/login" className="footer-admin-link">{t('footer.adminLink')}</Link>
+        <a
+          href={`${CMS_URL}/admin`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-admin-link"
+        >
+          {t('footer.adminLink')}
+        </a>
       </div>
     </footer>
   );

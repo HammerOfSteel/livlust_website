@@ -1,41 +1,49 @@
 {
   "hero": {
-    "title": "Livslust och hållbart stöd",
-    "subtitle": "Vi är här för dig som förlorat en närstående i självmord."
+    "title": "Du är inte ensam i din sorg",
+    "subtitle": "Vi är en ideell förening som stödjer efterlevande efter självmord — anhöriga, vänner och närstående som förlorat någon de älskade.",
+    "cta": "Kontakta oss"
   },
   "about": {
     "heading": "Om oss",
-    "body": "Vi är en ideell förening som erbjuder stöd, gemenskap och resurser till efterlevande efter självmord. Du behöver inte bära sorgen ensam — vi förstår och vi finns här."
+    "body": "Livslust och hållbart stöd grundades av efterlevande, för efterlevande. Vi vet av erfarenhet hur överväldigande sorgen kan kännas, och hur viktigt det är att möta människor som verkligen förstår. Vår förening erbjuder en trygg plats att dela, läka och hitta vägen vidare — i din egen takt, utan krav."
   },
   "offer": {
     "heading": "Vad vi erbjuder",
-    "body": "Vi erbjuder stödgrupper, samtalsstöd och information för dig som sörjer efter en självmordsförlust. Alla är välkomna, oavsett hur länge sedan det hände."
+    "groups_heading": "Stödgrupper",
+    "groups_body": "Regelbundna stödgrupper i Stockholm och online, där du kan möta andra i liknande situation.",
+    "talk_heading": "Samtalsstöd",
+    "talk_body": "Enskilda samtal med en frivilligstödjare som lyssnar utan att döma och förstår förlusten.",
+    "resources_heading": "Resurser & information",
+    "resources_body": "Boktips, artiklar och guider om sorgbearbetning och självmordsförlust."
+  },
+  "crisis": {
+    "heading": "Behöver du krishjälp just nu?",
+    "mind": "Mind Självmordslinjen: 90101 (dygnet runt, anonymt)",
+    "vardguiden": "1177 Vårdguiden — ring 1177 för sjukvårdsrådgivning",
+    "note": "Om det är fara för liv, ring 112."
   },
   "contact": {
     "heading": "Kontakta oss",
-    "intro": "Hör av dig till oss – vi finns här för dig.",
+    "intro": "Hör av dig till oss — vi svarar så snart vi kan. Du behöver inte ha alla ord redo. Vi lyssnar.",
     "name": "Namn",
     "email": "E-post",
     "message": "Meddelande",
-    "submit": "Skicka",
-    "success": "Tack! Vi återkommer så snart vi kan.",
-    "error": "Något gick fel. Försök igen senare.",
+    "message_placeholder": "Skriv ditt meddelande här…",
+    "submit": "Skicka meddelande",
+    "sending": "Skickar…",
+    "success": "Tack för ditt meddelande. Vi återkommer till dig så snart vi kan.",
+    "error": "Något gick fel. Försök igen om en stund.",
     "address": "Stockholm, Sverige",
     "emailAddress": "info@livlust.se"
   },
   "footer": {
     "adminLink": "Admin",
-    "rights": "© {{year}} Livslust och hållbart stöd"
+    "rights": "© {{year}} Livslust och hållbart stöd. Ideell förening."
   },
-  "admin": {
-    "loginHeading": "Adminlogin",
-    "emailLabel": "E-post",
-    "passwordLabel": "Lösenord",
-    "loginButton": "Logga in",
-    "loginError": "Felaktig e-post eller lösenord.",
-    "dashboard": "Kontrollpanel",
-    "content": "Redigera innehåll",
-    "users": "Hantera användare",
-    "logout": "Logga ut"
+  "nav": {
+    "about": "Om oss",
+    "offer": "Stöd",
+    "contact": "Kontakt"
   }
 }

@@ -5,26 +5,56 @@ services:
     env_file: .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 12
 
-  backend:
-    build: ./backend
+  directus:
+    image: directus/directus:10.13.3
     restart: unless-stopped
-    env_file: .env
     ports:
-      - "4000:4000"
+      - "8055:8055"
+    env_file: .env
+    environment:
+      KEY: ${DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET}
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      PUBLIC_URL: http://localhost:8055
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "true"
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_POINTS: "50"
+      RATE_LIMITER_DURATION: "15"
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./backend/src:/app/src
+      - directus_uploads:/directus/uploads
+
+  directus-init:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./directus:/app
+    command: node /app/seed.mjs
+    environment:
+      DIRECTUS_URL: http://directus:8055
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+    depends_on:
+      - directus
+    restart: on-failure
 
   frontend:
     build: ./frontend
@@ -33,9 +63,10 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      - directus
     volumes:
       - ./frontend/src:/app/src
 
 volumes:
   postgres_data:
+  directus_uploads:

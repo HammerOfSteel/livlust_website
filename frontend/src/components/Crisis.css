@@ -1,0 +1,44 @@
+.crisis-wrap {
+  background: var(--color-crisis-bg);
+  border-top: 3px solid var(--color-crisis-bdr);
+  border-bottom: 3px solid var(--color-crisis-bdr);
+  padding: 1.75rem 0;
+}
+
+.crisis-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.crisis-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.15rem;
+}
+
+.crisis-content h3 {
+  color: var(--color-primary-d);
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.crisis-content ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.crisis-content a {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.crisis-emergency {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-top: 0.25rem;
+}

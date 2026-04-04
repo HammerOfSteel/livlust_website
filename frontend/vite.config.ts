@@ -6,9 +6,10 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/api': {
-        target: 'http://backend:4000',
+      '/cms': {
+        target: 'http://directus:8055',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/cms/, ''),
       },
     },
   },
