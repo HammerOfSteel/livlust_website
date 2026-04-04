@@ -3,100 +3,93 @@
 ## MVP
 
 ### Infrastructure
-- [x] README.md updated
-- [x] overview.md created
-- [x] todo.md created
-- [ ] `docker-compose.yml` with frontend, backend, db services
-- [ ] `.env.example` with required environment variables
-- [ ] PostgreSQL init SQL (users, content tables)
+- [x] README.md, overview.md, todo.md created and up to date
+- [x] `docker-compose.yml` — db, Directus, directus-init, frontend
+- [x] `.env.example` with all required environment variables
+- [x] `.gitignore`
+- [x] `db/init.sql` (minimal — schema managed by Directus)
+- [x] `directus/seed.mjs` — idempotent bootstrap: collections, fields, permissions, seed content
 
 ### Frontend
-- [ ] Vite + React + TypeScript scaffold
-- [ ] i18n setup (react-i18next) with `sv` and `en` JSON files
-- [ ] Language toggle (SV / EN) in footer
-- [ ] Landing page — one-pager with sections:
-  - [ ] Header / Hero (logo, name, tagline)
-  - [ ] About us section
-  - [ ] What we offer section
-  - [ ] Contact form (sends email or stores in DB)
-  - [ ] Footer (contact info, admin link, language toggle)
-- [ ] Admin login page (`/admin/login`)
-- [ ] Admin dashboard (protected route)
-  - [ ] Edit landing page content (per section, per language)
-  - [ ] User management (create / edit / delete admin users)
-- [ ] Responsive design (mobile-first)
-- [ ] WCAG AA accessibility baseline
+- [x] Vite + React + TypeScript scaffold
+- [x] i18n setup (react-i18next) with `sv` and `en` JSON files
+- [x] Language toggle (SV/EN) in sticky header
+- [x] 5-theme CSS variable system (`VITE_THEME` in `.env`)
+- [x] Landing page, one-pager with sections:
+  - [x] Header — typographic wordmark, nav links, language toggle
+  - [x] Hero — full-viewport crossfade image slideshow (30s interval)
+  - [x] About us — two-column layout with quote and badge card
+  - [x] Events section — event cards with external links (Knata och Prata, Ostersund 9 Apr)
+  - [x] Crisis box — Mind Sjalvmordslinjen 90101, 1177
+  - [x] Contact form — card layout, stores submissions in Directus
+  - [x] Footer — copyright + Directus admin link
+- [x] `useSiteContent` hook — fetches and caches content from Directus at runtime
+- [x] Responsive design (mobile-first)
 
-### Backend
-- [ ] Express + TypeScript scaffold
-- [ ] JWT authentication (login, token validation middleware)
-- [ ] `POST /api/auth/login` — admin login
-- [ ] `GET/PUT /api/content/:section` — read and update CMS content
-- [ ] `GET/POST/PUT/DELETE /api/users` — admin user management
-- [ ] `POST /api/contact` — receive contact form submissions
-- [ ] Bcrypt password hashing
-- [ ] Input validation (zod or express-validator)
-
-### Database
-- [ ] `users` table (id, email, password_hash, role, created_at)
-- [ ] `content` table (id, section, language, body, updated_at)
-- [ ] `contact_submissions` table (id, name, email, message, created_at)
-- [ ] Seed script — initial superadmin user
+### CMS
+- [x] Directus self-hosted via Docker image
+- [x] `page_content` collection (section, language, body) — public read
+- [x] `contact_submissions` collection — public create
+- [x] Admin UI at `http://localhost:8055/admin`
+- [x] User management built into Directus
+- [x] Content seeded for all sections in Swedish and English
 
 ### DevOps
-- [ ] Dockerfile for frontend
-- [ ] Dockerfile for backend
-- [ ] docker-compose.yml tying all services together
-- [ ] `.gitignore` ignoring `.env`, `node_modules`, build outputs
+- [x] Dockerfile for frontend
+- [x] docker-compose.yml with health checks and service dependencies
+- [x] Git repo initialised, pushed to HammerOfSteel/livlust_website on GitHub
 
-### GitHub
-- [ ] Init git repo
-- [ ] Create repo on hammerofsteel GitHub via `gh` CLI
-- [ ] Push initial commit
+---
+
+## Next steps (short term)
+
+- [ ] Add a real logo/logotype image (replace typographic wordmark or complement it)
+- [ ] WCAG AA accessibility audit and fixes
+- [ ] Meta tags, Open Graph image, `<title>` per section for SEO
+- [ ] `robots.txt` and `sitemap.xml`
+- [ ] Verify all EN content in Directus (some items hit rate limit on first seed — re-run `directus-init` if needed)
+- [ ] Change default passwords in `.env` before any public deployment
+- [ ] Add a second upcoming event card once more events are scheduled
 
 ---
 
 ## Beyond MVP — Suggested Features
 
-### Events & Calendar
-- [ ] Public-facing events/calendar section on the landing page
-- [ ] Admin: create, edit, delete events (title, description, date, location)
-- [ ] `events` table in database
-- [ ] iCal export link
+### Events management via Directus
+- [ ] `events` collection in Directus (title, date, location, description, external_url, language)
+- [ ] Frontend fetches events from Directus instead of hardcoding them
+- [ ] Admin creates, edits, deletes events through Directus UI
+- [ ] iCal export link per event
 
 ### Newsletter / Mailing List
 - [ ] Email sign-up form on landing page
-- [ ] Admin: view and export subscribers
-- [ ] Integration with a mailing provider (e.g. Mailchimp, Brevo)
+- [ ] `subscribers` collection in Directus
+- [ ] Integration with a mailing provider (Mailchimp, Brevo)
 
 ### Blog / News
-- [ ] Admin: write and publish news/blog posts
+- [ ] `posts` collection in Directus (title, body, published_at, language)
 - [ ] Public-facing news section on the site
-- [ ] Swedish + English per post
 
-### Media & Resources
-- [ ] Admin: upload documents (PDFs, guides)
+### Media and Resources
+- [ ] Admin: upload documents (PDFs, guides) via Directus Files
 - [ ] Public: downloadable resources section
 
 ### Improved Contact Flow
-- [ ] Email notification to org when contact form is submitted
+- [ ] Email notification to org when a contact form submission is created (Directus Flow)
 - [ ] Auto-reply email to sender
-- [ ] Spam protection (honeypot or reCAPTCHA)
+- [ ] Spam protection (honeypot field or reCAPTCHA)
 
-### SEO & Accessibility
-- [ ] Meta tags, Open Graph, sitemap.xml, robots.txt
-- [ ] Full WCAG AA audit and fixes
-- [ ] Swedish-language structured data (schema.org)
+### SEO and Accessibility
+- [ ] Full WCAG AA audit
+- [ ] Swedish-language structured data (schema.org NonProfit)
 
 ### Security Hardening
-- [ ] Rate limiting on login and contact endpoints
-- [ ] CSRF protection
-- [ ] Helmet.js HTTP security headers
-- [ ] Secure cookie flags for JWT
+- [ ] Review Directus CORS and rate limiter config for production
+- [ ] HTTPS + secure headers via reverse proxy (Caddy or nginx) in production
 
 ### Analytics
-- [ ] Privacy-friendly analytics (e.g. Plausible, Umami)
-- [ ] Admin dashboard visit stats
+- [ ] Privacy-friendly analytics (Plausible or Umami) as a Docker service
 
 ### Multi-language Expansion
-- [ ] Additional language support (e.g. Arabic, Somali) to serve diverse communities
+- [ ] Additional languages (Arabic, Somali) to serve diverse communities in Sweden
+

@@ -1,12 +1,12 @@
 {
   "hero": {
     "title": "Du är inte ensam i din sorg",
-    "subtitle": "Vi är en ideell förening som stödjer efterlevande efter självmord — anhöriga, vänner och närstående som förlorat någon de älskade.",
+    "subtitle": "Vi är en ideell förening som stödjer efterlevande efter självmord, anhöriga, vänner och närstående som förlorat någon de älskade.",
     "cta": "Kontakta oss"
   },
   "about": {
     "heading": "Om oss",
-    "body": "Livslust och hållbart stöd grundades av efterlevande, för efterlevande. Vi vet av erfarenhet hur överväldigande sorgen kan kännas, och hur viktigt det är att möta människor som verkligen förstår. Vår förening erbjuder en trygg plats att dela, läka och hitta vägen vidare — i din egen takt, utan krav."
+    "body": "Livslust och hållbart stöd grundades av efterlevande, för efterlevande. Vi vet av erfarenhet hur överväldigande sorgen kan kännas, och hur viktigt det är att möta människor som verkligen förstår. Vår förening erbjuder en trygg plats att dela, läka och hitta vägen vidare, i din egen takt, utan krav."
   },
   "offer": {
     "heading": "Vad vi erbjuder",
@@ -25,7 +25,7 @@
   },
   "contact": {
     "heading": "Kontakta oss",
-    "intro": "Hör av dig till oss — vi svarar så snart vi kan. Du behöver inte ha alla ord redo. Vi lyssnar.",
+    "intro": "Hör av dig till oss, vi svarar så snart vi kan. Du behöver inte ha alla ord redo. Vi lyssnar.",
     "name": "Namn",
     "email": "E-post",
     "message": "Meddelande",
@@ -43,7 +43,7 @@
   },
   "nav": {
     "about": "Om oss",
-    "offer": "Stöd",
+    "offer": "Aktiviteter",
     "contact": "Kontakt"
   }
 }

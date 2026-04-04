@@ -9,7 +9,10 @@ export default function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <a href="/" className="header-logo" aria-label="Hem">
-          <img src="/logo.png" alt="Livslust logotyp" className="logo-img" />
+          <span className="header-wordmark">
+            <span className="header-wordmark-main">Livslust</span>
+            <span className="header-wordmark-sub">och hållbart stöd</span>
+          </span>
         </a>
 
         <nav className="header-nav" aria-label="Sidonavigation">

@@ -1,12 +1,12 @@
 {
   "hero": {
     "title": "You are not alone in your grief",
-    "subtitle": "We are a non-profit organisation supporting suicide loss survivors — family members, friends and loved ones who have lost someone to suicide.",
+    "subtitle": "We are a non-profit organisation supporting suicide loss survivors, family members, friends and loved ones who have lost someone to suicide.",
     "cta": "Get in touch"
   },
   "about": {
     "heading": "About us",
-    "body": "Livslust och hållbart stöd was founded by survivors for survivors. We know from experience how overwhelming grief can feel, and how important it is to meet people who truly understand. Our organisation offers a safe place to share, heal and find a way forward — at your own pace, without expectations."
+    "body": "Livslust och hållbart stöd was founded by survivors for survivors. We know from experience how overwhelming grief can feel, and how important it is to meet people who truly understand. Our organisation offers a safe place to share, heal and find a way forward, at your own pace, without expectations."
   },
   "offer": {
     "heading": "What we offer",
@@ -25,7 +25,7 @@
   },
   "contact": {
     "heading": "Contact us",
-    "intro": "Reach out to us — we will reply as soon as we can. You do not need to have all the words ready. We listen.",
+    "intro": "Reach out to us, we will reply as soon as we can. You do not need to have all the words ready. We listen.",
     "name": "Name",
     "email": "Email",
     "message": "Message",
@@ -43,7 +43,7 @@
   },
   "nav": {
     "about": "About",
-    "offer": "Support",
+    "offer": "Events",
     "contact": "Contact"
   }
 }

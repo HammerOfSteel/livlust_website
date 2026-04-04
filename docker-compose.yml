@@ -34,7 +34,7 @@ services:
       CORS_ENABLED: "true"
       CORS_ORIGIN: "true"
       RATE_LIMITER_ENABLED: "true"
-      RATE_LIMITER_POINTS: "50"
+      RATE_LIMITER_POINTS: "250"
       RATE_LIMITER_DURATION: "15"
     depends_on:
       db:

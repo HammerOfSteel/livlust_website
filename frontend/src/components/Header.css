@@ -15,11 +15,28 @@
   height: 64px;
 }
 
-.header-logo { display: flex; align-items: center; }
+.header-logo { display: flex; align-items: center; text-decoration: none; }
+.header-logo:hover { text-decoration: none; }
 
-.logo-img {
-  height: 44px;
-  width: auto;
+.header-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.header-wordmark-main {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.header-wordmark-sub {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
 }
 
 .header-nav {
