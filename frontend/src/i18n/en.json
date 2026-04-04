@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "Livslust och hållbart stöd",
+    "subtitle": "We are here for you who have lost a loved one to suicide."
+  },
+  "about": {
+    "heading": "About us",
+    "body": "We are a non-profit organisation offering support, community, and resources to suicide loss survivors. You don't have to carry the grief alone — we understand and we are here."
+  },
+  "offer": {
+    "heading": "What we offer",
+    "body": "We offer support groups, counselling, and information for those grieving a suicide loss. Everyone is welcome, regardless of how long ago it happened."
+  },
+  "contact": {
+    "heading": "Contact us",
+    "intro": "Reach out to us – we are here for you.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send",
+    "success": "Thank you! We will get back to you as soon as we can.",
+    "error": "Something went wrong. Please try again later.",
+    "address": "Stockholm, Sweden",
+    "emailAddress": "info@livlust.se"
+  },
+  "footer": {
+    "adminLink": "Admin",
+    "rights": "© {{year}} Livslust och hållbart stöd"
+  },
+  "admin": {
+    "loginHeading": "Admin Login",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "loginButton": "Log in",
+    "loginError": "Incorrect email or password.",
+    "dashboard": "Dashboard",
+    "content": "Edit content",
+    "users": "Manage users",
+    "logout": "Log out"
+  }
+}

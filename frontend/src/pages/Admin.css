@@ -1,0 +1,106 @@
+/* ── Admin shared styles ───────────────────────────────── */
+.admin-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Login card */
+.admin-page:not(.admin-dashboard) {
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.admin-heading {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Dashboard header */
+.admin-header {
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 56px;
+  flex-wrap: wrap;
+}
+
+.admin-brand {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-right: auto;
+}
+
+.admin-nav { display: flex; gap: 0.25rem; }
+
+.admin-tab {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+.admin-tab:hover { background: rgba(255,255,255,0.22); }
+.admin-tab.active { background: rgba(255,255,255,0.3); font-weight: 600; }
+
+.admin-logout {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.9rem;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.admin-logout:hover { background: rgba(255,255,255,0.28); }
+
+.admin-main { padding-top: 2rem; padding-bottom: 3rem; }
+
+/* Section titles inside admin */
+.admin-section-title {
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+/* Tables */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.admin-table th { color: var(--color-muted); font-weight: 600; }
+
+.btn-sm {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+}
+.btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+.btn-danger:hover { background: #b02a37; }

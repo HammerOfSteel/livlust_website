@@ -1,0 +1,20 @@
+.site-footer {
+  background: var(--color-primary-d);
+  color: rgba(255,255,255,0.8);
+  padding: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-admin-link {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+}
+.footer-admin-link:hover { color: #fff; }

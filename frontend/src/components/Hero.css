@@ -1,0 +1,26 @@
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-d) 100%);
+  color: #fff;
+  padding: 5rem 0 4rem;
+  text-align: center;
+}
+
+.hero h1 { color: #fff; margin-bottom: 1rem; }
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  opacity: 0.92;
+}
+
+.hero-cta {
+  background: #fff;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+.hero-cta:hover {
+  background: var(--color-accent);
+  color: var(--color-primary-d);
+  text-decoration: none;
+}

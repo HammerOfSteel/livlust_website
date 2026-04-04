@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "Livslust och hållbart stöd",
+    "subtitle": "Vi är här för dig som förlorat en närstående i självmord."
+  },
+  "about": {
+    "heading": "Om oss",
+    "body": "Vi är en ideell förening som erbjuder stöd, gemenskap och resurser till efterlevande efter självmord. Du behöver inte bära sorgen ensam — vi förstår och vi finns här."
+  },
+  "offer": {
+    "heading": "Vad vi erbjuder",
+    "body": "Vi erbjuder stödgrupper, samtalsstöd och information för dig som sörjer efter en självmordsförlust. Alla är välkomna, oavsett hur länge sedan det hände."
+  },
+  "contact": {
+    "heading": "Kontakta oss",
+    "intro": "Hör av dig till oss – vi finns här för dig.",
+    "name": "Namn",
+    "email": "E-post",
+    "message": "Meddelande",
+    "submit": "Skicka",
+    "success": "Tack! Vi återkommer så snart vi kan.",
+    "error": "Något gick fel. Försök igen senare.",
+    "address": "Stockholm, Sverige",
+    "emailAddress": "info@livlust.se"
+  },
+  "footer": {
+    "adminLink": "Admin",
+    "rights": "© {{year}} Livslust och hållbart stöd"
+  },
+  "admin": {
+    "loginHeading": "Adminlogin",
+    "emailLabel": "E-post",
+    "passwordLabel": "Lösenord",
+    "loginButton": "Logga in",
+    "loginError": "Felaktig e-post eller lösenord.",
+    "dashboard": "Kontrollpanel",
+    "content": "Redigera innehåll",
+    "users": "Hantera användare",
+    "logout": "Logga ut"
+  }
+}
