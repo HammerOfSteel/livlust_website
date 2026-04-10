@@ -59,7 +59,7 @@ jobs:
             # ── 5. Obtain TLS certificate (once per domain) ───────────────
             if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
               ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
-              sudo certbot --nginx -d "${DOMAIN}" -d "www.${DOMAIN}" --non-interactive --agree-tos --email "${ADMIN_EMAIL:-admin@livslusths.se}"
+              sudo certbot --nginx -d "${DOMAIN}" -d "www.${DOMAIN}" --non-interactive --agree-tos --email "${ADMIN_EMAIL:-info@livslusths.se}"
               echo "Certificate obtained for ${DOMAIN}."
             fi
 
