@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import logoImg from '../images/logo.png';
 import './Header.css';
 
 export default function Header() {
@@ -9,6 +10,7 @@ export default function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <a href="/" className="header-logo" aria-label="Hem">
+          <img src={logoImg} alt="Livslust logotyp" className="header-logo-img" />
           <span className="header-wordmark">
             <span className="header-wordmark-main">Livslust</span>
             <span className="header-wordmark-sub">och hållbart stöd</span>
