@@ -78,36 +78,35 @@ export default function News() {
               const isOpen = expanded === post.id;
               return (
                 <article key={post.id} className={`news-card${isOpen ? ' is-open' : ''}`}>
+                  {/* Featured image — always visible */}
+                  {img && (
+                    <div className="news-card-image-wrap">
+                      <img
+                        src={img}
+                        alt={post.image_alt ?? ''}
+                        className="news-card-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+
                   <div className="news-card-body">
                     <time className="news-card-date" dateTime={post.published_at}>
                       {formatPublishedDate(post.published_at, lang)}
                     </time>
                     <h3 className="news-card-title">{post.title}</h3>
 
-                    {/* Excerpt — shown only when collapsed */}
+                    {/* Excerpt — shown when collapsed */}
                     {post.excerpt && !isOpen && (
                       <p className="news-card-excerpt">{post.excerpt}</p>
                     )}
 
-                    {/* Featured image + full body — shown when expanded */}
-                    {isOpen && (
-                      <>
-                        {img && (
-                          <div className="news-card-image-wrap">
-                            <img
-                              src={img}
-                              alt={post.image_alt ?? ''}
-                              className="news-card-image"
-                            />
-                          </div>
-                        )}
-                        {post.body && (
-                          <div
-                            className="news-card-full-body"
-                            dangerouslySetInnerHTML={{ __html: post.body }}
-                          />
-                        )}
-                      </>
+                    {/* Full article body — shown when expanded */}
+                    {isOpen && post.body && (
+                      <div
+                        className="news-card-full-body"
+                        dangerouslySetInnerHTML={{ __html: post.body }}
+                      />
                     )}
 
                     <button

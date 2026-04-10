@@ -45,10 +45,9 @@
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.1);
 }
 
-/* ── Image (featured, shown inside body when expanded) ── */
+/* ── Featured image — always visible at top of card ───── */
 .news-card-image-wrap {
-  width: calc(100% + 3.5rem);
-  margin: 0.75rem -1.75rem 1.5rem;
+  width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   flex-shrink: 0;
@@ -59,6 +58,11 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.news-card:hover .news-card-image {
+  transform: scale(1.04);
 }
 
 /* ── Body ─────────────────────────────────────────────── */
