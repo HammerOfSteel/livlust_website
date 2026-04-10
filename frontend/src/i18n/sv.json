@@ -2,7 +2,8 @@
   "hero": {
     "title": "Du är inte ensam i din sorg",
     "subtitle": "Vi är en ideell förening som stödjer efterlevande efter självmord, anhöriga, vänner och närstående som förlorat någon de älskade.",
-    "cta": "Kontakta oss"
+    "cta": "Kontakta oss",
+    "social_label": "Följ oss"
   },
   "about": {
     "heading": "Om oss",
@@ -41,9 +42,24 @@
     "adminLink": "Admin",
     "rights": "© {{year}} Livslust och hållbart stöd. Ideell förening."
   },
+  "activities": {
+    "heading": "Vad vi gör",
+    "intro": "Vi erbjuder flera former av stöd och gemenskap, anpassade efter olika behov och livssituationer.",
+    "samtalstrafar_title": "Samtalsträffar",
+    "samtalstrafar_body": "Vi håller regelbundna samtalsträffar där efterlevande möts i ett tryggt rum för att dela erfarenheter och stödja varandra. Vid många tillfällen arrangerar vi parallella träffar på samma plats, så att fler kan delta samtidigt.",
+    "knata_title": "Knata och Prata",
+    "knata_body": "En promenadgrupp för efterlevande där rörelse och samtal möts i naturen. Vi har grupper öppna för alla efterlevande och en grupp specifikt för män. Att gå tillsammans sänker tröskeln och öppnar för naturliga samtal.",
+    "forelasningar_title": "Föreläsningar",
+    "forelasningar_body": "Vi föreläser om suicidförlust, sorg och stöd på skolor, arbetsplatser, sjukhus och hos andra organisationer. Syftet är att öka förståelse och minska stigma kring psykisk ohälsa och självmord.",
+    "sorgbearbetning_title": "Sorgbearbetning",
+    "sorgbearbetning_body": "Vi utbildar och arbetar med sorgbearbetning i enlighet med Svenska Sorgeinstitutet. Målet är att ge efterlevande konkreta verktyg att bearbeta sin förlust på ett hållbart och strukturerat sätt.",
+    "digitala_title": "Digitala samtalsträffar",
+    "digitala_body": "För dig som inte kan delta på plats erbjuder vi samtalsträffar via video. Det digitala formatet gör det möjligt för fler att nå stöd, oavsett var i landet du befinner dig."
+  },
   "nav": {
     "about": "Om oss",
-    "offer": "Aktiviteter",
+    "offer": "Evenemang",
+    "activities": "Vad vi gör",
     "contact": "Kontakt"
   }
 }

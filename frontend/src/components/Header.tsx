@@ -18,6 +18,7 @@ export default function Header() {
         <nav className="header-nav" aria-label="Sidonavigation">
           <a href="#about">{t('nav.about')}</a>
           <a href="#offer">{t('nav.offer')}</a>
+          <a href="#activities">{t('nav.activities')}</a>
           <a href="#contact">{t('nav.contact')}</a>
         </nav>
 

@@ -2,7 +2,8 @@
   "hero": {
     "title": "You are not alone in your grief",
     "subtitle": "We are a non-profit organisation supporting suicide loss survivors, family members, friends and loved ones who have lost someone to suicide.",
-    "cta": "Get in touch"
+    "cta": "Get in touch",
+    "social_label": "Follow us"
   },
   "about": {
     "heading": "About us",
@@ -41,9 +42,24 @@
     "adminLink": "Admin",
     "rights": "© {{year}} Livslust och hållbart stöd. Non-profit organisation."
   },
+  "activities": {
+    "heading": "What we do",
+    "intro": "We offer several forms of support and community, adapted to different needs and life situations.",
+    "samtalstrafar_title": "Support Gatherings",
+    "samtalstrafar_body": "We hold regular support gatherings where bereaved individuals can come together in a safe space to share experiences and support one another. In many cases we arrange parallel sessions at the same venue so that more people can take part at once.",
+    "knata_title": "Knata och Prata (Walk and Talk)",
+    "knata_body": "A walking group for the bereaved where movement and conversation meet in nature. We have groups open to all survivors as well as a group specifically for men. Walking together lowers the threshold and opens the door to natural conversation.",
+    "forelasningar_title": "Lectures and Talks",
+    "forelasningar_body": "We give presentations on suicide loss, grief and support at schools, workplaces, hospitals and other organisations. The aim is to increase understanding and reduce stigma around mental illness and suicide.",
+    "sorgbearbetning_title": "Grief Processing",
+    "sorgbearbetning_body": "We provide grief processing work in accordance with the Swedish Grief Institute. The goal is to give bereaved individuals practical tools to process their loss in a sustainable and structured way.",
+    "digitala_title": "Online Support Gatherings",
+    "digitala_body": "For those who cannot attend in person we offer support gatherings via video call. The digital format means that more people can access support regardless of where in the country they are."
+  },
   "nav": {
     "about": "About",
     "offer": "Events",
+    "activities": "What we do",
     "contact": "Contact"
   }
 }
