@@ -56,18 +56,7 @@ jobs:
               echo "Nginx site installed."
             fi
 
-            # ── 5. Obtain TLS certificate (first deploy only) ────────────
-            if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
-              ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
-              sudo certbot --nginx \
-                -d "${DOMAIN}" \
-                --non-interactive \
-                --agree-tos \
-                --email "${ADMIN_EMAIL:-admin@livlust.se}"
-              echo "Certificate obtained and nginx updated by Certbot."
-            fi
-
-            # ── 6. Remove dangling images ────────────────────────────────
+            # ── 5. Remove dangling images ────────────────────────────────
             sudo docker image prune -f
 
             echo "Deployment complete: https://${DOMAIN}"

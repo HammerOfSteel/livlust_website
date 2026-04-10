@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import dawnArticleImg from '../images/dawn_article.jpg';
+import websiteArticleImg from '../images/website_article.jpg';
+import heaveAHeartImg from '../images/heave_a_heart_article.jpg';
 import './News.css';
 
 interface Post {
@@ -12,13 +15,15 @@ interface Post {
   image_alt: string | null;
 }
 
-// Eagerly import all article images so Vite bundles them
-const articleImages = import.meta.glob('../images/*_article.jpg', { eager: true }) as Record<string, { default: string }>;
+const IMAGE_MAP: Record<string, string> = {
+  'dawn_article.jpg':          dawnArticleImg,
+  'website_article.jpg':       websiteArticleImg,
+  'heave_a_heart_article.jpg': heaveAHeartImg,
+};
 
 function getImage(key: string | null): string | null {
   if (!key) return null;
-  const match = Object.entries(articleImages).find(([path]) => path.endsWith(key));
-  return match ? match[1].default : null;
+  return IMAGE_MAP[key.trim()] ?? null;
 }
 
 function formatPublishedDate(dateStr: string, lang: string): string {
