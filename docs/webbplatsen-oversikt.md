@@ -6,7 +6,7 @@ Den här guiden riktar sig till er i organisationen som vill förstå hur webbpl
 
 ## Vad är webbplatsen?
 
-Webbplatsen på **https://livslust.dancingsalamanders.com** är Livslust och hållbart stöds digitala hem. Där kan besökare läsa om vilka vi är, se kommande evenemang, ta del av vad vi erbjuder och höra av sig via kontaktformuläret.
+Webbplatsen på **https://livslusths.se** är Livslust och hållbart stöds digitala hem. Där kan besökare läsa om vilka vi är, se kommande evenemang, ta del av vad vi erbjuder och höra av sig via kontaktformuläret.
 
 Webbplatsen är byggd på svenska som standardspråk med möjlighet att byta till engelska — något som gör den tillgänglig även för besökare som inte talar svenska.
 
@@ -23,7 +23,7 @@ Via Directus kan ni:
 - Se inkommande meddelanden från kontaktformuläret
 - Hantera vilka som har tillgång till systemet
 
-Directus-adminpanelen nås på: **https://livslust.dancingsalamanders.com/cms/admin**
+Directus-adminpanelen nås på: **https://livslusths.se/cms/admin**
 
 ---
 
@@ -58,7 +58,7 @@ Allt körs i **Docker** — tänk på Docker som separata lådor där varje del 
 Webbplatsen körs på en virtuell server hos **Oracle Cloud** (gratis nivå).
 
 - **IP:** 129.151.193.219
-- **Domän:** livslust.dancingsalamanders.com (A-post i DNS hos dancingsalamanders.com)
+- **Domän:** livslusths.se (A-post i DNS hos simply.com)
 - **HTTPS:** Krypterad trafik via ett Let's Encrypt-certifikat (förnyas automatiskt)
 - **Operativsystem:** Ubuntu Linux
 

@@ -243,7 +243,7 @@ const SEED_POSTS = [
     language: 'sv',
     published_at: '2026-04-10',
     title: 'Vår webbplats är här, och vår Discord öppnar snart',
-    excerpt: 'Idag lanserar vi livslust.dancingsalamanders.com. Det är en plats för information, kontakt och gemenskap, och det är bara början.',
+    excerpt: 'Idag lanserar vi livslusths.se. Det är en plats för information, kontakt och gemenskap, och det är bara början.',
     body: `<p>Idag lanserar vi vår webbplats. Den är enkel och ärlig, precis som vi vill att vår förening ska vara. Du hittar information om vilka vi är, vad vi gör och hur du kan komma i kontakt med oss. Du kan se kommande evenemang och spara dem i din kalender. Och du kan höra av dig, oavsett om du bär på ord eller inte.</p>
 
 <h3>Vad vi hoppas att webbplatsen blir</h3>
@@ -269,7 +269,7 @@ const SEED_POSTS = [
     language: 'en',
     published_at: '2026-04-10',
     title: 'Our website is here, and our Discord opens soon',
-    excerpt: 'Today we launch livslust.dancingsalamanders.com. It is a place for information, contact and community, and it is just the beginning.',
+    excerpt: 'Today we launch livslusths.se. It is a place for information, contact and community, and it is just the beginning.',
     body: `<p>Today we launch our website. It is simple and honest, just as we want our organisation to be. You will find information about who we are, what we do and how to get in touch. You can see upcoming events and save them to your calendar. And you can reach out, whether or not you have words ready.</p>
 
 <h3>What we hope the website will become</h3>

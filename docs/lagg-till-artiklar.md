@@ -8,7 +8,7 @@ Den här guiden förklarar hur du skapar inlägg i nyhets- och bloggsektionen p�
 
 ## Var loggar jag in?
 
-Gå till **https://livslust.dancingsalamanders.com/cms/admin** och logga in med dina uppgifter.
+Gå till **https://livslusths.se/cms/admin** och logga in med dina uppgifter.
 
 ---
 

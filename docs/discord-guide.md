@@ -96,7 +96,7 @@ Om du ser något problematiskt, mår dåligt och behöver stöd, eller vill hör
 |--------|---------|
 | Mind Självmordslinjen | **90101** (dygnet runt, gratis, anonymt) |
 | 1177 Vårdguiden | Ring **1177** för sjukvårdsrådgivning |
-| Livslust hemsida | https://livslust.dancingsalamanders.com |
+| Livslust hemsida | https://livslusths.se |
 | Akut fara | Ring **112** |
 
 ---

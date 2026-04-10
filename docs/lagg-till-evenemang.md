@@ -6,7 +6,7 @@ Den här guiden förklarar hur du lägger till ett nytt evenemang så att det vi
 
 ## Var loggar jag in?
 
-Gå till **https://livslust.dancingsalamanders.com/cms/admin** i din webbläsare.
+Gå till **https://livslusths.se/cms/admin** i din webbläsare.
 
 Logga in med den e-postadress och det lösenord som du fått av organisationen.
 

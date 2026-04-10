@@ -33,7 +33,7 @@ function buildIcs(ev: Event): string {
     'BEGIN:VCALENDAR', 'VERSION:2.0',
     'PRODID:-//Livslust//Events//SV', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:livslust-${ev.id}@livslust.dancingsalamanders.com`,
+    `UID:livslust-${ev.id}@livslusths.se`,
     `SUMMARY:${esc(ev.title)}`,
     dtstart, dtend,
     ev.location    ? `LOCATION:${esc(ev.location)}`       : '',
