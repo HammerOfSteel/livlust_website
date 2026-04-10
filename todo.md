@@ -55,20 +55,24 @@
 
 ## Beyond MVP — Suggested Features
 
+### Features we the org wants first
+- [x] What we do section — accordion with Samtalsträffar, Knata och Prata (walk and talk, general + men's group), Föreläsningar (schools/companies/hospitals), Sorgbearbetning (Svenska Sorgeinstitutet), Digitala samtalsträffar
+- [x] Social media icons (Discord, Instagram, Facebook) in bottom-left of hero with scale + brand-colour hover effect; placeholder URLs ready to swap in
+
 ### Events management via Directus
-- [ ] `events` collection in Directus (title, date, location, description, external_url, language)
-- [ ] Frontend fetches events from Directus instead of hardcoding them
-- [ ] Admin creates, edits, deletes events through Directus UI
-- [ ] iCal export link per event
+- [x] `events` collection in Directus (title, tagline, date, time_label, location, organizers, description, external_url, badge, partner, language, status)
+- [x] Frontend fetches events from Directus instead of hardcoding them (loading + empty state)
+- [x] Admin creates, edits, deletes events through Directus UI
+- [x] iCal export link per event
+
+### Blog / News
+- [ ] `posts` collection in Directus (title, body, published_at, language)
+- [ ] Public-facing news section on the site part of the onepager design
 
 ### Newsletter / Mailing List
 - [ ] Email sign-up form on landing page
 - [ ] `subscribers` collection in Directus
 - [ ] Integration with a mailing provider (Mailchimp, Brevo)
-
-### Blog / News
-- [ ] `posts` collection in Directus (title, body, published_at, language)
-- [ ] Public-facing news section on the site
 
 ### Media and Resources
 - [ ] Admin: upload documents (PDFs, guides) via Directus Files

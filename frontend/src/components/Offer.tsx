@@ -16,6 +16,46 @@ interface Event {
   partner: string | null;
 }
 
+function parseTimeLabel(label: string | null): { start: string; end: string } | null {
+  if (!label) return null;
+  const m = label.match(/(\d{1,2}):(\d{2})[^\d]+(\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  return { start: m[1].padStart(2, '0') + m[2], end: m[3].padStart(2, '0') + m[4] };
+}
+
+function buildIcs(ev: Event): string {
+  const datePart = ev.event_date.replace(/-/g, '');
+  const times = parseTimeLabel(ev.time_label);
+  const dtstart = times ? `DTSTART:${datePart}T${times.start}00` : `DTSTART;VALUE=DATE:${datePart}`;
+  const dtend   = times ? `DTEND:${datePart}T${times.end}00`   : `DTEND;VALUE=DATE:${datePart}`;
+  const esc = (s: string) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  const lines = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0',
+    'PRODID:-//Livslust//Events//SV', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:livslust-${ev.id}@livslust.dancingsalamanders.com`,
+    `SUMMARY:${esc(ev.title)}`,
+    dtstart, dtend,
+    ev.location    ? `LOCATION:${esc(ev.location)}`       : '',
+    ev.description ? `DESCRIPTION:${esc(ev.description)}` : '',
+    ev.external_url ? `URL:${ev.external_url}`             : '',
+    'END:VEVENT', 'END:VCALENDAR',
+  ].filter(Boolean);
+  return lines.join('\r\n');
+}
+
+function downloadIcs(ev: Event) {
+  const blob = new Blob([buildIcs(ev)], { type: 'text/calendar;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `${ev.title.toLowerCase().replace(/\s+/g, '-')}.ics`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function formatDate(dateStr: string, lang: string): string {
   const date = new Date(dateStr + 'T12:00:00');
   return date.toLocaleDateString(lang === 'sv' ? 'sv-SE' : 'en-GB', {
@@ -132,11 +172,26 @@ function EventCardInner({ ev, isEn, lang }: { ev: Event; isEn: boolean; lang: st
 
       {ev.description && <p className="event-description">{ev.description}</p>}
 
-      {ev.external_url && (
-        <span className="event-cta-link">
-          {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
-        </span>
-      )}
+      <div className="event-card-footer">
+        {ev.external_url && (
+          <span className="event-cta-link">
+            {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
+          </span>
+        )}
+        <button
+          className="event-ical-btn"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); downloadIcs(ev); }}
+          aria-label={isEn ? `Add ${ev.title} to calendar` : `Lägg till ${ev.title} i kalendern`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          {isEn ? 'Add to calendar' : 'Spara i kalender'}
+        </button>
+      </div>
     </>
   );
 }
