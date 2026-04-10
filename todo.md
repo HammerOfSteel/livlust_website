@@ -66,8 +66,8 @@
 - [x] iCal export link per event
 
 ### Blog / News
-- [ ] `posts` collection in Directus (title, body, published_at, language)
-- [ ] Public-facing news section on the site part of the onepager design
+- [x] `posts` collection in Directus (title, excerpt, body rich-text, published_at, image_key, image_alt, language, status)
+- [x] Public-facing news section on the site — card grid, inline expand/collapse to read full article
 
 ### Newsletter / Mailing List
 - [ ] Email sign-up form on landing page

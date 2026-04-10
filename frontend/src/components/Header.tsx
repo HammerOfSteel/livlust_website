@@ -19,6 +19,7 @@ export default function Header() {
           <a href="#about">{t('nav.about')}</a>
           <a href="#offer">{t('nav.offer')}</a>
           <a href="#activities">{t('nav.activities')}</a>
+          <a href="#news">{t('nav.news')}</a>
           <a href="#contact">{t('nav.contact')}</a>
         </nav>
 

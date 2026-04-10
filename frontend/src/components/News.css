@@ -1,0 +1,153 @@
+.news-section {
+  padding: 5rem 0;
+  background: var(--color-bg);
+}
+
+.news-section .section-heading {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.news-section .section-intro {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  opacity: 0.8;
+  line-height: 1.8;
+}
+
+.news-loading,
+.news-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 2.5rem 0;
+}
+
+/* ── Grid ─────────────────────────────────────────────── */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* ── Card ─────────────────────────────────────────────── */
+.news-card {
+  background: var(--color-card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: calc(var(--radius) * 1.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+
+.news-card:hover {
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Image ────────────────────────────────────────────── */
+.news-card-image-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.news-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.news-card:hover .news-card-image {
+  transform: scale(1.04);
+}
+
+/* ── Body ─────────────────────────────────────────────── */
+.news-card-body {
+  padding: 1.5rem 1.75rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.news-card-date {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: 0.75;
+  margin-bottom: 0.6rem;
+}
+
+.news-card-title {
+  font-size: 1.15rem;
+  color: var(--color-primary-d);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.news-card-excerpt {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+  flex: 1;
+}
+
+/* ── Full body (rich text from Directus) ─────────────── */
+.news-card-full-body {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: var(--color-primary-d);
+  margin-bottom: 1.25rem;
+}
+
+.news-card-full-body p {
+  margin-bottom: 1rem;
+}
+
+.news-card-full-body h3 {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--color-primary);
+}
+
+.news-card-full-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Read more button ─────────────────────────────────── */
+.news-read-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: color 0.15s;
+}
+
+.news-read-btn:hover {
+  color: var(--color-primary-d);
+}
+
+.news-read-btn-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.news-card.is-open .news-read-btn-icon {
+  transform: rotate(180deg);
+}

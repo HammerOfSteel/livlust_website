@@ -189,6 +189,122 @@ async function seedEvents(token) {
   }
 }
 
+const SEED_POSTS = [
+  {
+    status: 'published',
+    language: 'sv',
+    published_at: '2026-04-01',
+    title: 'Vi startar Livslust och hållbart stöd',
+    excerpt: 'Sorgen över att förlora någon till suicid är en av de tyngsta en människa kan bära. Det var ur den erfarenheten Livslust och hållbart stöd skapades.',
+    body: `<p>Sorgen över att förlora någon till suicid är en av de tyngsta en människa kan bära. Den är ofta ensam. Den är ofta tyst. Och den omges av en skam och ett stigma som gör att många som drabbas drar sig för att tala om vad de bär på.</p>
+
+<p>Det var ur den erfarenheten som Livslust och hållbart stöd skapades. Vi som grundat föreningen är själva efterlevande. Vi vet hur det känns att stå vid sidan av ett liv som fortsätter, medan man inuti bär på något som saknar ord. Vi vet hur viktigt det är att möta andra som förstår, inte för att de lärt sig om sorg, utan för att de levt den.</p>
+
+<h3>Varför en förening?</h3>
+
+<p>Det professionella stödet är viktigt och vi hänvisar alltid till det. Men vi tror på något utöver det: på mötets kraft. På att sitta i ett rum med andra som inte behöver förklara vad suicidförlust innebär. På att gå sida vid sida i naturen och prata litet eller mycket. På att höra att man inte är ensam och faktiskt känna det.</p>
+
+<p>Livslust och hållbart stöd erbjuder samtalsträffar, Knata och Prata-grupper, digitala möten och föreläsningar. Allt ideellt. Allt av och för efterlevande.</p>
+
+<h3>En plats att komma till</h3>
+
+<p>Vår förhoppning är att föreningen ska vara en plats, både fysisk och digital, dit du kan komma som du är. Utan krav på att ha det bra. Utan krav på att ha ord. Bara en plats där du är välkommen, och där du vet att de som finns där förstår.</p>
+
+<p>Vi är i startgroparna. Mycket är nytt. Men det viktigaste är på plats: viljan att finnas för varandra.</p>`,
+    image_key: 'dawn_article.jpg',
+    image_alt: 'Gryning över havet, ett nytt ljus bryter fram vid horisonten',
+  },
+  {
+    status: 'published',
+    language: 'en',
+    published_at: '2026-04-01',
+    title: 'Starting Livslust och hållbart stöd',
+    excerpt: 'The grief of losing someone to suicide is one of the heaviest a person can carry. It was from that experience that Livslust och hållbart stöd was created.',
+    body: `<p>The grief of losing someone to suicide is one of the heaviest a person can carry. It is often lonely. It is often silent. And it is surrounded by a shame and stigma that makes many who are affected reluctant to speak about what they are carrying.</p>
+
+<p>It was from that experience that Livslust och hållbart stöd was created. Those of us who founded the organisation are survivors ourselves. We know what it feels like to stand beside a life that keeps moving, while inside you carry something that has no words. We know how important it is to meet others who understand, not because they have studied grief, but because they have lived it.</p>
+
+<h3>Why an organisation?</h3>
+
+<p>Professional support is important and we always point people towards it. But we believe in something beyond that: the power of meeting. Of sitting in a room with others who do not need to have suicide loss explained to them. Of walking side by side in nature and talking a little or a lot. Of hearing that you are not alone and actually feeling it.</p>
+
+<p>Livslust och hållbart stöd offers support gatherings, walk-and-talk groups, online meetings and lectures. All voluntary. All by and for survivors.</p>
+
+<h3>A place to come to</h3>
+
+<p>Our hope is that the organisation will be a place, both physical and digital, where you can come as you are. With no expectation that you are doing well. With no expectation that you have words. Just a place where you are welcome, and where you know that the people there understand.</p>
+
+<p>We are just getting started. Much is new. But the most important thing is in place: the will to be there for one another.</p>`,
+    image_key: 'dawn_article.jpg',
+    image_alt: 'Dawn over the sea, a new light breaking through at the horizon',
+  },
+  {
+    status: 'published',
+    language: 'sv',
+    published_at: '2026-04-10',
+    title: 'Vår webbplats är här, och vår Discord öppnar snart',
+    excerpt: 'Idag lanserar vi livslust.dancingsalamanders.com. Det är en plats för information, kontakt och gemenskap, och det är bara början.',
+    body: `<p>Idag lanserar vi vår webbplats. Den är enkel och ärlig, precis som vi vill att vår förening ska vara. Du hittar information om vilka vi är, vad vi gör och hur du kan komma i kontakt med oss. Du kan se kommande evenemang och spara dem i din kalender. Och du kan höra av dig, oavsett om du bär på ord eller inte.</p>
+
+<h3>Vad vi hoppas att webbplatsen blir</h3>
+
+<p>Vi ser webbplatsen som en dörr. En plats att börja, att känna sig trygg nog att ta ett första steg. Inte ett mål i sig, utan en väg in. Med tiden vill vi fortsätta fylla den med berättelser, resurser och möjligheter att hitta varandra.</p>
+
+<h3>Discord, ett digitalt rum att träffas i</h3>
+
+<p>Parallellt med lanseringen av webbplatsen håller vi på att starta en Discord-server. Discord är en chattplattform, lite som en digital mötesplats, där du kan finnas utan att behöva boka tid eller kliva in i ett fysiskt rum.</p>
+
+<p>Tanken är enkel: ett ställe att vara. Att skriva när det känns tungt klockan tre på natten. Att fråga om du är den enda som reagerar på ett visst sätt, och höra ett "nej, jag känner igen det". Att följa med i vad föreningen gör, när du vill och i din takt.</p>
+
+<p>Vi kommer att dela inbjudningslänken så snart servern är öppen. Följ oss på Instagram och Facebook för att inte missa det.</p>
+
+<h3>Du är välkommen</h3>
+
+<p>Oavsett om du precis förlorat någon eller om det hände för länge sedan. Oavsett om du är redo att dela eller bara vill lyssna. Det finns plats för dig här.</p>`,
+    image_key: 'website_article.jpg',
+    image_alt: 'Närbild på händer som håller en mobiltelefon med webbplatsen',
+  },
+  {
+    status: 'published',
+    language: 'en',
+    published_at: '2026-04-10',
+    title: 'Our website is here, and our Discord opens soon',
+    excerpt: 'Today we launch livslust.dancingsalamanders.com. It is a place for information, contact and community, and it is just the beginning.',
+    body: `<p>Today we launch our website. It is simple and honest, just as we want our organisation to be. You will find information about who we are, what we do and how to get in touch. You can see upcoming events and save them to your calendar. And you can reach out, whether or not you have words ready.</p>
+
+<h3>What we hope the website will become</h3>
+
+<p>We see the website as a door. A place to start, to feel safe enough to take a first step. Not a destination in itself, but a way in. Over time we want to keep filling it with stories, resources and opportunities to find one another.</p>
+
+<h3>Discord, a digital space to meet in</h3>
+
+<p>Alongside the website launch, we are setting up a Discord server. Discord is a chat platform, a bit like a digital meeting place, where you can be present without needing to book an appointment or step into a physical room.</p>
+
+<p>The idea is simple: a place to be. To write when it feels heavy at three in the morning. To ask whether you are the only one who reacts a certain way, and to hear "no, I recognise that". To follow what the organisation is doing, when you want and at your own pace.</p>
+
+<p>We will share the invite link as soon as the server is open. Follow us on Instagram and Facebook so you do not miss it.</p>
+
+<h3>You are welcome</h3>
+
+<p>Whether you have just lost someone or it happened a long time ago. Whether you are ready to share or just want to listen. There is a place for you here.</p>`,
+    image_key: 'website_article.jpg',
+    image_alt: 'Close-up of hands holding a phone showing the website',
+  },
+];
+
+async function seedPosts(token) {
+  for (const post of SEED_POSTS) {
+    const qs = `filter[title][_eq]=${encodeURIComponent(post.title)}&filter[language][_eq]=${post.language}&limit=1`;
+    const existing = await api(token, 'GET', `/items/posts?${qs}`);
+    if (existing.data?.length > 0) {
+      console.log(`  ↩ Post '${post.title}' (${post.language}) already exists.`);
+      continue;
+    }
+    const result = await api(token, 'POST', '/items/posts', post);
+    console.log(`  ✓ Seeded post '${post.title}' (${post.language}).`, result.errors ?? '');
+  }
+}
+
 async function main() {
   await waitForDirectus();
   const token = await login();
@@ -197,6 +313,7 @@ async function main() {
   await createCollection(token, 'page_content', 'article', 'Website content by section and language');
   await createCollection(token, 'contact_submissions', 'mail', 'Contact form submissions from the website');
   await createCollection(token, 'events', 'event', 'Upcoming events shown on the website');
+  await createCollection(token, 'posts', 'post', 'News and blog articles shown on the website');
 
   console.log('\n🔧 Fields — page_content…');
   await ensureField(token, 'page_content', {
@@ -318,10 +435,61 @@ async function main() {
   await ensurePublicPermission(token, 'page_content', 'read');
   await ensurePublicPermission(token, 'contact_submissions', 'create');
   await ensurePublicPermission(token, 'events', 'read');
+  await ensurePublicPermission(token, 'posts', 'read');
+
+  console.log('\n🔧 Fields — posts…');
+  await ensureField(token, 'posts', {
+    field: 'status', type: 'string',
+    meta: {
+      interface: 'select-dropdown', width: 'half', required: true,
+      options: { choices: [{ text: 'Publicerad', value: 'published' }, { text: 'Utkast', value: 'draft' }] },
+      note: 'Välj "Publicerad" för att visa artikeln på webbplatsen.',
+    },
+    schema: { is_nullable: false, default_value: 'published' },
+  });
+  await ensureField(token, 'posts', {
+    field: 'language', type: 'string',
+    meta: {
+      interface: 'select-dropdown', width: 'half', required: true,
+      options: { choices: [{ text: 'Svenska', value: 'sv' }, { text: 'English', value: 'en' }] },
+    },
+    schema: { is_nullable: false, max_length: 10, default_value: 'sv' },
+  });
+  await ensureField(token, 'posts', {
+    field: 'published_at', type: 'date',
+    meta: { interface: 'datetime', width: 'half', required: true, note: 'Publiceringsdatum (används för sortering)' },
+    schema: { is_nullable: false },
+  });
+  await ensureField(token, 'posts', {
+    field: 'title', type: 'string',
+    meta: { interface: 'input', width: 'full', required: true },
+    schema: { is_nullable: false, max_length: 255 },
+  });
+  await ensureField(token, 'posts', {
+    field: 'excerpt', type: 'string',
+    meta: { interface: 'input', width: 'full', note: 'Kort sammanfattning som visas på kortet (1-2 meningar)' },
+    schema: { is_nullable: true, max_length: 500 },
+  });
+  await ensureField(token, 'posts', {
+    field: 'body', type: 'text',
+    meta: { interface: 'input-rich-text-html', width: 'full', note: 'Artikelns fullständiga text' },
+    schema: { is_nullable: true },
+  });
+  await ensureField(token, 'posts', {
+    field: 'image_key', type: 'string',
+    meta: { interface: 'input', width: 'half', note: 'Filnamn på bilden i images/-mappen, t.ex. "dawn_article.jpg"' },
+    schema: { is_nullable: true, max_length: 255 },
+  });
+  await ensureField(token, 'posts', {
+    field: 'image_alt', type: 'string',
+    meta: { interface: 'input', width: 'half', note: 'Beskrivning av bilden för skärmläsare (alt-text)' },
+    schema: { is_nullable: true, max_length: 255 },
+  });
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);
   await seedEvents(token);
+  await seedPosts(token);
 
   console.log('\n✅ Directus setup complete.\n');
 }
