@@ -23,8 +23,7 @@
 }
 
 .about-badge {
-  background: var(--color-primary);
-  color: #fff;
+  background: #fff;
   border-radius: calc(var(--radius) * 2);
   padding: 2rem;
   text-align: center;
@@ -36,7 +35,7 @@
 
 .about-badge-logo {
   width: 100%;
-  max-width: 180px;
+  max-width: 220px;
   height: auto;
   display: block;
 }
