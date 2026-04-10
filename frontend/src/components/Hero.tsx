@@ -71,7 +71,7 @@ export default function Hero() {
           </svg>
         </a>
         <a
-          href="https://instagram.com/placeholder"
+          href="https://www.instagram.com/livslust_och_hallbartstod/"
           target="_blank"
           rel="noopener noreferrer"
           className="hero-social-link hero-social-instagram"
