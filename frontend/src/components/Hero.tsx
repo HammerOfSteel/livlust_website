@@ -60,7 +60,7 @@ export default function Hero() {
       {/* Social links — bottom-left */}
       <div className="hero-social" aria-label={t('hero.social_label')}>
         <a
-          href="https://discord.gg/placeholder"
+          href="https://discord.gg/ReXE6DTEuK"
           target="_blank"
           rel="noopener noreferrer"
           className="hero-social-link hero-social-discord"
