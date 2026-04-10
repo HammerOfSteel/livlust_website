@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSiteContent } from '../hooks/useSiteContent';
+import logoImg from '../images/logo.png';
 import './About.css';
 
 export default function About() {
@@ -17,8 +18,7 @@ export default function About() {
           </blockquote>
         </div>
         <div className="about-badge">
-          <span className="about-icon" aria-hidden="true">🤍</span>
-          <p>Grundad av efterlevande,<br />för efterlevande.</p>
+          <img src={logoImg} alt="Livslust logotyp" className="about-badge-logo" />
         </div>
       </div>
     </section>

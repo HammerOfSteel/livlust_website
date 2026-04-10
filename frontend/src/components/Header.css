@@ -15,15 +15,8 @@
   height: 64px;
 }
 
-.header-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+.header-logo { display: flex; align-items: center; text-decoration: none; }
 .header-logo:hover { text-decoration: none; }
-
-.header-logo-img {
-  height: 38px;
-  width: auto;
-  display: block;
-  flex-shrink: 0;
-}
 
 .header-wordmark {
   display: flex;
