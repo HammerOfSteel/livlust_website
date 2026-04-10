@@ -143,6 +143,52 @@ async function seedContent(token) {
   }
 }
 
+const EVENT_URL_KNATA = 'https://www.medborgarskolan.se/arrangemang-sok/knata-prata-for-efterlevande-till-suicid-med-livslust-hallbart-stod-1504163/';
+
+const SEED_EVENTS = [
+  {
+    status: 'published',
+    language: 'sv',
+    title: 'Knata och Prata',
+    tagline: 'För efterlevande till suicid',
+    event_date: '2026-04-09',
+    time_label: 'kl 18:00-19:00',
+    location: 'Hotell Östersund, Kyrkgatan 70, Östersund',
+    organizers: 'Micke Eklund & Sune Mets',
+    description: 'En promenad och samtal för dig som mist någon i suicid. Micke och Sune, båda grundare av Livslust och själva efterlevande, leder träffen. Gå i din takt och dela så mycket eller lite du vill. Varmt välkommen!',
+    external_url: EVENT_URL_KNATA,
+    badge: 'Gratis',
+    partner: 'Medborgarskolan',
+  },
+  {
+    status: 'published',
+    language: 'en',
+    title: 'Knata och Prata',
+    tagline: 'For survivors of suicide loss',
+    event_date: '2026-04-09',
+    time_label: '18:00-19:00',
+    location: 'Hotell Östersund, Kyrkgatan 70, Östersund',
+    organizers: 'Micke Eklund & Sune Mets',
+    description: 'A walk and talk session for those who have lost someone to suicide. Micke and Sune, both founders of Livslust and suicide loss survivors themselves, lead the session. Walk at your own pace and share as much or as little as you like. Warmly welcome!',
+    external_url: EVENT_URL_KNATA,
+    badge: 'Free',
+    partner: 'Medborgarskolan',
+  },
+];
+
+async function seedEvents(token) {
+  for (const ev of SEED_EVENTS) {
+    const qs = `filter[title][_eq]=${encodeURIComponent(ev.title)}&filter[event_date][_eq]=${ev.event_date}&filter[language][_eq]=${ev.language}&limit=1`;
+    const existing = await api(token, 'GET', `/items/events?${qs}`);
+    if (existing.data?.length > 0) {
+      console.log(`  ↩ Event '${ev.title}' (${ev.language}) already exists.`);
+      continue;
+    }
+    const result = await api(token, 'POST', '/items/events', ev);
+    console.log(`  ✓ Seeded event '${ev.title}' (${ev.language}).`, result.errors ?? '');
+  }
+}
+
 async function main() {
   await waitForDirectus();
   const token = await login();
@@ -150,6 +196,7 @@ async function main() {
   console.log('\n📁 Collections…');
   await createCollection(token, 'page_content', 'article', 'Website content by section and language');
   await createCollection(token, 'contact_submissions', 'mail', 'Contact form submissions from the website');
+  await createCollection(token, 'events', 'event', 'Upcoming events shown on the website');
 
   console.log('\n🔧 Fields — page_content…');
   await ensureField(token, 'page_content', {
@@ -198,12 +245,83 @@ async function main() {
     schema: { is_nullable: true },
   });
 
+  console.log('\n� Fields — events…');
+  await ensureField(token, 'events', {
+    field: 'status', type: 'string',
+    meta: {
+      interface: 'select-dropdown', width: 'half', required: true,
+      options: { choices: [{ text: 'Publicerad', value: 'published' }, { text: 'Utkast', value: 'draft' }] },
+      note: 'Välj "Publicerad" för att visa eventet på webbplatsen.',
+    },
+    schema: { is_nullable: false, default_value: 'published' },
+  });
+  await ensureField(token, 'events', {
+    field: 'language', type: 'string',
+    meta: {
+      interface: 'select-dropdown', width: 'half', required: true,
+      options: { choices: [{ text: 'Svenska', value: 'sv' }, { text: 'English', value: 'en' }] },
+    },
+    schema: { is_nullable: false, max_length: 10, default_value: 'sv' },
+  });
+  await ensureField(token, 'events', {
+    field: 'title', type: 'string',
+    meta: { interface: 'input', width: 'full', required: true, note: 'Namn på eventet, t.ex. "Knata och Prata"' },
+    schema: { is_nullable: false, max_length: 255 },
+  });
+  await ensureField(token, 'events', {
+    field: 'tagline', type: 'string',
+    meta: { interface: 'input', width: 'full', note: 'Kort beskrivning under titeln, t.ex. "För efterlevande till suicid"' },
+    schema: { is_nullable: true, max_length: 255 },
+  });
+  await ensureField(token, 'events', {
+    field: 'event_date', type: 'date',
+    meta: { interface: 'datetime', width: 'half', required: true, note: 'Datum för eventet (används för sortering)' },
+    schema: { is_nullable: false },
+  });
+  await ensureField(token, 'events', {
+    field: 'time_label', type: 'string',
+    meta: { interface: 'input', width: 'half', note: 'Tidsetikett, t.ex. "kl 18:00-19:00"' },
+    schema: { is_nullable: true, max_length: 100 },
+  });
+  await ensureField(token, 'events', {
+    field: 'location', type: 'string',
+    meta: { interface: 'input', width: 'full', note: 'Venue och adress, t.ex. "Hotell Östersund, Kyrkgatan 70, Östersund"' },
+    schema: { is_nullable: true, max_length: 500 },
+  });
+  await ensureField(token, 'events', {
+    field: 'organizers', type: 'string',
+    meta: { interface: 'input', width: 'full', note: 'Namn på arrangörer, t.ex. "Micke Eklund & Sune Mets"' },
+    schema: { is_nullable: true, max_length: 255 },
+  });
+  await ensureField(token, 'events', {
+    field: 'description', type: 'text',
+    meta: { interface: 'input-multiline', width: 'full', note: 'Längre beskrivning av eventet' },
+    schema: { is_nullable: true },
+  });
+  await ensureField(token, 'events', {
+    field: 'external_url', type: 'string',
+    meta: { interface: 'input', width: 'full', note: 'Länk till anmälan eller mer info (t.ex. Medborgarskolan)' },
+    schema: { is_nullable: true, max_length: 2048 },
+  });
+  await ensureField(token, 'events', {
+    field: 'badge', type: 'string',
+    meta: { interface: 'input', width: 'half', note: 'Liten etikett, t.ex. "Gratis"' },
+    schema: { is_nullable: true, max_length: 100 },
+  });
+  await ensureField(token, 'events', {
+    field: 'partner', type: 'string',
+    meta: { interface: 'input', width: 'half', note: 'Samarbetspartner, t.ex. "Medborgarskolan"' },
+    schema: { is_nullable: true, max_length: 255 },
+  });
+
   console.log('\n🔐 Public permissions…');
   await ensurePublicPermission(token, 'page_content', 'read');
   await ensurePublicPermission(token, 'contact_submissions', 'create');
+  await ensurePublicPermission(token, 'events', 'read');
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);
+  await seedEvents(token);
 
   console.log('\n✅ Directus setup complete.\n');
 }

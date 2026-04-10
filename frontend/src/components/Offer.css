@@ -4,6 +4,23 @@
   gap: 1.5rem;
 }
 
+.event-card--no-link {
+  cursor: default;
+}
+.event-card--no-link:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+  border-color: var(--color-border);
+}
+
+.events-loading,
+.events-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 2.5rem 0;
+  font-size: 1rem;
+}
+
 .event-card {
   display: block;
   background: var(--color-surface);
