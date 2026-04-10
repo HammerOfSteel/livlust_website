@@ -22,20 +22,16 @@
   line-height: 1.8;
 }
 
-.about-badge {
-  background: #fff;
-  border-radius: calc(var(--radius) * 2);
-  padding: 2rem;
-  text-align: center;
-  box-shadow: var(--shadow);
+.about-logo-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.about-badge-logo {
+.about-logo-img {
   width: 100%;
-  max-width: 220px;
+  max-width: 260px;
   height: auto;
   display: block;
+  border-radius: calc(var(--radius) * 2);
 }

@@ -17,8 +17,8 @@ export default function About() {
             "Sorgen bevisar kärlekens storlek.<br />Vi bär den tillsammans."
           </blockquote>
         </div>
-        <div className="about-badge">
-          <img src={logoImg} alt="Livslust logotyp" className="about-badge-logo" />
+        <div className="about-logo-wrap">
+          <img src={logoImg} alt="Livslust logotyp" className="about-logo-img" />
         </div>
       </div>
     </section>
