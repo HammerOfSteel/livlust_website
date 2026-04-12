@@ -82,7 +82,7 @@ export default function Hero() {
           </svg>
         </a>
         <a
-          href="https://www.facebook.com/61573448770819/"
+          href="https://www.facebook.com/61572334714535"
           target="_blank"
           rel="noopener noreferrer"
           className="hero-social-link hero-social-facebook"

@@ -9,7 +9,10 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
-        <p>{t('footer.rights', { year })}</p>
+        <div className="footer-left">
+          <p>{t('footer.rights', { year })}</p>
+          <p className="footer-org">Org.nr 802556-0601 &middot; Kamvägen 3, 93731 Burträsk</p>
+        </div>
         <a
           href={`${CMS_URL}/admin`}
           target="_blank"
