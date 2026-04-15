@@ -82,6 +82,15 @@ export default function Offer() {
       .finally(() => setLoading(false));
   }, [lang]);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const isPastEvent = (eventDate: string): boolean => {
+    const evDate = new Date(eventDate + 'T12:00:00');
+    evDate.setHours(0, 0, 0, 0);
+    return evDate < today;
+  };
+
   return (
     <section id="offer">
       <div className="container">
@@ -106,24 +115,27 @@ export default function Offer() {
 
         {!loading && events.length > 0 && (
           <div className="event-cards">
-            {events.map(ev => (
-              ev.external_url ? (
+            {events.map(ev => {
+              const pastEvent = isPastEvent(ev.event_date);
+              const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
+              
+              return ev.external_url && !pastEvent ? (
                 <a
                   key={ev.id}
                   href={ev.external_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="event-card"
+                  className={cardClasses}
                   aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
                 >
-                  <EventCardInner ev={ev} isEn={isEn} lang={lang} />
+                  <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
                 </a>
               ) : (
-                <div key={ev.id} className="event-card event-card--no-link">
-                  <EventCardInner ev={ev} isEn={isEn} lang={lang} />
+                <div key={ev.id} className={cardClasses}>
+                  <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
                 </div>
-              )
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
@@ -131,12 +143,17 @@ export default function Offer() {
   );
 }
 
-function EventCardInner({ ev, isEn, lang }: { ev: Event; isEn: boolean; lang: string }) {
+function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; lang: string; isPast: boolean }) {
   return (
     <>
-      {(ev.badge || ev.partner) && (
+      {(ev.badge || ev.partner || isPast) && (
         <div className="event-card-header">
-          {ev.badge && <span className="event-badge">{ev.badge}</span>}
+          {isPast && (
+            <span className="event-badge event-badge--past">
+              {isEn ? 'Past event' : 'Tidigare händelse'}
+            </span>
+          )}
+          {ev.badge && !isPast && <span className="event-badge">{ev.badge}</span>}
           {ev.partner && (
             <span className="event-partner">
               {isEn ? 'In cooperation with' : 'I samarbete med'} {ev.partner}
@@ -173,7 +190,7 @@ function EventCardInner({ ev, isEn, lang }: { ev: Event; isEn: boolean; lang: st
       {ev.description && <p className="event-description">{ev.description}</p>}
 
       <div className="event-card-footer">
-        {ev.external_url && (
+        {ev.external_url && !isPast && (
           <span className="event-cta-link">
             {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
           </span>

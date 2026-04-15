@@ -13,6 +13,23 @@
   border-color: var(--color-border);
 }
 
+/* ── Past event styling (grayed out) ──────────────────── */
+.event-card--past {
+  opacity: 0.6;
+  cursor: default;
+}
+.event-card--past:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+  border-color: var(--color-border);
+}
+.event-card--past .event-title {
+  color: var(--color-muted);
+}
+.event-card--past .event-cta-link {
+  display: none;
+}
+
 .events-loading,
 .events-empty {
   text-align: center;
@@ -56,6 +73,11 @@
   border-radius: 99px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.event-badge--past {
+  background: var(--color-card-bg);
+  color: var(--color-muted);
 }
 
 .event-partner {
