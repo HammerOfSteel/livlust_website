@@ -70,6 +70,7 @@ export default function Offer() {
 
   const [events, setEvents]   = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [locationFilter, setLocationFilter] = useState<string>('all');
 
   useEffect(() => {
     setLoading(true);
@@ -90,6 +91,24 @@ export default function Offer() {
     evDate.setHours(0, 0, 0, 0);
     return evDate < today;
   };
+
+  // Extract unique locations from events (simplified city names)
+  const getSimplifiedLocation = (location: string | null): string => {
+    if (!location) return '';
+    if (location.toLowerCase().includes('online')) return 'Online';
+    if (location.toLowerCase().includes('östersund')) return 'Östersund';
+    if (location.toLowerCase().includes('gevåg')) return 'Gevåg';
+    return location.split(',')[0].trim(); // fallback: first part before comma
+  };
+
+  const uniqueLocations = Array.from(
+    new Set(events.map(ev => getSimplifiedLocation(ev.location)).filter(Boolean))
+  ).sort();
+
+  // Filter events by selected location
+  const filteredEvents = locationFilter === 'all'
+    ? events
+    : events.filter(ev => getSimplifiedLocation(ev.location) === locationFilter);
 
   return (
     <section id="offer">
@@ -114,29 +133,49 @@ export default function Offer() {
         )}
 
         {!loading && events.length > 0 && (
-          <div className="event-cards">
-            {events.map(ev => {
-              const pastEvent = isPastEvent(ev.event_date);
-              const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
-              
-              return ev.external_url && !pastEvent ? (
-                <a
-                  key={ev.id}
-                  href={ev.external_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cardClasses}
-                  aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
+          <>
+            <div className="event-filters">
+              <button
+                className={`event-filter-btn${locationFilter === 'all' ? ' active' : ''}`}
+                onClick={() => setLocationFilter('all')}
+              >
+                {isEn ? 'All locations' : 'Alla platser'}
+              </button>
+              {uniqueLocations.map(loc => (
+                <button
+                  key={loc}
+                  className={`event-filter-btn${locationFilter === loc ? ' active' : ''}`}
+                  onClick={() => setLocationFilter(loc)}
                 >
-                  <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
-                </a>
-              ) : (
-                <div key={ev.id} className={cardClasses}>
-                  <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
-                </div>
-              );
-            })}
-          </div>
+                  {loc}
+                </button>
+              ))}
+            </div>
+
+            <div className="event-cards">
+              {filteredEvents.map(ev => {
+                const pastEvent = isPastEvent(ev.event_date);
+                const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
+                
+                return ev.external_url && !pastEvent ? (
+                  <a
+                    key={ev.id}
+                    href={ev.external_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cardClasses}
+                    aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
+                  >
+                    <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
+                  </a>
+                ) : (
+                  <div key={ev.id} className={cardClasses}>
+                    <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
+                  </div>
+                );
+              })}
+            </div>
+          </>
         )}
       </div>
     </section>
