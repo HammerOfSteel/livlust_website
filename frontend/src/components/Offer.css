@@ -1,7 +1,25 @@
 .event-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .event-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .carousel-arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  
+  .carousel-arrow svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
 }
 
 /* ── Event location filters ─────────────────────────── */
@@ -41,6 +59,81 @@
 .event-filter-btn.active:hover {
   background: var(--color-primary-d);
   border-color: var(--color-primary-d);
+}
+
+.event-filter-btn--past {
+  margin-left: 0.5rem;
+  border-style: dashed;
+}
+
+/* ── Event carousel ──────────────────────────────────── */
+.event-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.carousel-arrow {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.carousel-arrow svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.carousel-arrow:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.carousel-arrow:active {
+  transform: scale(0.95);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.carousel-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background: var(--color-border);
+}
+
+.carousel-dot.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.3);
 }
 
 .event-card--no-link {

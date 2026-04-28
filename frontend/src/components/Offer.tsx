@@ -71,6 +71,8 @@ export default function Offer() {
   const [events, setEvents]   = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [locationFilter, setLocationFilter] = useState<string>('all');
+  const [showPast, setShowPast] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -98,6 +100,7 @@ export default function Offer() {
     if (location.toLowerCase().includes('online')) return 'Online';
     if (location.toLowerCase().includes('östersund')) return 'Östersund';
     if (location.toLowerCase().includes('gevåg')) return 'Gevåg';
+    if (location.toLowerCase().includes('skellefteå')) return 'Skellefteå';
     return location.split(',')[0].trim(); // fallback: first part before comma
   };
 
@@ -105,10 +108,35 @@ export default function Offer() {
     new Set(events.map(ev => getSimplifiedLocation(ev.location)).filter(Boolean))
   ).sort();
 
-  // Filter events by selected location
-  const filteredEvents = locationFilter === 'all'
+  // Filter events by selected location and past/future
+  let filteredEvents = locationFilter === 'all'
     ? events
     : events.filter(ev => getSimplifiedLocation(ev.location) === locationFilter);
+  
+  if (!showPast) {
+    filteredEvents = filteredEvents.filter(ev => !isPastEvent(ev.event_date));
+  }
+
+  // Reset carousel index when filters change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [locationFilter, showPast]);
+
+  const cardsPerPage = 2;
+  const totalPages = Math.ceil(filteredEvents.length / cardsPerPage);
+
+  const nextPage = () => {
+    setCurrentIndex((prev) => (prev + 1) % totalPages);
+  };
+
+  const prevPage = () => {
+    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  const visibleEvents = filteredEvents.slice(
+    currentIndex * cardsPerPage,
+    (currentIndex + 1) * cardsPerPage
+  );
 
   return (
     <section id="offer">
@@ -150,31 +178,85 @@ export default function Offer() {
                   {loc}
                 </button>
               ))}
+              <button
+                className={`event-filter-btn event-filter-btn--past${showPast ? ' active' : ''}`}
+                onClick={() => setShowPast(!showPast)}
+                title={isEn ? 'Show past events' : 'Visa tidigare händelser'}
+              >
+                {isEn ? 'Show past' : 'Visa tidigare'}
+              </button>
             </div>
 
-            <div className="event-cards">
-              {filteredEvents.map(ev => {
-                const pastEvent = isPastEvent(ev.event_date);
-                const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
-                
-                return ev.external_url && !pastEvent ? (
-                  <a
-                    key={ev.id}
-                    href={ev.external_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cardClasses}
-                    aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
+            {filteredEvents.length === 0 ? (
+              <p className="events-empty">
+                {isEn
+                  ? 'No events match the selected filters.'
+                  : 'Inga evenemang matchar de valda filtren.'}
+              </p>
+            ) : (
+              <div className="event-carousel">
+                {totalPages > 1 && (
+                  <button
+                    className="carousel-arrow carousel-arrow--prev"
+                    onClick={prevPage}
+                    aria-label={isEn ? 'Previous events' : 'Föregående evenemang'}
                   >
-                    <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
-                  </a>
-                ) : (
-                  <div key={ev.id} className={cardClasses}>
-                    <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
-                  </div>
-                );
-              })}
-            </div>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                )}
+
+                <div className="event-cards">
+                  {visibleEvents.map(ev => {
+                    const pastEvent = isPastEvent(ev.event_date);
+                    const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
+                    
+                    return ev.external_url && !pastEvent ? (
+                      <a
+                        key={ev.id}
+                        href={ev.external_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cardClasses}
+                        aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
+                      >
+                        <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
+                      </a>
+                    ) : (
+                      <div key={ev.id} className={cardClasses}>
+                        <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {totalPages > 1 && (
+                  <button
+                    className="carousel-arrow carousel-arrow--next"
+                    onClick={nextPage}
+                    aria-label={isEn ? 'Next events' : 'Nästa evenemang'}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {totalPages > 1 && (
+              <div className="carousel-dots">
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    className={`carousel-dot${idx === currentIndex ? ' active' : ''}`}
+                    onClick={() => setCurrentIndex(idx)}
+                    aria-label={isEn ? `Go to page ${idx + 1}` : `Gå till sida ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>
