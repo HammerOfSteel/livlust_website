@@ -311,10 +311,24 @@ function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; 
       {ev.description && <p className="event-description">{ev.description}</p>}
 
       <div className="event-card-footer">
-        {ev.external_url && !isPast && (
-          <span className="event-cta-link">
-            {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
-          </span>
+        {!isPast && (
+          ev.external_url ? (
+            <span className="event-cta-link">
+              {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
+            </span>
+          ) : (
+            <a
+              href="mailto:info@livslusths.se"
+              className="event-email-btn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              {isEn ? 'Register via email' : 'Anmäl dig via mail'}
+            </a>
+          )
         )}
         <button
           className="event-ical-btn"
