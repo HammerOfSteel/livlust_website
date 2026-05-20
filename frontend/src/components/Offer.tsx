@@ -265,6 +265,8 @@ export default function Offer() {
 }
 
 function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; lang: string; isPast: boolean }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   return (
     <>
       {(ev.badge || ev.partner || isPast) && (
@@ -308,7 +310,19 @@ function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; 
         )}
       </ul>
 
-      {ev.description && <p className="event-description">{ev.description}</p>}
+      {ev.description && (
+        <>
+          <p className={`event-description${isExpanded ? ' expanded' : ''}`}>{ev.description}</p>
+          {ev.description.length > 150 && (
+            <button
+              className="event-expand-btn"
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsExpanded(!isExpanded); }}
+            >
+              {isExpanded ? (isEn ? 'Show less' : 'Visa mindre') : (isEn ? 'Read more' : 'Läs mer')}
+            </button>
+          )}
+        </>
+      )}
 
       <div className="event-card-footer">
         {!isPast && (

@@ -259,7 +259,43 @@
   font-size: 0.95rem;
   color: var(--color-muted);
   line-height: 1.75;
-  margin-bottom: 1.4rem;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.event-description.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.event-expand-btn {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.event-expand-btn:hover {
+  color: var(--color-accent-dark, #2980b9);
+}
+
+/* Show expand button on mobile/tablet */
+@media (max-width: 768px) {
+  .event-expand-btn {
+    display: block;
+  }
 }
 
 .event-cta-link {

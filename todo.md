@@ -97,3 +97,60 @@
 ### Multi-language Expansion
 - [ ] Additional languages (Arabic, Somali) to serve diverse communities in Sweden
 
+---
+
+## Verksamhetsutveckling
+
+### Marknadsföring och synlighet
+- [ ] Skapa en innehållsplan för Instagram och Facebook — ex. en post/vecka: citat, aktiviteter, bakgrundshistorier
+- [ ] Producera en kort "Vilka är vi"-video (60 sek) för sociala medier och hemsidan
+- [ ] Sätt upp Google Ad Grants — ideella organisationer kan få upp till 10 000 USD/månad i gratis Google-annonser
+- [ ] Skriv pressreleaser till lokala medier (Norran, VK, P4 Västernorrland) om lanseringen och kommande träffar
+- [ ] Kontakta SVT/SR för eventuell medverkan i reportage om suicidförlust och efterlevandes stöd
+- [ ] Skapa en hashtag-strategi: #livslust #efterlevande #suicidförlust #hållbartstöd
+- [ ] Dela aktiviteter och träffar i relevanta Facebook-grupper för sorg och psykisk hälsa
+- [ ] Skapa en Google My Business-profil för lokal synlighet
+
+### Finansiering — Bidrag och fonder
+- [ ] **Allmänna arvsfonden** — Huvudfond för ideella org som arbetar med utsatta grupper. Hög relevans. Ansökan löpande, upp till 3 år. https://arvsfonden.se
+- [ ] **Folkhälsomyndigheten** — Bidrag för suicidprevention och psykisk hälsa. Utlysningar vanligen höst. https://folkhalsomyndigheten.se
+- [ ] **Familjen Kamprads stiftelse** — Stödjer hälsa och välmående, särskilt på landsbygden. Passar Burträsk-basen väl. https://www.kampr adsstiftelse.se
+- [ ] **Radiohjälpen** — Stödjer org som hjälper människor i utsatta situationer i Sverige. https://radiohjalpen.se
+- [ ] **Postkodsstiftelsen** — Stödjer civilsamhällesorganisationer med samhällsnytta. https://postkodsstiftelsen.se
+- [ ] **Region Västerbotten** — Regionala folkhälsobidrag och föreningsbidrag. Kontakta Hälso- och sjukvårdsavdelningen.
+- [ ] **Länsstyrelsen Västerbotten** — Bidrag till ideella föreningar, särskilt inom social omsorg.
+- [ ] **Kommunbidrag Skellefteå/Norsjö** — Lokala föreningsbidrag, ansök hos respektive kommun.
+- [ ] **Norrbacka-Eugeniastiftelsen** — Stödjer arbete för människor med funktionsnedsättning och psykisk ohälsa.
+- [ ] **Stiftelsen Sunnerdahls Handikappfond** — Hälsa och socialt arbete.
+- [ ] **MUCF (Myndigheten för ungdoms- och civilsamhällesfrågor)** — Organisationsbidrag för etablerade föreningar. https://mucf.se
+- [ ] Upprätta intern bidragskalender med deadlines för ansökningar
+
+### Finansiering — Övriga insamlingsvägar
+- [ ] Sätt upp Swish-insamling för enskilda donationer (Swish Handel för ideella org)
+- [ ] Skapa en "Stöd oss"-sida på hemsidan med information om hur man donerar
+- [ ] Undersök möjligheten att bli 90-konto-organisation (Svensk Insamlingskontroll) för ökad trovärdighet
+- [ ] Sätt upp minnesinsamlingar — samarbeta med begravningsbyråer för att erbjudas som insamlingsändamål
+- [ ] Crowdfunding-kampanj (Kickstarter, Forska!Sverige, eller Insamlingsstiftelse) för specifikt projekt/aktivitet
+- [ ] Företagssponsring — kontakta lokala företag i Skellefteå/Burträsk för partnerskap och sponsring
+
+### Partnerskap och samarbeten
+- [ ] **SPES** (Riksförbundet för suicidprevention och efterlevandes stöd) — Naturlig samarbetspartner och möjlighet till nätverksstöd. https://spes.se
+- [ ] **Suicide Zero** — Riksorganisation för suicidprevention, möjliga gemensamma kampanjer. https://suicidezero.se
+- [ ] **Mind Sverige** — Redan refererade (Självmordslinjen), formalisera samarbetet. https://mind.se
+- [ ] **Svenska Sorgeinstitutet** — Redan nämnda i verksamheten, formalisera utbildningssamarbete.
+- [ ] **NSPH** (Nationell Samverkan för Psykisk Hälsa) — Paraplyorganisation, ansök om medlemskap.
+- [ ] **1177 / Regionen** — Bli en rekommenderad resurs för vårdpersonal som möter efterlevande.
+- [ ] Kontakta begravningsbyråer i Västerbotten — de möter efterlevande direkt och kan hänvisa.
+- [ ] Samarbete med kyrkor och trossamfund som erbjuder sorgstöd.
+- [ ] Kontakta Medborgarskolan (redan partner) om utökat samarbete och lokalbidrag.
+
+### Föreläsningar och utbildning
+- [ ] Ta fram en presentationsbroschyr/pitch för föreläsningsverksamheten (skolor, sjukhus, företag)
+- [ ] Sätt ett pris/taxa för föreläsningar — gratis för skolor, avgift för företag/organisationer
+- [ ] Kontakta rektorer och kuratorer på gymnasieskolor i Västerbotten och Dalarna
+- [ ] Kontakta HR-avdelningar på större arbetsgivare i regionen (Skellefteå Kraft, SSAB, Region Västerbotten)
+- [ ] Kontakta psykiatrimottagningar och vårdcentraler om utbildningsinsatser för personal
+- [ ] Anmäl organisationen till föreläsarkataloger (t.ex. Eventeffect, Talare.se)
+- [ ] Skapa en enkel PDF-folder om föreläsningserbjudandet att skicka till potentiella uppdragsgivare
+- [ ] Undersök om Studieförbunden (ABF, Studiefrämjandet) kan samordna och marknadsföra föreläsningar
+
