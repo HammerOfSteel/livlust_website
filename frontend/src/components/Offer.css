@@ -274,7 +274,7 @@
 }
 
 .event-expand-btn {
-  display: none; /* Hidden on desktop */
+  display: block;
   background: none;
   border: none;
   color: var(--color-accent);
@@ -289,13 +289,6 @@
 
 .event-expand-btn:hover {
   color: var(--color-accent-dark, #2980b9);
-}
-
-/* Show expand button on mobile/tablet */
-@media (max-width: 768px) {
-  .event-expand-btn {
-    display: block;
-  }
 }
 
 .event-cta-link {
