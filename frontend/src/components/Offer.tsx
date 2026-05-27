@@ -101,6 +101,7 @@ export default function Offer() {
     if (location.toLowerCase().includes('östersund')) return 'Östersund';
     if (location.toLowerCase().includes('gevåg')) return 'Gevåg';
     if (location.toLowerCase().includes('skellefteå')) return 'Skellefteå';
+    if (location.toLowerCase().includes('ystad')) return 'Ystad';
     return location.split(',')[0].trim(); // fallback: first part before comma
   };
 
