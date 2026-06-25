@@ -56,6 +56,18 @@
     "digitala_title": "Digitala samtalsträffar",
     "digitala_body": "För dig som inte kan delta på plats erbjuder vi samtalsträffar via video. Det digitala formatet gör det möjligt för fler att nå stöd, oavsett var i landet du befinner dig."
   },
+  "membership": {
+    "cta": "Bli medlem",
+    "heading": "Bli medlem i föreningen",
+    "intro": "Vi välkomnar alla som delar vår målsättning. Medlemskapet kostar 99 kr per år och ger dig rösträtt på årsmötet.",
+    "fee": "Medlemsavgift: 99 kr / år",
+    "name_reminder_label": "Viktigt:",
+    "name_reminder": "Ange ditt fullständiga namn i meddelandefältet vid betalningen så att vi kan registrera dig som medlem.",
+    "qr_alt": "Swish QR-kod för att betala medlemsavgiften",
+    "stadgar_show": "Läs föreningens stadgar",
+    "stadgar_adopted": "Antagna på konstituerande möte 12/3 2026",
+    "close": "Stäng"
+  },
   "nav": {
     "about": "Om oss",
     "offer": "Evenemang",

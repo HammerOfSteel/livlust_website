@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSiteContent } from '../hooks/useSiteContent';
+import MembershipModal from './MembershipModal';
 import './Hero.css';
 
 // Eagerly import all hero images from src/images/
@@ -29,6 +30,8 @@ export default function Hero() {
     return () => clearInterval(id);
   }, []);
 
+  const [showMembership, setShowMembership] = useState(false);
+
   const title    = cms.hero_title    ?? t('hero.title');
   const subtitle = cms.hero_subtitle ?? t('hero.subtitle');
 
@@ -52,10 +55,23 @@ export default function Hero() {
         <p className="hero-eyebrow">Livslust och hållbart stöd</p>
         <h1>{title}</h1>
         <p className="hero-subtitle">{subtitle}</p>
-        <a href="#contact" className="btn hero-cta">
-          {t('hero.cta')} →
-        </a>
+        <div className="hero-cta-group">
+          <a href="#contact" className="btn hero-cta">
+            {t('hero.cta')} →
+          </a>
+          <button
+            type="button"
+            className="btn hero-cta-secondary"
+            onClick={() => setShowMembership(true)}
+          >
+            {t('membership.cta')}
+          </button>
+        </div>
       </div>
+
+      {showMembership && (
+        <MembershipModal onClose={() => setShowMembership(false)} />
+      )}
 
       {/* Social links — bottom-left */}
       <div className="hero-social" aria-label={t('hero.social_label')}>

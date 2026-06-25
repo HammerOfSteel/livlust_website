@@ -56,6 +56,18 @@
     "digitala_title": "Online Support Gatherings",
     "digitala_body": "For those who cannot attend in person we offer support gatherings via video call. The digital format means that more people can access support regardless of where in the country they are."
   },
+  "membership": {
+    "cta": "Become a member",
+    "heading": "Become a member",
+    "intro": "We welcome everyone who shares our mission. Membership costs 99 SEK per year and gives you voting rights at the annual meeting.",
+    "fee": "Membership fee: 99 SEK / year",
+    "name_reminder_label": "Important:",
+    "name_reminder": "Please include your full name in the payment message so that we can register you as a member.",
+    "qr_alt": "Swish QR code for paying the membership fee",
+    "stadgar_show": "Read the association's bylaws (in Swedish)",
+    "stadgar_adopted": "Adopted at the founding meeting 12 March 2026",
+    "close": "Close"
+  },
   "nav": {
     "about": "About",
     "offer": "Events",

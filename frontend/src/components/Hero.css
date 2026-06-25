@@ -65,6 +65,13 @@
   text-shadow: 0 1px 6px rgba(0,0,0,0.2);
 }
 
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .hero-cta {
   background: #fff;
   color: var(--color-primary);
@@ -74,6 +81,20 @@
 .hero-cta:hover {
   background: var(--color-accent);
   color: var(--color-primary-d);
+  text-decoration: none;
+}
+
+.hero-cta-secondary {
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  cursor: pointer;
+}
+.hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
   text-decoration: none;
 }
 
