@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import dawnArticleImg from '../images/dawn_article.jpg';
 import websiteArticleImg from '../images/website_article.jpg';
 import heaveAHeartImg from '../images/heave_a_heart_article.jpg';
+import hero7Img from '../images/hero7.jpg';
 import './News.css';
 
 interface Post {
@@ -19,6 +20,7 @@ const IMAGE_MAP: Record<string, string> = {
   'dawn_article.jpg':          dawnArticleImg,
   'website_article.jpg':       websiteArticleImg,
   'heave_a_heart_article.jpg': heaveAHeartImg,
+  'hero7.jpg':                 hero7Img,
 };
 
 function getImage(key: string | null): string | null {
@@ -38,13 +40,14 @@ export default function News() {
   const isEn = i18n.language === 'en';
   const lang  = isEn ? 'en' : 'sv';
 
-  const [posts, setPosts]     = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expanded, setExpanded] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalPost, setModalPost] = useState<Post | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    setExpanded(null);
+    setCurrentIndex(0);
     fetch(
       `/cms/items/posts?filter[language][_eq]=${lang}&filter[status][_eq]=published&sort=-published_at&fields=*`
     )
@@ -53,6 +56,19 @@ export default function News() {
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
   }, [lang]);
+
+  const cardsPerPage = 2;
+  const maxIndex = Math.max(0, posts.length - cardsPerPage);
+  
+  const nextPage = () => {
+    setCurrentIndex(prev => (prev >= maxIndex ? 0 : prev + 1));
+  };
+  
+  const prevPage = () => {
+    setCurrentIndex(prev => (prev <= 0 ? maxIndex : prev - 1));
+  };
+
+  const visiblePosts = posts.slice(currentIndex, currentIndex + cardsPerPage);
 
   return (
     <section id="news" className="news-section">
@@ -77,71 +93,138 @@ export default function News() {
         )}
 
         {!loading && posts.length > 0 && (
-          <div className="news-grid">
-            {posts.map(post => {
-              const img = getImage(post.image_key);
-              const isOpen = expanded === post.id;
-              return (
-                <article key={post.id} className={`news-card${isOpen ? ' is-open' : ''}`}>
-                  {/* Featured image — always visible */}
-                  {img && (
-                    <div className="news-card-image-wrap">
-                      <img
-                        src={img}
-                        alt={post.image_alt ?? ''}
-                        className="news-card-image"
-                        loading="lazy"
-                      />
-                    </div>
-                  )}
+          <div className="news-carousel">
+            {posts.length > cardsPerPage && (
+              <button
+                className="carousel-arrow carousel-arrow--left"
+                onClick={prevPage}
+                aria-label={isEn ? 'Previous articles' : 'Föregående artiklar'}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+            )}
 
-                  <div className="news-card-body">
-                    <time className="news-card-date" dateTime={post.published_at}>
-                      {formatPublishedDate(post.published_at, lang)}
-                    </time>
-                    <h3 className="news-card-title">{post.title}</h3>
-
-                    {/* Excerpt — shown when collapsed */}
-                    {post.excerpt && !isOpen && (
-                      <p className="news-card-excerpt">{post.excerpt}</p>
+            <div className="news-grid">
+              {visiblePosts.map(post => {
+                const img = getImage(post.image_key);
+                return (
+                  <article key={post.id} className="news-card">
+                    {img && (
+                      <div className="news-card-image-wrap">
+                        <img
+                          src={img}
+                          alt={post.image_alt ?? ''}
+                          className="news-card-image"
+                          loading="lazy"
+                        />
+                      </div>
                     )}
 
-                    {/* Full article body — shown when expanded */}
-                    {isOpen && post.body && (
-                      <div
-                        className="news-card-full-body"
-                        dangerouslySetInnerHTML={{ __html: post.body }}
-                      />
-                    )}
+                    <div className="news-card-body">
+                      <time className="news-card-date" dateTime={post.published_at}>
+                        {formatPublishedDate(post.published_at, lang)}
+                      </time>
+                      <h3 className="news-card-title">{post.title}</h3>
 
-                    <button
-                      className="news-read-btn"
-                      onClick={() => setExpanded(isOpen ? null : post.id)}
-                      aria-expanded={isOpen}
-                    >
-                      {isOpen
-                        ? (isEn ? 'Show less' : 'Visa mindre')
-                        : (isEn ? 'Read more' : 'Läs mer')}
-                      <svg
-                        className="news-read-btn-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
+                      {post.excerpt && (
+                        <p className="news-card-excerpt">{post.excerpt}</p>
+                      )}
+
+                      <button
+                        className="news-read-btn"
+                        onClick={() => setModalPost(post)}
                       >
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
+                        {isEn ? 'Read more' : 'Läs mer'}
+                        <svg
+                          className="news-read-btn-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            {posts.length > cardsPerPage && (
+              <button
+                className="carousel-arrow carousel-arrow--right"
+                onClick={nextPage}
+                aria-label={isEn ? 'Next articles' : 'Nästa artiklar'}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Pagination dots */}
+        {!loading && posts.length > cardsPerPage && (
+          <div className="carousel-dots">
+            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+              <button
+                key={idx}
+                className={`carousel-dot${idx === currentIndex ? ' active' : ''}`}
+                onClick={() => setCurrentIndex(idx)}
+                aria-label={isEn ? `Go to page ${idx + 1}` : `Gå till sida ${idx + 1}`}
+              />
+            ))}
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      {modalPost && (
+        <div className="news-modal-overlay" onClick={() => setModalPost(null)}>
+          <div className="news-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="news-modal-close"
+              onClick={() => setModalPost(null)}
+              aria-label={isEn ? 'Close' : 'Stäng'}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            <div className="news-modal-content">
+              {getImage(modalPost.image_key) && (
+                <img
+                  src={getImage(modalPost.image_key)!}
+                  alt={modalPost.image_alt ?? ''}
+                  className="news-modal-image"
+                />
+              )}
+
+              <time className="news-modal-date" dateTime={modalPost.published_at}>
+                {formatPublishedDate(modalPost.published_at, lang)}
+              </time>
+
+              <h2 className="news-modal-title">{modalPost.title}</h2>
+
+              {modalPost.body && (
+                <div
+                  className="news-modal-body"
+                  dangerouslySetInnerHTML={{ __html: modalPost.body }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
