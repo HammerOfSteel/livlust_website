@@ -1,8 +1,8 @@
-# Internationella dagen för sörjande föräldrar – 3 juli
+# Internationella dagen för föräldrar som förlorat barn – 3 juli
 
 *Publicerad 3 juli 2026*
 
-Idag, den 3 juli, uppmärksammas **Internationella dagen för sörjande föräldrar** – en dag som ägnas åt alla föräldrar som mist ett barn. Oavsett hur länge sedan förlusten inträffade, oavsett barnets ålder, oavsett omständigheterna. Det är en dag för att se sorgen, för att hålla minnet levande, och för att påminna oss om att ingen förälder ska behöva gå igenom denna smärta ensam.
+Idag, den 3 juli, uppmärksammas **Internationella dagen för föräldrar som förlorat barn** – en dag som ägnas åt alla föräldrar som mist ett barn. Oavsett hur länge sedan förlusten inträffade, oavsett barnets ålder, oavsett omständigheterna. Det är en dag för att se sorgen, för att hålla minnet levande, och för att påminna oss om att ingen förälder ska behöva gå igenom denna smärta ensam.
 
 ## En förlust som förändrar allt
 
@@ -68,7 +68,7 @@ Du behöver inte gå igenom detta ensam. Det finns händer att hålla i, axlar a
 
 ## Ett minne att bära framåt
 
-Internationella dagen för sörjande föräldrar är inte en dag för att "komma över" sorgen. Det är en dag för att känna den, för att ge den rum, för att hedra våra barn och den kärlek vi bär.
+Internationella dagen för föräldrar som förlorat barn är inte en dag för att "komma över" sorgen. Det är en dag för att känna den, för att ge den rum, för att hedra våra barn och den kärlek vi bär.
 
 Ditt barn levde. Och den kärleken försvinner aldrig.
 
