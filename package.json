@@ -1,0 +1,29 @@
+{
+  "name": "livlust_website",
+  "version": "1.0.0",
+  "description": "Website for **Livslust och hållbart stöd**, a Swedish non-profit support organisation (ideell förening) for suicide loss survivors — family members and friends who have lost a loved one to suicide.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HammerOfSteel/livlust_website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HammerOfSteel/livlust_website/issues"
+  },
+  "homepage": "https://github.com/HammerOfSteel/livlust_website#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}

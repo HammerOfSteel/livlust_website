@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './i18n/index';
 import Home from './pages/Home';
+import ResourcesPage from './pages/ResourcesPage';
 import './index.css';
 
 // Apply theme from env var (set data-theme on <html>)
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/resurskarta" element={<ResourcesPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

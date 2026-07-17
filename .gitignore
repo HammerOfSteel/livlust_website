@@ -19,6 +19,10 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
+# Playwright
+test-results/
+playwright-report/
+
 # Editors
 .vscode/
 .idea/
