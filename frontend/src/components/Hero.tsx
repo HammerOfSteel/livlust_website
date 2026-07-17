@@ -66,6 +66,9 @@ export default function Hero() {
           >
             {t('membership.cta')}
           </button>
+          <a href="/resurskarta" className="btn hero-cta-secondary">
+            🗺 {t('resurskarta.cta')}
+          </a>
         </div>
       </div>
 

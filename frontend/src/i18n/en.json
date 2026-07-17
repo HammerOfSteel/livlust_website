@@ -74,5 +74,28 @@
     "activities": "What we do",
     "news": "News",
     "contact": "Contact"
+  },
+  "resurskarta": {
+    "cta": "Resource map",
+    "page_title": "Resource map",
+    "back_home": "← Home",
+    "search_placeholder": "Search city or resource…",
+    "search_label": "Search resources",
+    "clear_search": "Clear search",
+    "filter_label": "Filter by category",
+    "filter_all": "All",
+    "resources": "resources",
+    "national_label": "National",
+    "back_to_list": "← All resources",
+    "open_website": "Open website →",
+    "contacts_label": "Contacts",
+    "no_results": "No resources match your search.",
+    "cat_livslust": "Livslust",
+    "cat_efterlevande": "Survivors",
+    "cat_fontanhus": "Fountain House",
+    "cat_psykisk": "Mental health",
+    "cat_ungdom": "Children & youth",
+    "cat_hbtqi": "LGBTQI",
+    "cat_missbruk": "Addiction"
   }
 }

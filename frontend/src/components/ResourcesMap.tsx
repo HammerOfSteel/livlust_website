@@ -1,4 +1,5 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
@@ -34,6 +35,7 @@ interface CardProps {
 }
 
 function ResourceCard({ resource: r, onSelect }: CardProps) {
+  const { t } = useTranslation();
   const cat = CATEGORIES[r.cat];
   return (
     <button className="rm-card" onClick={() => onSelect(r.id)}>
@@ -43,7 +45,7 @@ function ResourceCard({ resource: r, onSelect }: CardProps) {
           className="rm-card__badge"
           style={{ background: cat.bg, color: cat.color }}
         >
-          {cat.emoji} {cat.label}
+          {cat.emoji} {t(`resurskarta.cat_${r.cat}`)}
         </span>
         <p className="rm-card__name">{r.name}</p>
         <p className="rm-card__meta">
@@ -60,18 +62,19 @@ interface DetailProps {
 }
 
 function ResourceDetail({ resource: r, onClose }: DetailProps) {
+  const { t } = useTranslation();
   const cat = CATEGORIES[r.cat];
   return (
     <div className="rm-detail">
       <div className="rm-detail__header">
         <button className="rm-detail__back" onClick={onClose}>
-          ← Alla resurser
+          {t('resurskarta.back_to_list')}
         </button>
         <span
           className="rm-detail__badge"
           style={{ background: cat.bg, color: cat.color }}
         >
-          {cat.emoji} {cat.label}
+          {cat.emoji} {t(`resurskarta.cat_${r.cat}`)}
         </span>
       </div>
 
@@ -94,7 +97,7 @@ function ResourceDetail({ resource: r, onClose }: DetailProps) {
 
       {r.contacts && r.contacts.length > 0 && (
         <div className="rm-detail__contacts">
-          <span className="rm-detail__contacts-label">Kontakter</span>
+          <span className="rm-detail__contacts-label">{t('resurskarta.contacts_label')}</span>
           <div className="rm-detail__contacts-list">
             {r.contacts.map(name => (
               <span key={name} className="rm-detail__contact-chip">{name}</span>
@@ -109,7 +112,7 @@ function ResourceDetail({ resource: r, onClose }: DetailProps) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Öppna webbplats →
+        {t('resurskarta.open_website')}
       </a>
     </div>
   );
@@ -122,6 +125,7 @@ export default function ResourcesMap() {
   const mapRef        = useRef<maplibregl.Map | null>(null);
   const markersRef    = useRef<Record<string, { outer: HTMLDivElement; inner: HTMLDivElement }>>({});
 
+  const { t } = useTranslation();
   const [mapLoaded,    setMapLoaded]    = useState(false);
   const [activeFilter, setActiveFilter] = useState<CategoryKey | 'all'>('all');
   const [search,       setSearch]       = useState('');
@@ -252,16 +256,16 @@ export default function ResourcesMap() {
             <input
               type="text"
               className="rm-search-input"
-              placeholder="Sök ort eller resurs…"
+              placeholder={t('resurskarta.search_placeholder')}
               value={search}
               onChange={handleSearchChange}
-              aria-label="Sök resurser"
+              aria-label={t('resurskarta.search_label')}
             />
             {search && (
               <button
                 className="rm-search-clear"
                 onClick={() => { setSearch(''); setSelectedId(null); }}
-                aria-label="Rensa sökning"
+                aria-label={t('resurskarta.clear_search')}
               >
                 ✕
               </button>
@@ -269,12 +273,12 @@ export default function ResourcesMap() {
           </div>
 
           {/* Category chips */}
-          <div className="rm-chips" role="group" aria-label="Filtrera efter kategori">
+          <div className="rm-chips" role="group" aria-label={t('resurskarta.filter_label')}>
             <button
               className={`rm-chip rm-chip--all${activeFilter === 'all' ? ' rm-chip--active' : ''}`}
               onClick={() => handleFilterClick('all')}
             >
-              Alla
+              {t('resurskarta.filter_all')}
             </button>
             {(Object.keys(CATEGORIES) as CategoryKey[]).map(key => {
               const c = CATEGORIES[key];
@@ -289,7 +293,7 @@ export default function ResourcesMap() {
                   onClick={() => handleFilterClick(key)}
                 >
                   {c.emoji && <span aria-hidden>{c.emoji}</span>}
-                  {c.label}
+                  {t(`resurskarta.cat_${key}`)}
                 </button>
               );
             })}
@@ -306,13 +310,13 @@ export default function ResourcesMap() {
             {/* Count + national shortcuts */}
             <div className="rm-results-header">
               <span className="rm-results-count">
-                {filtered.length} resurser
+                {filtered.length} {t('resurskarta.resources')}
               </span>
             </div>
 
             {/* National resources bar */}
             <div className="rm-national" aria-label="Nationella resurser">
-              <span className="rm-national__label">Nationellt</span>
+              <span className="rm-national__label">{t('resurskarta.national_label')}</span>
               {NATIONAL.map(n => (
                 <a
                   key={n.id}
@@ -334,7 +338,7 @@ export default function ResourcesMap() {
                 <ResourceCard key={r.id} resource={r} onSelect={setSelectedId} />
               ))}
               {filtered.length === 0 && (
-                <p className="rm-empty">Inga resurser matchar din sökning.</p>
+                <p className="rm-empty">{t('resurskarta.no_results')}</p>
               )}
             </div>
           </>

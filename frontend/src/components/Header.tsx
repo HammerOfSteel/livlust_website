@@ -21,9 +21,6 @@ export default function Header() {
           <a href="#activities">{t('nav.activities')}</a>
           <a href="#news">{t('nav.news')}</a>
           <a href="#contact">{t('nav.contact')}</a>
-          <a href="/resurskarta" className="header-nav-map-btn">
-            🗺 Resurskarta
-          </a>
         </nav>
 
         <button

@@ -74,5 +74,28 @@
     "activities": "Vad vi gör",
     "news": "Nyheter",
     "contact": "Kontakt"
+  },
+  "resurskarta": {
+    "cta": "Resurskarta",
+    "page_title": "Resurskarta",
+    "back_home": "← Hem",
+    "search_placeholder": "Sök ort eller resurs…",
+    "search_label": "Sök resurser",
+    "clear_search": "Rensa sökning",
+    "filter_label": "Filtrera efter kategori",
+    "filter_all": "Alla",
+    "resources": "resurser",
+    "national_label": "Nationellt",
+    "back_to_list": "← Alla resurser",
+    "open_website": "Öppna webbplats →",
+    "contacts_label": "Kontakter",
+    "no_results": "Inga resurser matchar din sökning.",
+    "cat_livslust": "Livslust",
+    "cat_efterlevande": "Efterlevande",
+    "cat_fontanhus": "Fontänhus",
+    "cat_psykisk": "Psykisk hälsa",
+    "cat_ungdom": "Barn & unga",
+    "cat_hbtqi": "HBTQI",
+    "cat_missbruk": "Beroende"
   }
 }
