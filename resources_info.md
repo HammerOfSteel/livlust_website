@@ -97,6 +97,38 @@ Dessa visas i kartan som en nationell lista snarare än geografiska nålar.
 
 ---
 
+### 1.7 Digital terapi & psykologappar ✅⚠️
+
+> **Viktigt om digitala plattformar**: Legitimerade svenska tjänster (Mindler, Kry) är reglerade av Socialstyrelsen och frikortsgilla som primärvård. Internationella plattformar som BetterHelp är **inte** reglerade i Sverige, håller inte garanterat samma kvalitetsstandarder och är ej frikortsgilla. De kan vara ett alternativ om lokalt stöd saknas eller väntetiderna är långa – men kontrollera alltid att terapeuten är legitimerad och att du förstår hur din data hanteras. Prioritera alltid 1177 eller din regions psykiatri för allvarligare besvär.
+
+| # | Tjänst | Typ | Pris | Kontakt | Webbplats | Notering |
+|---|-------|-----|------|---------|-----------|----------|
+| A1 | **Mindler** | App + videosamtal (legitimerade psykologer) | 100 kr/samtal, frikort gäller | info@mindler.se | [mindler.se](https://mindler.se/) | ✅ Reglerad av Socialstyrelsen. IKBT-program inkluderat. NPF-utredningar (ADHD/Autism) erbjuds. 200+ psykologer på 20+ språk. |
+| A2 | **Kry – Psykolog** | Videosamtal (legitimerade psykologer) | Primärvårdspris, frikort gäller | Patientsupport: **08-22 77 07** (vardagar 9–17) | [kry.se/psykolog-online](https://www.kry.se/psykolog-online/) | ✅ Reglerad. KBT, IKBT, ACT. BUP (barn/unga) finns. Hela Sverige. Bokas i appen. |
+| A3 | **Flow Neuroscience** | tDCS-headset + app (depression) | Hårdvara + abonnemang (privat betalning) | Via webbplatsen | [flowneuroscience.com](https://flowneuroscience.com/) | ✅ CE-märkt medicinteknisk produkt. Klinisk evidens (NHS). Ej traditionell terapi. Komplement till psykologkontakt. |
+| A4 | **BetterHelp** | Internationell online-terapi (text/video/ljud) | ca 280–440 kr/vecka (prenumeration, ej frikort) | betterhelp.com/contact | [betterhelp.com](https://www.betterhelp.com/) | ⚠️ **Ej reglerad i Sverige. Ej frikortsgill. Primärt engelska.** Möjligt alternativ om inget lokalt finns. Kontrollera legitimation och datapolicy. |
+
+---
+
+### 1.8 Anhörigstöd ✅
+
+| # | Namn | Kategori | Telefon | E-post | Adress | Öppettider | Webbplats | Beskrivning |
+|---|------|----------|---------|--------|--------|------------|-----------|-------------|
+| B1 | Nationellt kompetenscentrum Anhöriga (Nka) | `anhorigstod` | **010-358 30 20** | info@anhoriga.se | Strömgatan 13, 391 26 Kalmar | Vardagar 8–12 | [anhoriga.se](https://anhoriga.se/) | Kunskap, stöd och webbutbildningar för anhöriga. Vägledning till lokalt stöd. Ej stödlinje. |
+| B2 | Anhörigas Riksförbund | `anhorigstod` | — | info@anhorigasriksforbund.se | — | — | [anhorigasriksforbund.se](https://anhorigasriksforbund.se/) | ⚠️ Intresseorganisation för anhöriga. Kan hänvisa till lokalt stöd. |
+
+---
+
+### 1.9 Missbruk & samsjuklighet ✅
+
+| # | Namn | Kategori | Telefon | E-post | Adress | Öppettider | Webbplats | Beskrivning |
+|---|------|----------|---------|--------|--------|------------|-----------|-------------|
+| C1 | AA Sverige (Anonyma Alkoholister) | `missbruk` | **08-720 38 42** (telejour) | help@aa.se | Bolidenvägen 20, 121 62 Johanneshov, Stockholm | Telejour: alla dagar 11–20 inkl. helger | [aa.se](https://aa.se/) | Kostnadsfri gemenskap för alkoholberoende. 12-stegsprogram. Hitta möten på aa.se/hitta-ett-mote/ |
+| C2 | Al-Anon Familjegrupper | `missbruk` | **070-610 96 61** (servicetelefon) | afg@al-anon.se | Vasavägen 51B, 177 32 Järfälla | Servicetelefon: mån 19–21 (övrig tid telefonsvarare); kontor mån 10–17, tis–ons 10–16:30 | [al-anon.se](https://al-anon.se/) | Stöd för anhöriga och vänner till alkoholister. Inkl. **Alateen** för tonåringar. Hitta möten: al-anon.se/moten |
+| C3 | NA Sverige (Anonyma Narkomaner) | `missbruk` | Se webbplatsen | — | — | — | [nasverige.se](https://nasverige.se/) | Kostnadsfri gemenskap för narkotikaberoende. 12-steg. Möten i hela Sverige. |
+
+---
+
 ## DEL 2 – Geografiskt mappade resurser (nålar på kartan)
 
 Alla resurser nedan har koordinater och visas som pins på kartan.
@@ -299,11 +331,17 @@ Kontaktuppgifter per förening finns på respektive lokal sida eller via info@ba
 
 | | Antal |
 |--|-------|
-| **Nationella resurser (DEL 1)** | 27 |
+| **Nationella resurser DEL 1.1–1.6** | 27 |
+| **Digital terapi & appar (DEL 1.7)** | 4 |
+| **Anhörigstöd nationellt (DEL 1.8)** | 2 |
+| **Missbruk & samsjuklighet (DEL 1.9)** | 3 |
+| **Totalt nationella** | **36** |
 | **Geografiskt mappade resurser (DEL 2)** | 70 |
-| **Totalt** | **97** |
+| **Totalt** | **106** |
 | Regioner med minst 1 pin | 21 av 21 |
 | Regioner med minst 2 pins | 17 av 21 |
 | Regioner med minst 3 pins | 13 av 21 |
-| Resurser med fullständig kontaktinfo (adress+telefon+e-post) | ~60 |
-| Resurser med ⚠️ (behöver kompletteras) | ~15 |
+| Resurser med fullständig kontaktinfo (adress+telefon+e-post) | ~65 |
+| Resurser med ⚠️ (behöver kompletteras) | ~10 |
+| Digitala plattformar (reglerade) | 3 (Mindler, Kry, Flow) |
+| Digitala plattformar (ej reglerade ⚠️) | 1 (BetterHelp) |
