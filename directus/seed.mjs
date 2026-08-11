@@ -583,6 +583,14 @@ async function main() {
     schema: { is_nullable: false, max_length: 255 },
   });
   await ensureField(token, 'posts', {
+    field: 'slug', type: 'string',
+    meta: {
+      interface: 'input', width: 'half', required: true,
+      note: 'URL-vänlig identifierare, t.ex. "vi-startar-livslust". Använd SAMMA slug för både den svenska och engelska versionen av samma inlägg, så att länken fungerar oavsett språk.',
+    },
+    schema: { is_nullable: false, max_length: 255 },
+  });
+  await ensureField(token, 'posts', {
     field: 'excerpt', type: 'string',
     meta: { interface: 'input', width: 'full', note: 'Kort sammanfattning som visas på kortet (1-2 meningar)' },
     schema: { is_nullable: true, max_length: 500 },
