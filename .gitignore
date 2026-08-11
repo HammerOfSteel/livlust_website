@@ -32,3 +32,6 @@ postgres_data/
 
 # Superpowers brainstorming companion (local mockup scratch files)
 .superpowers/
+
+# Git worktrees (isolated workspaces for feature implementation)
+.worktrees/
