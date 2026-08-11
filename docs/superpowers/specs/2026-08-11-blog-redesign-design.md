@@ -38,8 +38,14 @@ this spec builds on it rather than replacing it.
 - No change to the existing i18n architecture (client-only `i18next` state,
   no URL language segment, defaults to `sv` on fresh load). The blog feature
   is designed to work within this constraint, not to fix it.
-- No migration of the 4 existing seeded post images into Directus file
-  storage — they keep using the legacy `image_key` static-import path.
+- No migration of the existing seeded post images (currently referenced via
+  `image_key`/`IMAGE_MAP`) into Directus file storage — they keep using the
+  legacy static-import path.
+- No application- or database-level enforcement of the slug-pairing
+  convention (same slug across a post's sv/en rows). It's a documented
+  editorial convention only — YAGNI, given the small trusted editor team
+  using Directus's own admin UI. If duplicate/inconsistent slugs become a
+  real problem later, enforcement can be added then.
 
 ## Architecture
 
@@ -63,8 +69,9 @@ used for other collections/fields:
   pure client state, confirmed in
   [frontend/src/i18n/index.ts](../../frontend/src/i18n/index.ts) and
   [frontend/src/components/Header.tsx](../../frontend/src/components/Header.tsx)
-  — `i18n.changeLanguage`, no route segment). The schema-level constraint is
-  `unique(slug, language)` — **not** `unique(slug)` alone, since that would
+  — `i18n.changeLanguage`, no route segment). This pairing is a documented
+  editorial convention (see Non-goals) rather than a database constraint —
+  a plain `unique(slug)` constraint must **not** be added, since that would
   block the intentional sv/en pairing.
 - **`image`** (uuid, `file-image` interface, relation to `directus_files`).
   Real Directus-hosted image upload, replacing the current requirement that a
@@ -77,9 +84,12 @@ used for other collections/fields:
   images can be fetched by anonymous visitors via the `/cms/assets/:id`
   endpoint, mirroring the existing `ensurePublicPermission(token, 'posts',
   'read')` pattern).
-- `SEED_POSTS` in `seed.mjs` gets `slug` values added for the 4 existing demo
-  posts (same slug shared across each post's sv/en pair), e.g.
-  `vi-startar-livslust` / `var-webbplats-ar-har`.
+- `SEED_POSTS` in `seed.mjs` currently has 2 unique demo posts, each seeded
+  as one sv row + one en row (4 rows total). Each gets a `slug` value added,
+  shared across its sv/en pair. For example, the sv and en rows of the first
+  post ("Vi startar Livslust och hållbart stöd" / "Starting Livslust och
+  hållbart stöd") both get the slug `vi-startar-livslust`; the sv and en
+  rows of the second post both get `var-webbplats-ar-har`.
 
 ### Fetching a post by slug
 
@@ -116,7 +126,8 @@ guessing a draft's slug never exposes unpublished content.
     pointing to `/blog`.
 - **`BlogIndexPage`** (new: `frontend/src/pages/BlogIndexPage.tsx` + CSS) —
   grid of `PostCard`s for all published posts in the current language; empty
-  state if there are none.
+  state if there are none. Sets `document.title` to "Nyheter | Livslust" /
+  "News | Livslust" (matching current UI language) on mount.
 - **`BlogPostPage`** (new: `frontend/src/pages/BlogPostPage.tsx` + CSS) — the
   approved "editorial style" layout:
   - Hero image strip (if an image is present).
@@ -124,8 +135,10 @@ guessing a draft's slug never exposes unpublished content.
   - Serif headline, thin accent-color divider.
   - Rich-text body (rendered HTML from Directus, same
     `dangerouslySetInnerHTML` approach already used in `News.tsx`).
-  - Prev/next post navigation footer (chronological order within the same
-    language).
+  - Prev/next post navigation footer: "prev" is the next-older post, "next"
+    is the next-newer post, both within the same language, ordered by
+    `published_at` descending — matching the existing `sort=-published_at`
+    already used for the list query in `News.tsx`.
   - "← Alla nyheter" link back to `/blog`.
   - Sets `document.title` to the post's title on mount.
 - **Reading time** — computed client-side: strip HTML tags from the body,
@@ -139,10 +152,11 @@ Following the existing precedent in
 (`#about`, `#offer`, etc.) are homepage-only anchors that would silently fail
 to do anything useful on another route. Both `BlogIndexPage` and
 `BlogPostPage` get:
-- A light custom header: logo linking home, a "back" link to `/#news`, and a
-  language toggle (needed here, unlike `ResourcesPage`, because posts are
-  bilingual and a reader should be able to switch to the other language of
-  the same article).
+- A light custom header: logo linking home, a "back" link that navigates to
+  `/` and lands on the homepage news section (via the existing `#news`
+  anchor id already present on that section), and a language toggle (needed
+  here, unlike `ResourcesPage`, because posts are bilingual and a reader
+  should be able to switch to the other language of the same article).
 - The existing `Footer` component (safe to reuse anywhere — no anchor links).
 
 ## Error handling
@@ -152,6 +166,13 @@ to do anything useful on another route. Both `BlogIndexPage` and
 - Draft posts are never reachable by slug (see fetch filter above).
 - Network/fetch failures degrade to the existing empty-state pattern already
   used in `News.tsx` (empty array, no thrown error surfaced to the user).
+- Toggling language on a post page whose other-language row isn't published
+  yet: since the fetch-by-slug query already returns whichever rows exist,
+  the language toggle simply re-runs language selection against the
+  already-fetched rows — if only one language exists, staying on it (rather
+  than switching to a blank page) is the correct behavior, so the toggle has
+  no visible effect until a translation is published. No separate "not
+  translated" message is needed for this edge case.
 
 ## Editorial workflow docs
 
