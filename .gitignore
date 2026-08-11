@@ -29,3 +29,6 @@ playwright-report/
 
 # Docker volumes
 postgres_data/
+
+# Superpowers brainstorming companion (local mockup scratch files)
+.superpowers/
