@@ -39,6 +39,13 @@ services:
       RATE_LIMITER_ENABLED: "true"
       RATE_LIMITER_POINTS: "250"
       RATE_LIMITER_DURATION: "15"
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_TRANSPORT: smtp
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
+      EMAIL_SMTP_SECURE: ${EMAIL_SMTP_SECURE}
     depends_on:
       db:
         condition: service_healthy
@@ -55,6 +62,7 @@ services:
       DIRECTUS_URL: http://directus:8055
       ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      CONTACT_NOTIFICATION_EMAIL: ${CONTACT_NOTIFICATION_EMAIL}
     depends_on:
       - directus
     restart: on-failure

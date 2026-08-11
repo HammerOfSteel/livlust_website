@@ -83,6 +83,67 @@ async function createCollection(token, name, icon, note) {
   console.log(`  ✓ Created collection '${name}'.`, data.errors ?? '');
 }
 
+async function flowExists(token, name) {
+  const data = await api(token, 'GET', `/flows?filter[name][_eq]=${encodeURIComponent(name)}&limit=1`);
+  return (data.data?.length ?? 0) > 0;
+}
+
+// Creates a Flow that emails the org whenever a contact form submission is created.
+// The recipient is fixed (never taken from the submitted payload) to avoid the
+// flow being abused to relay mail to an attacker-chosen address.
+async function ensureContactNotificationFlow(token) {
+  const FLOW_NAME = 'Kontaktformulär — e-postnotis';
+  if (await flowExists(token, FLOW_NAME)) {
+    console.log(`  ↩ Flow '${FLOW_NAME}' already exists.`);
+    return;
+  }
+
+  const notifyTo = process.env.CONTACT_NOTIFICATION_EMAIL || 'info@livslusths.se';
+
+  const flow = await api(token, 'POST', '/flows', {
+    name: FLOW_NAME,
+    icon: 'mail',
+    status: 'active',
+    trigger: 'event',
+    accountability: 'all',
+    options: {
+      type: 'action',
+      scope: ['items.create'],
+      collections: ['contact_submissions'],
+    },
+  });
+  if (flow.errors || !flow.data?.id) {
+    console.log(`  ✗ Failed to create flow '${FLOW_NAME}'.`, flow.errors ?? flow);
+    return;
+  }
+
+  const operation = await api(token, 'POST', '/operations', {
+    flow: flow.data.id,
+    key: 'send_notification_email',
+    type: 'mail',
+    position_x: 19,
+    position_y: 1,
+    options: {
+      to: notifyTo,
+      type: 'wysiwyg',
+      subject: 'Nytt meddelande via kontaktformuläret – {{$trigger.payload.name}}',
+      replyTo: '{{$trigger.payload.email}}',
+      body:
+        '<p>Ett nytt meddelande har skickats via kontaktformuläret på webbplatsen.</p>' +
+        '<p><strong>Namn:</strong> {{$trigger.payload.name}}<br>' +
+        '<strong>E-post:</strong> {{$trigger.payload.email}}</p>' +
+        '<p><strong>Meddelande:</strong><br>{{$trigger.payload.message}}</p>',
+    },
+  });
+  if (operation.errors || !operation.data?.id) {
+    console.log(`  ✗ Failed to create mail operation for flow '${FLOW_NAME}'.`, operation.errors ?? operation);
+    return;
+  }
+
+  await api(token, 'PATCH', `/flows/${flow.data.id}`, { operation: operation.data.id });
+  console.log(`  ✓ Created flow '${FLOW_NAME}' → emails ${notifyTo} on new contact submissions.`);
+}
+
 async function ensureField(token, collection, fieldDef) {
   if (await fieldExists(token, collection, fieldDef.field)) {
     console.log(`  ↩ Field '${collection}.${fieldDef.field}' already exists.`);
@@ -546,6 +607,9 @@ async function main() {
   await seedContent(token);
   await seedEvents(token);
   await seedPosts(token);
+
+  console.log('\n🔔 Flows…');
+  await ensureContactNotificationFlow(token);
 
   console.log('\n✅ Directus setup complete.\n');
 }
