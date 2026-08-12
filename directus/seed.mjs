@@ -310,6 +310,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'sv',
+    slug: 'vi-startar-livslust',
     published_at: '2026-04-01',
     title: 'Vi startar Livslust och hållbart stöd',
     excerpt: 'Sorgen över att förlora någon till suicid är en av de tyngsta en människa kan bära. Det var ur den erfarenheten Livslust och hållbart stöd skapades.',
@@ -334,6 +335,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'en',
+    slug: 'vi-startar-livslust',
     published_at: '2026-04-01',
     title: 'Starting Livslust och hållbart stöd',
     excerpt: 'The grief of losing someone to suicide is one of the heaviest a person can carry. It was from that experience that Livslust och hållbart stöd was created.',
@@ -358,6 +360,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'sv',
+    slug: 'var-webbplats-ar-har',
     published_at: '2026-04-10',
     title: 'Vår webbplats är här, och vår Discord öppnar snart',
     excerpt: 'Idag lanserar vi livslusths.se. Det är en plats för information, kontakt och gemenskap, och det är bara början.',
@@ -384,6 +387,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'en',
+    slug: 'var-webbplats-ar-har',
     published_at: '2026-04-10',
     title: 'Our website is here, and our Discord opens soon',
     excerpt: 'Today we launch livslusths.se. It is a place for information, contact and community, and it is just the beginning.',
