@@ -7,9 +7,17 @@ interface Item {
   icon: string;
   titleKey: string;
   bodyKey: string;
+  ctaKey?: string;
+  ctaHref?: string;
 }
 
+const DISCORD_INVITE_URL = 'https://discord.gg/ReXE6DTEuK';
+
 const ITEMS: Item[] = [
+  {
+    id: 'discord', icon: '🕹', titleKey: 'activities.discord_title', bodyKey: 'activities.discord_body',
+    ctaKey: 'activities.discord_cta', ctaHref: DISCORD_INVITE_URL,
+  },
   { id: 'samtalstrafar',   icon: '💬', titleKey: 'activities.samtalstrafar_title',   bodyKey: 'activities.samtalstrafar_body'   },
   { id: 'knata',           icon: '🚶', titleKey: 'activities.knata_title',           bodyKey: 'activities.knata_body'           },
   { id: 'forelasningar',   icon: '🎤', titleKey: 'activities.forelasningar_title',   bodyKey: 'activities.forelasningar_body'   },
@@ -58,6 +66,16 @@ export default function Activities() {
               >
                 <div className="accordion-body-inner">
                   <p>{t(item.bodyKey)}</p>
+                  {item.ctaHref && (
+                    <a
+                      href={item.ctaHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="accordion-cta"
+                    >
+                      {t(item.ctaKey!)} →
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
