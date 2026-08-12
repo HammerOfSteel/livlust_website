@@ -1,0 +1,21 @@
+import dawnArticleImg from '../images/dawn_article.jpg';
+import websiteArticleImg from '../images/website_article.jpg';
+import heaveAHeartImg from '../images/heave_a_heart_article.jpg';
+import hero7Img from '../images/hero7.jpg';
+import type { Post } from '../types/post';
+
+const LEGACY_IMAGE_MAP: Record<string, string> = {
+  'dawn_article.jpg':          dawnArticleImg,
+  'website_article.jpg':       websiteArticleImg,
+  'heave_a_heart_article.jpg': heaveAHeartImg,
+  'hero7.jpg':                 hero7Img,
+};
+
+// Prefers a real Directus-hosted upload; falls back to the legacy
+// image_key → static-import map used by posts seeded before the upload
+// field existed.
+export function getPostImageUrl(post: Pick<Post, 'image' | 'image_key'>): string | null {
+  if (post.image?.id) return `/cms/assets/${post.image.id}`;
+  if (post.image_key) return LEGACY_IMAGE_MAP[post.image_key.trim()] ?? null;
+  return null;
+}
