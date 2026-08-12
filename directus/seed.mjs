@@ -553,6 +553,7 @@ async function main() {
   await ensurePublicPermission(token, 'contact_submissions', 'create');
   await ensurePublicPermission(token, 'events', 'read');
   await ensurePublicPermission(token, 'posts', 'read');
+  await ensurePublicPermission(token, 'directus_files', 'read');
 
   console.log('\n🔧 Fields — posts…');
   await ensureField(token, 'posts', {
