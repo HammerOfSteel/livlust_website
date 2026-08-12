@@ -548,6 +548,38 @@ async function seedPosts(token) {
   }
 }
 
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// Posts created before the `slug` field existed (e.g. via the admin UI) have no slug,
+// which breaks their /blog/:slug links. Backfill a unique slug for any post missing one.
+async function backfillPostSlugs(token) {
+  const data = await api(token, 'GET', '/items/posts?fields=id,slug,title&limit=-1');
+  const posts = data.data ?? [];
+  const missing = posts.filter(p => !p.slug);
+  if (missing.length === 0) {
+    console.log('  ↩ All posts already have a slug.');
+    return;
+  }
+  const usedSlugs = new Set(posts.map(p => p.slug).filter(Boolean));
+  for (const post of missing) {
+    const base = slugify(post.title) || `post-${post.id}`;
+    let slug = base;
+    let n = 2;
+    while (usedSlugs.has(slug)) {
+      slug = `${base}-${n++}`;
+    }
+    usedSlugs.add(slug);
+    const result = await api(token, 'PATCH', `/items/posts/${post.id}`, { slug });
+    console.log(`  ✓ Backfilled slug '${slug}' for post '${post.title}'.`, result.errors ?? '');
+  }
+}
+
 async function main() {
   await waitForDirectus();
   const token = await login();
@@ -755,6 +787,7 @@ async function main() {
   await seedContent(token);
   await seedEvents(token);
   await seedPosts(token);
+  await backfillPostSlugs(token);
 
   console.log('\n🔔 Flows…');
   await ensureContactNotificationFlow(token);
