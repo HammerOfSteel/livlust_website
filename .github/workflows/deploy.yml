@@ -25,6 +25,9 @@ jobs:
             DOMAIN="livslusths.se"
             NGINX_SITE="/etc/nginx/sites-available/${DOMAIN}"
             NGINX_ENABLED="/etc/nginx/sites-enabled/${DOMAIN}"
+            NEWSLETTER_DOMAIN="newsletter.livslusths.se"
+            NEWSLETTER_NGINX_SITE="/etc/nginx/sites-available/${NEWSLETTER_DOMAIN}"
+            NEWSLETTER_NGINX_ENABLED="/etc/nginx/sites-enabled/${NEWSLETTER_DOMAIN}"
 
             # ── 1. Clone or pull latest code ────────────────────────────
             if [ ! -d "${DEPLOY_DIR}/.git" ]; then
@@ -45,7 +48,7 @@ jobs:
             fi
 
             # ── 3. Build and start production containers ─────────────────
-            sudo docker compose -f docker-compose.prod.yml up --build -d db directus frontend
+            sudo docker compose -f docker-compose.prod.yml up --build -d db directus frontend listmonk_db listmonk
 
             # ── 3b. Re-run Directus schema/content seeding ────────────────
             # directus-init is a one-shot service; once it has exited
@@ -64,11 +67,27 @@ jobs:
               echo "Nginx site installed."
             fi
 
+            # ── 4b. Install newsletter (Listmonk) nginx site (first deploy only) ──
+            if [ ! -f "${NEWSLETTER_NGINX_SITE}" ]; then
+              sudo cp "${DEPLOY_DIR}/deploy/nginx-newsletter.conf" "${NEWSLETTER_NGINX_SITE}"
+              sudo ln -sf "${NEWSLETTER_NGINX_SITE}" "${NEWSLETTER_NGINX_ENABLED}"
+              sudo nginx -t
+              sudo systemctl reload nginx
+              echo "Newsletter nginx site installed."
+            fi
+
             # ── 5. Obtain TLS certificate (once per domain) ───────────────
             if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
               ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
               sudo certbot --nginx -d "${DOMAIN}" -d "www.${DOMAIN}" --non-interactive --agree-tos --email "${ADMIN_EMAIL:-info@livslusths.se}"
               echo "Certificate obtained for ${DOMAIN}."
+            fi
+
+            # ── 5b. Obtain TLS certificate for the newsletter subdomain ──
+            if [ ! -f "/etc/letsencrypt/live/${NEWSLETTER_DOMAIN}/fullchain.pem" ]; then
+              ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
+              sudo certbot --nginx -d "${NEWSLETTER_DOMAIN}" --non-interactive --agree-tos --email "${ADMIN_EMAIL:-info@livslusths.se}"
+              echo "Certificate obtained for ${NEWSLETTER_DOMAIN}."
             fi
 
             # ── 6. Remove dangling images ────────────────────────────────

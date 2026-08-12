@@ -75,6 +75,49 @@ services:
     volumes:
       - ./frontend/src:/app/src
 
+  # ── Listmonk (newsletter) — http://localhost:9010 ───────────────────
+  listmonk_db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${LISTMONK_DB_USER:-listmonk}
+      POSTGRES_PASSWORD: ${LISTMONK_DB_PASSWORD}
+      POSTGRES_DB: ${LISTMONK_DB_NAME:-listmonk}
+    volumes:
+      - listmonk_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${LISTMONK_DB_USER:-listmonk}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  listmonk:
+    image: listmonk/listmonk:latest
+    restart: unless-stopped
+    ports:
+      - "9010:9000"
+    # --install --idempotent is a no-op after the first run; --upgrade applies
+    # any pending DB migrations on every start.
+    command: [sh, -c, "./listmonk --install --idempotent --yes --config '' && ./listmonk --upgrade --yes --config '' && ./listmonk --config ''"]
+    environment:
+      LISTMONK_app__address: 0.0.0.0:9000
+      LISTMONK_db__host: listmonk_db
+      LISTMONK_db__port: "5432"
+      LISTMONK_db__user: ${LISTMONK_DB_USER:-listmonk}
+      LISTMONK_db__password: ${LISTMONK_DB_PASSWORD}
+      LISTMONK_db__database: ${LISTMONK_DB_NAME:-listmonk}
+      LISTMONK_db__ssl_mode: disable
+      TZ: Europe/Stockholm
+      LISTMONK_ADMIN_USER: ${LISTMONK_ADMIN_USER:-}
+      LISTMONK_ADMIN_PASSWORD: ${LISTMONK_ADMIN_PASSWORD:-}
+    depends_on:
+      listmonk_db:
+        condition: service_healthy
+    volumes:
+      - listmonk_uploads:/listmonk/uploads
+
 volumes:
   postgres_data:
   directus_uploads:
+  listmonk_data:
+  listmonk_uploads:
