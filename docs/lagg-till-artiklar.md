@@ -2,8 +2,6 @@
 
 Den här guiden förklarar hur du skapar inlägg i nyhets- och bloggsektionen på webbplatsen.
 
-> **Notera:** Nyhetsektionen är planerad som ett nästa steg. När den är på plats hittar du samlingen i menyn under **"Posts"** eller **"Inlägg"**.
-
 ---
 
 ## Var loggar jag in?
@@ -27,7 +25,9 @@ Klicka på **"Posts"** i vänstermenyn.
 | **Status** | "Publicerad" syns på webbplatsen, "Utkast" sparas men visas ej | Publicerad |
 | **Språk** | Skapa ett separat inlägg per språk | Svenska |
 | **Titel** | Rubriken på artikeln | Ny samtalsgrupp startar i höst |
+| **Slug** | Del av webbadressen till inlägget. **Använd samma slug för den svenska och den engelska versionen av samma inlägg**, annars fungerar inte språkväxlingen på artikelsidan. Använd bara små bokstäver, siffror och bindestreck. | ny-samtalsgrupp-hostenmark |
 | **Brödtext** | Artiklens innehåll. Du kan använda radbrytningar för stycken | Från september startar vi... |
+| **Bild** | Ladda upp en bild till artikeln genom att klicka i fältet och välja en fil. Valfritt. | (ladda upp en JPG/PNG) |
 | **Publiceringsdatum** | När inlägget ska dateras (väljs automatiskt till nu om du lämnar det) | 2026-09-01 |
 
 ### 4. Spara
@@ -42,6 +42,14 @@ Klicka på bock-ikonen uppe till höger.
 - **Personligt tilltal:** Skriv till "dig" och "dig som har förlorat någon".
 - **Undvik jargong:** Enkla ord når fler.
 - **Avsluta med en uppmaning:** T.ex. "Hör av dig om du vill veta mer" + länk till kontaktformuläret.
+
+---
+
+## Dela ett inlägg
+
+Varje publicerat inlägg får nu en egen webbadress, t.ex.
+`https://livslusths.se/blog/ny-samtalsgrupp-hostenmark`. Du kan dela den
+länken direkt på sociala medier eller i andra kanaler.
 
 ---
 
