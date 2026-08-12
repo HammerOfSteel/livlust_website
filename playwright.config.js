@@ -11,7 +11,12 @@ module.exports = defineConfig({
     launchOptions: { args: ['--enable-webgl', '--use-gl=swiftshader'] },
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'chromium', testMatch: /map\.spec\.js/, use: { ...devices['Desktop Chrome'] } },
+    {
+      name: 'blog-e2e',
+      testMatch: /blog\.spec\.js/,
+      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:3000' },
+    },
   ],
   // Don't start a server — user runs python3 -m http.server 8765 separately
   webServer: {

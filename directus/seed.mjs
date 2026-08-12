@@ -62,6 +62,11 @@ async function fieldExists(token, collection, field) {
   return !data.errors;
 }
 
+async function relationExists(token, collection, field) {
+  const data = await api(token, 'GET', `/relations/${collection}/${field}`);
+  return !data.errors;
+}
+
 async function createCollection(token, name, icon, note) {
   if (await collectionExists(token, name)) {
     console.log(`  ↩ Collection '${name}' already exists.`);
@@ -151,6 +156,19 @@ async function ensureField(token, collection, fieldDef) {
   }
   const data = await api(token, 'POST', `/fields/${collection}`, fieldDef);
   console.log(`  ✓ Created field '${collection}.${fieldDef.field}'.`, data.errors ?? '');
+}
+
+async function ensureRelation(token, collection, field, relatedCollection) {
+  if (await relationExists(token, collection, field)) {
+    console.log(`  ↩ Relation '${collection}.${field}' already exists.`);
+    return;
+  }
+  const data = await api(token, 'POST', '/relations', {
+    collection,
+    field,
+    related_collection: relatedCollection,
+  });
+  console.log(`  ✓ Created relation '${collection}.${field}' → '${relatedCollection}'.`, data.errors ?? '');
 }
 
 async function ensurePublicPermission(token, collection, action) {
@@ -310,6 +328,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'sv',
+    slug: 'vi-startar-livslust',
     published_at: '2026-04-01',
     title: 'Vi startar Livslust och hållbart stöd',
     excerpt: 'Sorgen över att förlora någon till suicid är en av de tyngsta en människa kan bära. Det var ur den erfarenheten Livslust och hållbart stöd skapades.',
@@ -334,6 +353,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'en',
+    slug: 'vi-startar-livslust',
     published_at: '2026-04-01',
     title: 'Starting Livslust och hållbart stöd',
     excerpt: 'The grief of losing someone to suicide is one of the heaviest a person can carry. It was from that experience that Livslust och hållbart stöd was created.',
@@ -358,6 +378,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'sv',
+    slug: 'var-webbplats-ar-har',
     published_at: '2026-04-10',
     title: 'Vår webbplats är här, och vår Discord öppnar snart',
     excerpt: 'Idag lanserar vi livslusths.se. Det är en plats för information, kontakt och gemenskap, och det är bara början.',
@@ -384,6 +405,7 @@ const SEED_POSTS = [
   {
     status: 'published',
     language: 'en',
+    slug: 'var-webbplats-ar-har',
     published_at: '2026-04-10',
     title: 'Our website is here, and our Discord opens soon',
     excerpt: 'Today we launch livslusths.se. It is a place for information, contact and community, and it is just the beginning.',
@@ -406,6 +428,110 @@ const SEED_POSTS = [
 <p>Whether you have just lost someone or it happened a long time ago. Whether you are ready to share or just want to listen. There is a place for you here.</p>`,
     image_key: 'website_article.jpg',
     image_alt: 'Close-up of hands holding a phone showing the website',
+  },
+  {
+    status: 'published',
+    language: 'sv',
+    slug: 'internationella-dagen-forlorat-barn',
+    published_at: '2026-07-03',
+    title: 'Internationella dagen för föräldrar som förlorat barn – 3 juli',
+    excerpt: 'Idag uppmärksammas Internationella dagen för föräldrar som förlorat barn – en dag som ägnas åt alla föräldrar som mist ett barn. Det är en dag för att se sorgen, för att hålla minnet levande, och för att påminna oss om att ingen förälder ska behöva gå igenom denna smärta ensam.',
+    body: `<p>Idag, den 3 juli, uppmärksammas <strong>Internationella dagen för föräldrar som förlorat barn</strong> – en dag som ägnas åt alla föräldrar som mist ett barn. Oavsett hur länge sedan förlusten inträffade, oavsett barnets ålder, oavsett omständigheterna. Det är en dag för att se sorgen, för att hålla minnet levande, och för att påminna oss om att ingen förälder ska behöva gå igenom denna smärta ensam.</p>
+<h2>En förlust som förändrar allt</h2>
+<p>Att förlora ett barn beskrivs ofta som det värsta en människa kan genomgå. Det är en förlust som vänder upp och ner på hela ens existens, som utmanar allt vi trodde vi visste om världen och livet. Förväntningarna, drömmarna, framtiden, allt förändras.</p>
+<p>Utöver den ofattbara sorgen finns ofta frågorna som aldrig får svar: <em>Varför? Kunde jag ha gjort något annorlunda? Varför såg jag det inte?</em> Skulden och skammen kan bli överväldigande. Många av oss bär en tystnad kring hur vårat barn dog, rädslan för andras domar, för att bli missförstådd bland oändligt mycket mer.</p>
+<h2>Att leva med sorgen</h2>
+<p>Sorg efter ett barn är ingen resa med ett tydligt slut. Det är inte något som "läker" eller "blir färdigt". Det är snarare något vi lär oss att bära, dag för dag. Vissa dagar känns lättare än andra. Vissa dagar är sorgen lika rå och överväldigande som den första dagen.</p>
+<p>Det är viktigt att veta att det inte finns något rätt sätt att sörja. Ingen tidtabell, ingen instruktionsbok. Din sorg är din egen, och den får ta den tid den behöver. Kanske märker du att du behöver prata om ditt barn varje dag. Kanske behöver du perioder av tystnad. Kanske hittar du tröst i minnesstunder, fotografier och berättelser. Kanske behöver du ibland ta avstånd för att orka.</p>
+<p>Allt detta är okej. Du gör så gott du kan, och det räcker.</p>
+<h2>Sorgens många ansikten</h2>
+<p>För många föräldrar kommer sorgen i vågor. Det kan vara utlösare som får allt att rasa – en doft, en sång, ett datum i kalendern. Födelsedagar, högtidsdagar, årsdagar av dödsfall. Men också oväntade stunder: att se ett barn i samma ålder som ditt skulle ha varit, att höra någon skratta på samma sätt.</p>
+<p>Vissa dagar känns sorgen fysisk. En tyngd i bröstet, en knöl i magen, trötthet som inte går att vila bort. Kroppen minns, även när vi försöker glömma.</p>
+<p>Och så finns ilskan. Ilska mot världen som inte stannade upp. Ilska mot människor som säger fel saker eller tiger när vi behöver att de säger något. Ilska mot oss själva, mot livet, kanske till och med mot vårt barn som lämnade oss.</p>
+<p>Alla dessa känslor är giltiga. De är en del av sorgen, en del av kärleken vi bär.</p>
+<p>Suicid är fortfarande tabu i de flesta sammanhang. Människor vet inte vad de ska säga, så de säger ingenting. Eller så säger de saker som gör ont, även om de menar väl.</p>
+<p>Sanningen är att psykisk ohälsa och suicidtankar ofta är osynliga, även för de som står oss närmast. Många som tar sitt liv visar inga tydliga varningstecken. Många kämpar i det tysta. Och även när vi såg att något inte stod rätt till, kunde vi inte alltid förstå hur allvarligt det var.</p>
+<h2>Mening och sammanhang</h2>
+<p>I sorgen finns också en stark längtan efter sammanhang. Vi vill förstå. Vi vill hitta en mening i det meningslösa. För många av oss blir det viktigt att göra något av vår sorg, att omvandla smärtan till något som kan hjälpa andra.</p>
+<p>Kanske blir det ett engagemang i föreningar. Kanske blir det att dela sin berättelse, att bryta tystnaden kring suicid och psykisk ohälsa. Kanske blir det att stötta andra sörjande, att finnas där på det sätt vi själva önskat att någon funnits för oss.</p>
+<p>Det finns ingen skyldighet att göra sorgen till något "användbart". Men för många blir det en väg framåt.</p>
+<h2>Du är inte ensam</h2>
+<p>Det är lätt att känna sig ensam i sorgen. Särskilt när samhället förväntar sig att vi ska "gå vidare" efter en viss tid. När vännerna slutar ringa, när kollegor inte längre frågar hur det går, när livet för alla andra verkar ha återgått till det normala.</p>
+<p>Men du är inte ensam. Det finns många av oss som bär samma sorg, samma saknad. Och även om ingen kan ta bort smärtan, kan gemenskap göra den lite lättare att bära.</p>
+<p>Livslust och hållbart stöd erbjuder samtalsträffar, Knata och Prata-grupper och digitala möten för efterlevande till suicid. Här kan du träffa andra som förstår, som inte kräver förklaringar, som vet hur det känns. Vi delar våra berättelser, våra tårar, vår ilska och vår saknad. Och ibland, med tiden, också våra leenden och minnen.</p>
+<p>Vi har samtalsträffar i Östersund, Skellefteå, Strömsund, Gevåg och Ystad. Vi finns digitalt för dig som inte kan ta dig till en fysisk träff. Allt är gratis, allt är ideellt, allt drivs av och för efterlevande.</p>
+<p>Andra stödresurser</p>
+<p>Utöver Livslust finns andra organisationer som erbjuder stöd till sörjande föräldrar:</p>
+<ul>
+<li><strong>SPES – Riksförbundet för suicidprevention och efterlevandes stöd</strong> erbjuder stödlinjer och lokala stödgrupper över hela landet.</li>
+<li><strong>Spädbarnsfonden</strong> ger stöd till föräldrar som förlorat barn tidigt i livet.</li>
+<li><strong>RSMH – Riksförbundet för social och mental hälsa</strong> har grupper och nätverk för anhöriga.</li>
+<li><strong>Mind</strong> erbjuder stödsamtal för både efterlevande och anhöriga till personer med psykisk ohälsa.</li>
+<li><strong>1177 Vårdguiden</strong> kan ge information om sorgestöd och var du kan söka professionell hjälp.</li>
+</ul>
+<p>Du behöver inte gå igenom detta ensam. Det finns händer att hålla i, axlar att gråta på, människor som ser dig.</p>
+<h2>Ett minne att bära framåt</h2>
+<p>Internationella dagen för föräldrar som förlorat barn är inte en dag för att "komma över" sorgen. Det är en dag för att känna den, för att ge den rum, för att hedra våra barn och den kärlek vi bär.</p>
+<p>Ditt barn levde. Och den kärleken försvinner aldrig.</p>
+<p>Idag tänder vi ljus. Vi säger deras namn. Vi delar deras berättelser. Vi påminner världen och oss själva om att de fanns, att de betydde något, att de fortfarande betyder allt.</p>
+<p>Och vi påminner varandra att vi bär detta tillsammans.</p>
+<hr>
+<p>Om du är efterlevande till suicid och behöver stöd, tveka inte att höra av dig till oss på Livslust och hållbart stöd. Du når oss på info@livslusths.se. Våra samtalsträffar och grupper är öppna för alla som förlorat någon i suicid. Ingen ska behöva gå igenom detta ensam.</p>
+<p>I akut kris, kontakta Självmordslinjen: 90101 (öppet kl. 17-24 varje dag) eller Mind Självmordsupplysningen: 020-18 18 00.</p>`,
+    image_key: 'hero7.jpg',
+    image_alt: 'Solljus som filtrerar genom trädgrenar',
+  },
+  {
+    status: 'published',
+    language: 'en',
+    slug: 'internationella-dagen-forlorat-barn',
+    published_at: '2026-07-03',
+    title: 'International Bereaved Parents Day – July 3rd',
+    excerpt: 'Today marks International Bereaved Parents Day – a day dedicated to all parents who have lost a child. It is a day to acknowledge grief, to keep memories alive, and to remind ourselves that no parent should have to go through this pain alone.',
+    body: `<p>Today, July 3rd, marks <strong>International Bereaved Parents Day</strong> – a day dedicated to all parents who have lost a child. Regardless of how long ago the loss occurred, regardless of the child's age, regardless of the circumstances. It is a day to acknowledge grief, to keep memories alive, and to remind ourselves that no parent should have to go through this pain alone.</p>
+<h2>A loss that changes everything</h2>
+<p>Losing a child is often described as the worst thing a person can experience. It is a loss that turns your entire existence upside down, challenging everything we thought we knew about the world and life. Expectations, dreams, the future – everything changes.</p>
+<p>Beyond the unfathomable grief, there are often questions that never get answered: <em>Why? Could I have done something differently? Why didn't I see it?</em> Guilt and shame can become overwhelming. Many of us carry a silence about how our child died, the fear of others' judgments, of being misunderstood, among infinitely more.</p>
+<h2>Living with grief</h2>
+<p>Grief after losing a child is not a journey with a clear end. It is not something that "heals" or "gets finished". Rather, it is something we learn to carry, day by day. Some days feel easier than others. Some days the grief is as raw and overwhelming as the first day.</p>
+<p>It is important to know that there is no right way to grieve. No timeline, no instruction manual. Your grief is your own, and it may take the time it needs. Perhaps you find that you need to talk about your child every day. Perhaps you need periods of silence. Perhaps you find comfort in memories, photographs and stories. Perhaps you sometimes need to take distance to cope.</p>
+<p>All of this is okay. You are doing the best you can, and that is enough.</p>
+<h2>The many faces of grief</h2>
+<p>For many parents, grief comes in waves. There can be triggers that make everything collapse – a scent, a song, a date on the calendar. Birthdays, holidays, death anniversaries. But also unexpected moments: seeing a child the same age your child would have been, hearing someone laugh in the same way.</p>
+<p>Some days grief feels physical. A weight in the chest, a knot in the stomach, tiredness that cannot be rested away. The body remembers, even when we try to forget.</p>
+<p>And then there is anger. Anger at the world that did not stop. Anger at people who say the wrong things or stay silent when we need them to say something. Anger at ourselves, at life, perhaps even at our child who left us.</p>
+<p>All these feelings are valid. They are part of grief, part of the love we carry.</p>
+<p>Suicide is still taboo in most contexts. People do not know what to say, so they say nothing. Or they say things that hurt, even though they mean well.</p>
+<p>The truth is that mental illness and suicidal thoughts are often invisible, even to those closest to us. Many who take their own lives show no clear warning signs. Many struggle in silence. And even when we saw that something was not right, we could not always understand how serious it was.</p>
+<h2>Meaning and context</h2>
+<p>In grief there is also a strong longing for context. We want to understand. We want to find meaning in the meaningless. For many of us, it becomes important to do something with our grief, to transform the pain into something that can help others.</p>
+<p>Perhaps it becomes an engagement in associations. Perhaps it becomes sharing one's story, breaking the silence around suicide and mental illness. Perhaps it becomes supporting other grieving people, being there in the way we ourselves wished someone had been for us.</p>
+<p>There is no obligation to make grief "useful". But for many, it becomes a way forward.</p>
+<h2>You are not alone</h2>
+<p>It is easy to feel alone in grief. Especially when society expects us to "move on" after a certain time. When friends stop calling, when colleagues no longer ask how things are going, when life for everyone else seems to have returned to normal.</p>
+<p>But you are not alone. There are many of us who carry the same grief, the same longing. And even though no one can take away the pain, community can make it a little easier to bear.</p>
+<p>Livslust och hållbart stöd offers support gatherings, Walk &amp; Talk groups and digital meetings for suicide loss survivors. Here you can meet others who understand, who do not require explanations, who know how it feels. We share our stories, our tears, our anger and our longing. And sometimes, with time, also our smiles and memories.</p>
+<p>We have support gatherings in Östersund, Skellefteå, Strömsund, Gevåg and Ystad. We are available digitally for those who cannot attend a physical meeting. Everything is free, everything is voluntary, everything is run by and for survivors.</p>
+<p>Other support resources</p>
+<p>In addition to Livslust, there are other organisations that offer support to bereaved parents:</p>
+<ul>
+<li><strong>SPES – The National Association for Suicide Prevention and Support for the Bereaved</strong> offers support lines and local support groups throughout the country.</li>
+<li><strong>Spädbarnsfonden (The Infant Fund)</strong> provides support to parents who have lost children early in life.</li>
+<li><strong>RSMH – The Swedish National Association for Social and Mental Health</strong> has groups and networks for relatives.</li>
+<li><strong>Mind</strong> offers support calls for both survivors and relatives of people with mental illness.</li>
+<li><strong>1177 Healthcare Guide</strong> can provide information about grief support and where you can seek professional help.</li>
+</ul>
+<p>You do not have to go through this alone. There are hands to hold, shoulders to cry on, people who see you.</p>
+<h2>A memory to carry forward</h2>
+<p>International Bereaved Parents Day is not a day to "get over" grief. It is a day to feel it, to give it space, to honour our children and the love we carry.</p>
+<p>Your child lived. And that love never disappears.</p>
+<p>Today we light candles. We say their names. We share their stories. We remind the world and ourselves that they existed, that they mattered, that they still mean everything.</p>
+<p>And we remind each other that we carry this together.</p>
+<hr>
+<p>If you are a suicide loss survivor and need support, please do not hesitate to contact us at Livslust och hållbart stöd. You can reach us at info@livslusths.se. Our support gatherings and groups are open to everyone who has lost someone to suicide. No one should have to go through this alone.</p>
+<p>In an acute crisis, contact the Suicide Hotline: 90101 (open 5pm-midnight every day) or Mind Suicide Information: 020-18 18 00.</p>`,
+    image_key: 'hero7.jpg',
+    image_alt: 'Sunlight filtering through tree branches',
   },
 ];
 
@@ -553,6 +679,7 @@ async function main() {
   await ensurePublicPermission(token, 'contact_submissions', 'create');
   await ensurePublicPermission(token, 'events', 'read');
   await ensurePublicPermission(token, 'posts', 'read');
+  await ensurePublicPermission(token, 'directus_files', 'read');
 
   console.log('\n🔧 Fields — posts…');
   await ensureField(token, 'posts', {
@@ -583,6 +710,14 @@ async function main() {
     schema: { is_nullable: false, max_length: 255 },
   });
   await ensureField(token, 'posts', {
+    field: 'slug', type: 'string',
+    meta: {
+      interface: 'input', width: 'half', required: true,
+      note: 'URL-vänlig identifierare, t.ex. "vi-startar-livslust". Använd SAMMA slug för både den svenska och engelska versionen av samma inlägg, så att länken fungerar oavsett språk.',
+    },
+    schema: { is_nullable: false, max_length: 255 },
+  });
+  await ensureField(token, 'posts', {
     field: 'excerpt', type: 'string',
     meta: { interface: 'input', width: 'full', note: 'Kort sammanfattning som visas på kortet (1-2 meningar)' },
     schema: { is_nullable: true, max_length: 500 },
@@ -602,6 +737,19 @@ async function main() {
     meta: { interface: 'input', width: 'half', note: 'Beskrivning av bilden för skärmläsare (alt-text)' },
     schema: { is_nullable: true, max_length: 255 },
   });
+  await ensureField(token, 'posts', {
+    field: 'image', type: 'uuid',
+    meta: {
+      interface: 'file-image', width: 'half', special: ['file'],
+      note: 'Ladda upp en bild för artikeln. Ersätter "image_key" för nya inlägg — äldre inlägg kan fortsätta använda image_key.',
+    },
+    schema: {
+      is_nullable: true,
+      foreign_key_table: 'directus_files',
+      foreign_key_column: 'id',
+    },
+  });
+  await ensureRelation(token, 'posts', 'image', 'directus_files');
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);

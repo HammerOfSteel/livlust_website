@@ -1,0 +1,34 @@
+.bi {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+.bi-content {
+  flex: 1;
+  padding: 3rem 1.5rem;
+}
+
+.bi-heading {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--color-primary-d);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.bi-loading,
+.bi-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 2.5rem 0;
+}
+
+.bi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
