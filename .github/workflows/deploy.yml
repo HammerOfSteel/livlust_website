@@ -45,7 +45,15 @@ jobs:
             fi
 
             # ── 3. Build and start production containers ─────────────────
-            sudo docker compose -f docker-compose.prod.yml up --build -d
+            sudo docker compose -f docker-compose.prod.yml up --build -d db directus frontend
+
+            # ── 3b. Re-run Directus schema/content seeding ────────────────
+            # directus-init is a one-shot service; once it has exited
+            # successfully, `up -d` will not re-run it even when seed.mjs
+            # has new schema/content changes, since the service config
+            # itself is unchanged. Force a fresh run on every deploy so
+            # schema migrations and content seeding always apply.
+            sudo docker compose -f docker-compose.prod.yml run --rm directus-init
 
             # ── 4. Install nginx site config (first deploy only) ─────────
             if [ ! -f "${NGINX_SITE}" ]; then

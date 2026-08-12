@@ -155,7 +155,10 @@ async function ensureField(token, collection, fieldDef) {
     return;
   }
   const data = await api(token, 'POST', `/fields/${collection}`, fieldDef);
-  console.log(`  ✓ Created field '${collection}.${fieldDef.field}'.`, data.errors ?? '');
+  if (data.errors) {
+    throw new Error(`Failed to create field '${collection}.${fieldDef.field}': ${JSON.stringify(data.errors)}`);
+  }
+  console.log(`  ✓ Created field '${collection}.${fieldDef.field}'.`);
 }
 
 async function ensureRelation(token, collection, field, relatedCollection) {
@@ -558,8 +561,10 @@ function slugify(text) {
 
 // Posts created before the `slug` field existed (e.g. via the admin UI) have no slug,
 // which breaks their /blog/:slug links. Backfill a unique slug for any post missing one.
+// Prefer the canonical slug from SEED_POSTS (matched by title+language) so sv/en pairs
+// of the same article keep sharing one slug; fall back to a slugified title otherwise.
 async function backfillPostSlugs(token) {
-  const data = await api(token, 'GET', '/items/posts?fields=id,slug,title&limit=-1');
+  const data = await api(token, 'GET', '/items/posts?fields=id,slug,title,language&limit=-1');
   const posts = data.data ?? [];
   const missing = posts.filter(p => !p.slug);
   if (missing.length === 0) {
@@ -568,7 +573,8 @@ async function backfillPostSlugs(token) {
   }
   const usedSlugs = new Set(posts.map(p => p.slug).filter(Boolean));
   for (const post of missing) {
-    const base = slugify(post.title) || `post-${post.id}`;
+    const canonical = SEED_POSTS.find(p => p.title === post.title && p.language === post.language);
+    const base = canonical?.slug || slugify(post.title) || `post-${post.id}`;
     let slug = base;
     let n = 2;
     while (usedSlugs.has(slug)) {
@@ -576,7 +582,10 @@ async function backfillPostSlugs(token) {
     }
     usedSlugs.add(slug);
     const result = await api(token, 'PATCH', `/items/posts/${post.id}`, { slug });
-    console.log(`  ✓ Backfilled slug '${slug}' for post '${post.title}'.`, result.errors ?? '');
+    if (result.errors) {
+      throw new Error(`Failed to backfill slug for post '${post.title}': ${JSON.stringify(result.errors)}`);
+    }
+    console.log(`  ✓ Backfilled slug '${slug}' for post '${post.title}'.`);
   }
 }
 
@@ -747,7 +756,10 @@ async function main() {
       interface: 'input', width: 'half', required: true,
       note: 'URL-vänlig identifierare, t.ex. "vi-startar-livslust". Använd SAMMA slug för både den svenska och engelska versionen av samma inlägg, så att länken fungerar oavsett språk.',
     },
-    schema: { is_nullable: false, max_length: 255 },
+    // is_nullable must stay true at the DB level: a NOT NULL column can't be added to a
+    // table that already has rows (ALTER TABLE fails). `meta.required` above still
+    // enforces it for admin/API writes; backfillPostSlugs() fills in existing rows.
+    schema: { is_nullable: true, max_length: 255 },
   });
   await ensureField(token, 'posts', {
     field: 'excerpt', type: 'string',
