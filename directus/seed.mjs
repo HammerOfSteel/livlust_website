@@ -610,6 +610,18 @@ async function main() {
     meta: { interface: 'input', width: 'half', note: 'Beskrivning av bilden för skärmläsare (alt-text)' },
     schema: { is_nullable: true, max_length: 255 },
   });
+  await ensureField(token, 'posts', {
+    field: 'image', type: 'uuid',
+    meta: {
+      interface: 'file-image', width: 'half', special: ['file'],
+      note: 'Ladda upp en bild för artikeln. Ersätter "image_key" för nya inlägg — äldre inlägg kan fortsätta använda image_key.',
+    },
+    schema: {
+      is_nullable: true,
+      foreign_key_table: 'directus_files',
+      foreign_key_column: 'id',
+    },
+  });
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);
