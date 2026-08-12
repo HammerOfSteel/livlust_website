@@ -62,6 +62,11 @@ async function fieldExists(token, collection, field) {
   return !data.errors;
 }
 
+async function relationExists(token, collection, field) {
+  const data = await api(token, 'GET', `/relations/${collection}/${field}`);
+  return !data.errors;
+}
+
 async function createCollection(token, name, icon, note) {
   if (await collectionExists(token, name)) {
     console.log(`  ↩ Collection '${name}' already exists.`);
@@ -151,6 +156,19 @@ async function ensureField(token, collection, fieldDef) {
   }
   const data = await api(token, 'POST', `/fields/${collection}`, fieldDef);
   console.log(`  ✓ Created field '${collection}.${fieldDef.field}'.`, data.errors ?? '');
+}
+
+async function ensureRelation(token, collection, field, relatedCollection) {
+  if (await relationExists(token, collection, field)) {
+    console.log(`  ↩ Relation '${collection}.${field}' already exists.`);
+    return;
+  }
+  const data = await api(token, 'POST', '/relations', {
+    collection,
+    field,
+    related_collection: relatedCollection,
+  });
+  console.log(`  ✓ Created relation '${collection}.${field}' → '${relatedCollection}'.`, data.errors ?? '');
 }
 
 async function ensurePublicPermission(token, collection, action) {
@@ -627,6 +645,7 @@ async function main() {
       foreign_key_column: 'id',
     },
   });
+  await ensureRelation(token, 'posts', 'image', 'directus_files');
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);
