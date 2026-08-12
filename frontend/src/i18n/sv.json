@@ -42,6 +42,16 @@
     "adminLink": "Admin",
     "rights": "© {{year}} Livslust och hållbart stöd. Ideell förening."
   },
+  "newsletter": {
+    "heading": "Missa inget nytt",
+    "intro": "Få våra kommande träffar, föreningsnyheter och tips rakt i inkorgen, ungefär en gång i månaden.",
+    "emailLabel": "E-postadress",
+    "emailPlaceholder": "Din e-postadress",
+    "submit": "Prenumerera",
+    "sending": "Skickar…",
+    "success": "Tack! Du är nu anmäld till nyhetsbrevet.",
+    "error": "Något gick fel. Försök igen om en stund."
+  },
   "activities": {
     "heading": "Vad vi gör",
     "intro": "Vi erbjuder flera former av stöd och gemenskap, anpassade efter olika behov och livssituationer.",

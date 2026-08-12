@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/cms/, ''),
       },
+      '/newsletter-api': {
+        target: 'http://listmonk:9000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/newsletter-api/, ''),
+      },
     },
   },
 });

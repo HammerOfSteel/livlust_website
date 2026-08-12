@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PostCard from './PostCard';
+import NewsletterSignup from './NewsletterSignup';
 import type { Post } from '../types/post';
 import './News.css';
 
@@ -116,6 +117,8 @@ export default function News() {
             </Link>
           </div>
         )}
+
+        <NewsletterSignup />
       </div>
     </section>
   );

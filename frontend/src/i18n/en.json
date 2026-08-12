@@ -42,6 +42,16 @@
     "adminLink": "Admin",
     "rights": "© {{year}} Livslust och hållbart stöd. Non-profit organisation."
   },
+  "newsletter": {
+    "heading": "Don't miss out",
+    "intro": "Get our upcoming gatherings, association news and tips straight to your inbox, about once a month.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "Your email address",
+    "submit": "Subscribe",
+    "sending": "Sending…",
+    "success": "Thank you! You're now signed up for the newsletter.",
+    "error": "Something went wrong. Please try again in a moment."
+  },
   "activities": {
     "heading": "What we do",
     "intro": "We offer several forms of support and community, adapted to different needs and life situations.",
