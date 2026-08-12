@@ -1,0 +1,121 @@
+.bp {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+.bp-loading {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--color-muted);
+}
+
+.bp-not-found {
+  text-align: center;
+  padding: 5rem 1.5rem;
+}
+
+.bp-not-found h1 {
+  font-size: 1.5rem;
+  color: var(--color-primary-d);
+  margin-bottom: 1rem;
+}
+
+.bp-hero {
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  .bp-hero { height: 200px; }
+}
+
+.bp-article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 2rem;
+  flex: 1;
+  width: 100%;
+}
+
+.bp-meta {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.bp-title {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-primary-d);
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bp-title { font-size: 1.6rem; }
+}
+
+.bp-divider {
+  width: 48px;
+  height: 3px;
+  background: var(--color-accent);
+  margin-bottom: 2rem;
+}
+
+.bp-body {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--color-text);
+}
+
+.bp-body p { margin-bottom: 1.25rem; }
+.bp-body h3 { font-size: 1.2rem; margin: 2rem 0 0.75rem; color: var(--color-primary); }
+
+.bp-nav {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+}
+
+.bp-nav-link {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+
+.bp-nav-link:hover { border-color: var(--color-primary); }
+
+.bp-nav-next { text-align: right; }
+
+.bp-nav-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-bottom: 0.3rem;
+}
+
+.bp-nav-title {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary-d);
+}
+
+.bp-nav-spacer { flex: 1; }
+
+.bp-back {
+  text-align: center;
+  padding-bottom: 3rem;
+}
