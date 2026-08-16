@@ -88,6 +88,9 @@
     "news": "News",
     "contact": "Contact"
   },
+  "kalender": {
+    "cta": "Calendar"
+  },
   "resurskarta": {
     "cta": "Resource map",
     "page_title": "Resource map",

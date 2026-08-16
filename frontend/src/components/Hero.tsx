@@ -69,6 +69,14 @@ export default function Hero() {
           <a href="/resurskarta" className="btn hero-cta-secondary">
             🗺 {t('resurskarta.cta')}
           </a>
+          <a
+            href="https://calendar.google.com/calendar/embed?src=info%40livslusths.se&ctz=Europe%2FStockholm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn hero-cta-secondary"
+          >
+            📅 {t('kalender.cta')}
+          </a>
         </div>
       </div>
 
