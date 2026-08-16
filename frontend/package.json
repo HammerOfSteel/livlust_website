@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/generate-blog-og.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
