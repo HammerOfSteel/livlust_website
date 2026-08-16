@@ -44,7 +44,7 @@
   },
   "newsletter": {
     "heading": "Missa inget nytt",
-    "intro": "Få våra kommande träffar, föreningsnyheter och tips rakt i inkorgen, ungefär en gång i månaden.",
+    "intro": "Få våra kommande träffar, föreningsnyheter och tips rakt i inkorgen varje Fredag morgon.",
     "emailLabel": "E-postadress",
     "emailPlaceholder": "Din e-postadress",
     "submit": "Prenumerera",
@@ -56,7 +56,7 @@
     "heading": "Vad vi gör",
     "intro": "Vi erbjuder flera former av stöd och gemenskap, anpassade efter olika behov och livssituationer.",
     "discord_title": "Discord-community",
-    "discord_body": "Vår Discord-server är en trygg mötesplats där du kan chatta, dela och få stöd dygnet runt – helt kostnadsfritt. Den är särskilt viktig för unga efterlevande, som ofta hellre söker stöd digitalt och i sin egen takt. Alla är välkomna att gå med.",
+    "discord_body": "Vår Discord-server är en trygg mötesplats och gemenskap där du kan chatta, dela och få stöd dygnet runt – helt kostnadsfritt. Alla är välkomna att gå med.",
     "discord_cta": "Gå med i vår Discord",
     "samtalstrafar_title": "Samtalsträffar",
     "samtalstrafar_body": "Vi håller regelbundna samtalsträffar där efterlevande möts i ett tryggt rum för att dela erfarenheter och stödja varandra. Vid många tillfällen arrangerar vi parallella träffar på samma plats, så att fler kan delta samtidigt.",
