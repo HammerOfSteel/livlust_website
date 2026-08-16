@@ -2,6 +2,7 @@ import dawnArticleImg from '../images/dawn_article.jpg';
 import websiteArticleImg from '../images/website_article.jpg';
 import heaveAHeartImg from '../images/heave_a_heart_article.jpg';
 import hero7Img from '../images/hero7.jpg';
+import walkAndTalkImg from '../images/walk_and_talk.jpg';
 import type { Post } from '../types/post';
 
 const LEGACY_IMAGE_MAP: Record<string, string> = {
@@ -9,6 +10,7 @@ const LEGACY_IMAGE_MAP: Record<string, string> = {
   'website_article.jpg':       websiteArticleImg,
   'heave_a_heart_article.jpg': heaveAHeartImg,
   'hero7.jpg':                 hero7Img,
+  'walk_and_talk.jpg':         walkAndTalkImg,
 };
 
 // Prefers a real Directus-hosted upload; falls back to the legacy
