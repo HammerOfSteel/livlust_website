@@ -13,6 +13,7 @@ interface PostSummary {
   slug: string;
   title: string;
   published_at: string;
+  external_url: string | null;
 }
 
 export default function BlogPostPage() {
@@ -37,9 +38,9 @@ export default function BlogPostPage() {
 
   // Fetch a slim, sorted list in the current language for prev/next navigation.
   useEffect(() => {
-    fetch(`/cms/items/posts?filter[language][_eq]=${lang}&filter[status][_eq]=published&sort=-published_at&fields=slug,title,published_at`)
+    fetch(`/cms/items/posts?filter[language][_eq]=${lang}&filter[status][_eq]=published&sort=-published_at&fields=slug,title,published_at,external_url`)
       .then(r => r.json())
-      .then(d => setSiblings(d.data ?? []))
+      .then(d => setSiblings((d.data ?? []).filter((p: PostSummary) => !p.external_url)))
       .catch(() => setSiblings([]));
   }, [lang]);
 
@@ -48,6 +49,11 @@ export default function BlogPostPage() {
 
   useEffect(() => {
     if (post) document.title = `${post.title} | Livslust`;
+  }, [post]);
+
+  // External-link posts have no internal article page — send readers straight to the source.
+  useEffect(() => {
+    if (post?.external_url) window.location.replace(post.external_url);
   }, [post]);
 
   if (loading) {
@@ -73,6 +79,16 @@ export default function BlogPostPage() {
     );
   }
 
+  if (post.external_url) {
+    return (
+      <div className="bp">
+        <BlogHeader />
+        <p className="bp-loading">{isEn ? 'Redirecting…' : 'Omdirigerar…'}</p>
+        <Footer />
+      </div>
+    );
+  }
+
   const idx = siblings.findIndex(p => p.slug === post.slug);
   const prev = idx >= 0 ? siblings[idx + 1] ?? null : null; // next-older
   const next = idx >= 0 && idx > 0 ? siblings[idx - 1] ?? null : null; // next-newer
@@ -93,20 +109,6 @@ export default function BlogPostPage() {
         <h1 className="bp-title">{post.title}</h1>
         <div className="bp-divider" />
         {post.body && <div className="bp-body" dangerouslySetInnerHTML={{ __html: post.body }} />}
-        {post.external_url && (
-          <a
-            href={post.external_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bp-external-link"
-          >
-            {isEn ? `Read more at ${new URL(post.external_url).hostname.replace(/^www\./, '')}` : `Läs mer hos ${new URL(post.external_url).hostname.replace(/^www\./, '')}`}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M7 17 17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </a>
-        )}
       </article>
 
       {(prev || next) && (

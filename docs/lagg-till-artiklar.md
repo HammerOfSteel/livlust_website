@@ -29,7 +29,8 @@ Klicka på **"Posts"** i vänstermenyn.
 | **Brödtext** | Artiklens innehåll. Du kan använda radbrytningar för stycken | Från september startar vi... |
 | **Bild** | Ladda upp en bild till artikeln genom att klicka i fältet och välja en fil. Valfritt. | (ladda upp en JPG/PNG) |
 | **Publiceringsdatum** | När inlägget ska dateras (väljs automatiskt till nu om du lämnar det) | 2026-09-01 |
-| **External url** | Länk till en extern artikel, t.ex. en tidning eller nyhetssajt som skrivit om oss. Valfritt — om ifylld visas en "Läs mer hos …"-knapp på inläggssidan som öppnar länken i en ny flik. Skriv då en kort egen text i "Brödtext" som sammanfattar vad artikeln handlar om, istället för att återge hela den externa artikeln. | https://www.svt.se/nyheter/... |
+| **External url** | Länk till en extern artikel, t.ex. en tidning eller nyhetssajt som skrivit om oss. Valfritt — om ifylld blir inlägget en ren länk-kort i nyhetssektionen: kortet visar din titel/bild/utdrag som vanligt, men "Läs mer" öppnar direkt den externa länken i en ny flik istället för en egen artikelsida hos oss. Skriv en kort egen text (eller ett citat från artikeln) i "Utdrag"/"Brödtext" istället för att återge hela den externa artikeln. | https://www.svt.se/nyheter/... |
+| **External image url** | Om du inte vill/kan ladda upp en egen bild till ett länk-inlägg kan du klistra in URL:en till källsidans egen bild här (dess "og:image") istället — den visas då på kortet. Fråga assistenten så kan den hämta rätt bild-URL åt dig. | https://www.svtstatic.se/... |
 
 ### 4. Spara
 

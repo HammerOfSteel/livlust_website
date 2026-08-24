@@ -33,7 +33,7 @@ async function main() {
   let posts;
   try {
     const res = await fetch(
-      `${CMS_URL}/items/posts?filter[status][_eq]=published&fields=slug,language,title,excerpt,image.id,image_key`
+      `${CMS_URL}/items/posts?filter[status][_eq]=published&fields=slug,language,title,excerpt,image.id,image_key,external_url`
     );
     if (!res.ok) throw new Error(`CMS responded with ${res.status}`);
     posts = (await res.json()).data ?? [];
@@ -41,6 +41,9 @@ async function main() {
     console.warn(`[generate-blog-og] Skipping: could not fetch posts (${err.message})`);
     return;
   }
+
+  // External-link posts have no internal /blog/<slug> page — they open the source URL directly.
+  posts = posts.filter(post => !post.external_url);
 
   const bySlug = new Map();
   for (const post of posts) {

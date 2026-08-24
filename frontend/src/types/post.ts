@@ -11,4 +11,5 @@ export interface Post {
   image_key: string | null;
   image_alt: string | null;
   external_url: string | null;
+  external_image_url: string | null;
 }

@@ -15,9 +15,11 @@ const LEGACY_IMAGE_MAP: Record<string, string> = {
 
 // Prefers a real Directus-hosted upload; falls back to the legacy
 // image_key → static-import map used by posts seeded before the upload
-// field existed.
-export function getPostImageUrl(post: Pick<Post, 'image' | 'image_key'>): string | null {
+// field existed; finally falls back to a hotlinked external image (used
+// for external_url link-posts whose og:image was fetched automatically).
+export function getPostImageUrl(post: Pick<Post, 'image' | 'image_key' | 'external_image_url'>): string | null {
   if (post.image?.id) return `/cms/assets/${post.image.id}`;
   if (post.image_key) return LEGACY_IMAGE_MAP[post.image_key.trim()] ?? null;
+  if (post.external_image_url) return post.external_image_url;
   return null;
 }

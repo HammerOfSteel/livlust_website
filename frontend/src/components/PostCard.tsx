@@ -17,8 +17,8 @@ export default function PostCard({ post }: PostCardProps) {
   const img = getPostImageUrl(post);
   const readingMinutes = calculateReadingTime(post.body);
 
-  return (
-    <Link to={`/blog/${post.slug}`} className="post-card">
+  const content = (
+    <>
       {img && (
         <div className="post-card-image-wrap">
           <img src={img} alt={post.image_alt ?? ''} className="post-card-image" loading="lazy" />
@@ -44,6 +44,17 @@ export default function PostCard({ post }: PostCardProps) {
           </svg>
         </span>
       </div>
+    </>
+  );
+
+  // Posts with an external_url link straight out to the third-party source instead of an internal page.
+  return post.external_url ? (
+    <a href={post.external_url} target="_blank" rel="noopener noreferrer" className="post-card">
+      {content}
+    </a>
+  ) : (
+    <Link to={`/blog/${post.slug}`} className="post-card">
+      {content}
     </Link>
   );
 }

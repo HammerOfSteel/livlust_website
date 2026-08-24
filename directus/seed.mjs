@@ -97,8 +97,7 @@ async function flowExists(token, name) {
 // The recipient is fixed (never taken from the submitted payload) to avoid the
 // flow being abused to relay mail to an attacker-chosen address.
 async function ensureContactNotificationFlow(token) {
-  const FLOW_NAME = 'Kontaktformulär — e-postnotis';
-  if (await flowExists(token, FLOW_NAME)) {
+  const FLOW_NAME = 'Kontaktformulär — e-postnotis';  if (await flowExists(token, FLOW_NAME)) {
     console.log(`  ↩ Flow '${FLOW_NAME}' already exists.`);
     return;
   }
@@ -798,7 +797,15 @@ async function main() {
     field: 'external_url', type: 'string',
     meta: {
       interface: 'input', width: 'full',
-      note: 'Länk till en extern artikel (t.ex. en nyhetssajt som skrivit om oss). Om ifylld visas en "Läs mer hos …"-knapp på inläggssidan som öppnar länken i en ny flik — bra för att dela egna korta inlägg om t.ex. en tidningsintervju utan att skriva om hela artikeln själv.',
+      note: 'Länk till en extern artikel (t.ex. en nyhetssajt som skrivit om oss). Om ifylld blir inlägget ett ren länk-kort i nyhetssektionen — kortet öppnar direkt den externa länken i en ny flik istället för en egen artikelsida hos oss. Bra för att dela t.ex. en tidningsintervju utan att skriva om hela artikeln själv.',
+    },
+    schema: { is_nullable: true, max_length: 2048 },
+  });
+  await ensureField(token, 'posts', {
+    field: 'external_image_url', type: 'string',
+    meta: {
+      interface: 'input', width: 'full',
+      note: 'Bild-URL till en extern artikels egen bild (t.ex. og:image), används när inlägget har en "External url" men ingen egen uppladdad bild. Fylls i manuellt eller av en assistent som hämtar käll-sidans egen bild.',
     },
     schema: { is_nullable: true, max_length: 2048 },
   });
