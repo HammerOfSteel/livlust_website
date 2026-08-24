@@ -794,6 +794,14 @@ async function main() {
     },
   });
   await ensureRelation(token, 'posts', 'image', 'directus_files');
+  await ensureField(token, 'posts', {
+    field: 'external_url', type: 'string',
+    meta: {
+      interface: 'input', width: 'full',
+      note: 'Länk till en extern artikel (t.ex. en nyhetssajt som skrivit om oss). Om ifylld visas en "Läs mer hos …"-knapp på inläggssidan som öppnar länken i en ny flik — bra för att dela egna korta inlägg om t.ex. en tidningsintervju utan att skriva om hela artikeln själv.',
+    },
+    schema: { is_nullable: true, max_length: 2048 },
+  });
 
   console.log('\n🌱 Seeding content…');
   await seedContent(token);

@@ -29,6 +29,7 @@ Klicka på **"Posts"** i vänstermenyn.
 | **Brödtext** | Artiklens innehåll. Du kan använda radbrytningar för stycken | Från september startar vi... |
 | **Bild** | Ladda upp en bild till artikeln genom att klicka i fältet och välja en fil. Valfritt. | (ladda upp en JPG/PNG) |
 | **Publiceringsdatum** | När inlägget ska dateras (väljs automatiskt till nu om du lämnar det) | 2026-09-01 |
+| **External url** | Länk till en extern artikel, t.ex. en tidning eller nyhetssajt som skrivit om oss. Valfritt — om ifylld visas en "Läs mer hos …"-knapp på inläggssidan som öppnar länken i en ny flik. Skriv då en kort egen text i "Brödtext" som sammanfattar vad artikeln handlar om, istället för att återge hela den externa artikeln. | https://www.svt.se/nyheter/... |
 
 ### 4. Spara
 

@@ -93,6 +93,20 @@ export default function BlogPostPage() {
         <h1 className="bp-title">{post.title}</h1>
         <div className="bp-divider" />
         {post.body && <div className="bp-body" dangerouslySetInnerHTML={{ __html: post.body }} />}
+        {post.external_url && (
+          <a
+            href={post.external_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bp-external-link"
+          >
+            {isEn ? `Read more at ${new URL(post.external_url).hostname.replace(/^www\./, '')}` : `Läs mer hos ${new URL(post.external_url).hostname.replace(/^www\./, '')}`}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7" />
+              <path d="M7 7h10v10" />
+            </svg>
+          </a>
+        )}
       </article>
 
       {(prev || next) && (

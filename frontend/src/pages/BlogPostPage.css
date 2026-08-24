@@ -77,6 +77,24 @@
 .bp-body p { margin-bottom: 1.25rem; }
 .bp-body h3 { font-size: 1.2rem; margin: 2rem 0 0.75rem; color: var(--color-primary); }
 
+.bp-external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.4rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.bp-external-link:hover { background: var(--color-primary-d); }
+
+.bp-external-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+
 .bp-nav {
   max-width: 720px;
   margin: 0 auto;
