@@ -2,75 +2,105 @@
 
 Den här guiden förklarar hur du lägger till ett nytt evenemang så att det visas i avsnittet "Kommande aktiviteter" på webbplatsen.
 
+Sedan 2026-08 hämtas alla evenemang direkt från vår **Google Kalender**
+(`info@livslusths.se`) — inte från Directus längre. Du behöver bara skapa
+eventet på ett ställe, i kalendern, så dyker det automatiskt upp som ett
+kort på webbplatsen.
+
 ---
 
 ## Var loggar jag in?
 
-Gå till **https://livslusths.se/cms/admin** i din webbläsare.
-
-Logga in med den e-postadress och det lösenord som du fått av organisationen.
+Gå till [Google Kalender](https://calendar.google.com/) och logga in med
+kontot för `info@livslusths.se`.
 
 ---
 
 ## Steg för steg
 
-### 1. Öppna evenemangssamlingen
+### 1. Skapa ett nytt event i kalendern
 
-När du loggat in ser du en meny till vänster. Klicka på **"Events"** (eller **"Evenemang"** om systemet är på svenska).
+Klicka på en dag/tid, eller på **"Skapa"** uppe till vänster → **"Event"**.
 
-### 2. Skapa ett nytt evenemang
+### 2. Fyll i fälten
 
-Klicka på den blå **"+ Skapa objekt"**-knappen i det övre högra hörnet.
+| Fält (i Google Kalender) | Vad du skriver | Exempel |
+|---|---|---|
+| **Titel** | Evenemangets namn | Knata och Prata i Ystad |
+| **Datum & tid** | När eventet börjar och slutar. Kryssa i "Hela dagen" om det inte har en specifik tid | 2026-09-15, 18:00–19:00 |
+| **Plats** | Adress, ort, eller en länk (t.ex. Discord-länk för digitala träffar) | Sandskogen, Ystad |
+| **Beskrivning** | Fritext om eventet — skriv precis som ni redan gör idag (📍 plats, 👥 arrangörer, "Anmäl dig på info@livslusths.se") | Se befintliga events i kalendern som exempel |
 
-### 3. Fyll i fälten
+Det finns inga separata fält för "tagline", "arrangörer" eller "märkning" —
+skriv det i Beskrivning precis som vanligt, det visas som brödtext på kortet.
 
-| Fält | Vad du skriver | Exempel |
-|------|---------------|---------|
-| **Status** | Välj "Publicerad" för att visa på webbplatsen, "Utkast" om du inte är klar än | Publicerad |
-| **Språk** | Välj Svenska (sv) eller Engelska (en). Skapa ett separat objekt per språk | Svenska |
-| **Titel** | Evenemangets namn | Knata och Prata |
-| **Tagline** | En kort mening under titeln | För efterlevande till suicid |
-| **Datum** | Datum för eventet (klicka för att välja i kalendern) | 2026-09-15 |
-| **Tidsetikett** | Tid att visa för besökaren | kl 18:00-19:00 |
-| **Plats** | Venue och adress | Kulturhuset, Stortorget 1, Östersund |
-| **Arrangörer** | Namnet/namnen på dem som leder | Micke Eklund & Sune Mets |
-| **Beskrivning** | Längre text om eventet (valfri) | En öppen promenadsession... |
-| **Extern länk** | Länk till anmälningssidan (t.ex. Medborgarskolan) — lämna tomt om det inte behövs | https://medborgarskolan.se/... |
-| **Etikett** | Liten märkning, t.ex. "Gratis" | Gratis |
-| **Partner** | Om ni arrangerar i samarbete med någon | Medborgarskolan |
+Anmälan sker alltid via mejl till **info@livslusths.se** — webbplatsen visar
+alltid den knappen, oavsett vad du skriver i beskrivningen.
 
-### 4. Spara
+### 3. Klart
 
-Klicka på **"Spara"** (bock-ikonen uppe till höger). Eventet syns direkt på webbplatsen.
+Eventet syns på webbplatsen inom någon minut (webbläsaren hämtar en färsk
+lista varje gång sidan laddas, ingen cache att vänta på).
 
 ---
 
-## Skapa engelska versionen
+## Skapa den engelska versionen
 
-Om ni vill att eventet även visas på engelska:
+Kalendern har bara ett fält per event, så för att visa en engelsk
+översättning skriver du den i **samma** Beskrivning-fält, efter en rad som
+bara innehåller:
 
-1. Klicka på **"+ Skapa objekt"** igen
-2. Välj **Språk: English**
-3. Fyll i samma information men på engelska
-4. Spara
+```
+--EN--
+```
+
+Allt ovanför den raden visas när besökaren har valt svenska, allt under
+visas när besökaren valt engelska. Titeln (fältet "Titel") är alltid
+densamma på båda språken. Exempel:
+
+```
+📍 Ystad, Sandskogen
+👥 Anna och Oliver
+
+En promenad och samtal för dig som mist någon i suicid...
+Anmäl dig gärna via mail till info@livslusths.se
+
+--EN--
+
+📍 Ystad, Sandskogen
+👥 Anna and Oliver
+
+A walk and conversation for anyone who has lost someone to suicide...
+Please sign up via email to info@livslusths.se
+```
+
+Om ingen `--EN--`-rad finns visas den svenska texten även för engelskspråkiga
+besökare (bättre än ett tomt kort).
 
 ---
 
 ## Ändra eller ta bort ett evenemang
 
-- **Ändra:** Klicka på eventet i listan, redigera fälten och spara.
-- **Ta bort:** Klicka på eventet, sedan på de tre prickarna (**...**) uppe till höger och välj "Ta bort".
-- **Dölj utan att ta bort:** Öppna eventet, byt Status till **"Utkast"** och spara. Det syns då inte längre på webbplatsen.
+Ändra eller ta bort eventet direkt i Google Kalender — webbplatsen läser
+alltid den senaste versionen, det finns ingen separat kopia att uppdatera.
 
 ---
 
 ## Vanliga frågor
 
 **Hur lång tid tar det innan eventet syns på webbplatsen?**
-Direkt — webbplatsen hämtar evenemang direkt från systemet.
+Nästan direkt — webbplatsen hämtar evenemangen direkt från kalendern varje
+gång sidan laddas.
 
 **Kan jag lägga upp ett evenemang i förväg?**
-Ja, du kan skapa det när som helst med status "Publicerad". Det visas omedelbart.
+Ja, skapa det i kalendern när som helst — det visas så fort det är sparat.
 
-**Händer något om jag inte fyller i alla fält?**
-Titel och datum är obligatoriska. Övriga fält är valfria och visas bara om de är ifyllda.
+**Vad händer med återkommande event (t.ex. "sista tisdagen varje månad")?**
+Om du gör eventet återkommande i Google Kalender (upprepningsinställningen)
+dyker varje tillfälle automatiskt upp som ett eget kort på webbplatsen, upp
+till ett år framåt.
+
+**Varför visas inte mitt event?**
+Kontrollera att det inte är markerat som "Privat" eller inställt att endast
+synas för dig — kalendern måste vara publik för att webbplatsen ska kunna
+läsa den (det är den redan, så det ska fungera automatiskt).

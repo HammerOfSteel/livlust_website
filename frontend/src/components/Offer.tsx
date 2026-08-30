@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import DOMPurify from 'dompurify';
+import { fetchCalendarEvents, type CalendarEvent } from '../utils/googleCalendar';
 import './Offer.css';
 
-interface Event {
-  id: number;
-  title: string;
-  tagline: string | null;
-  event_date: string;
-  time_label: string | null;
-  location: string | null;
-  organizers: string | null;
-  description: string | null;
-  external_url: string | null;
-  badge: string | null;
-  partner: string | null;
+type Event = CalendarEvent;
+
+function stripHtml(html: string): string {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  return (div.textContent ?? '').replace(/\s+/g, ' ').trim();
 }
 
 function parseTimeLabel(label: string | null): { start: string; end: string } | null {
@@ -23,7 +19,7 @@ function parseTimeLabel(label: string | null): { start: string; end: string } | 
   return { start: m[1].padStart(2, '0') + m[2], end: m[3].padStart(2, '0') + m[4] };
 }
 
-function buildIcs(ev: Event): string {
+function buildIcs(ev: Event, description: string): string {
   const datePart = ev.event_date.replace(/-/g, '');
   const times = parseTimeLabel(ev.time_label);
   const dtstart = times ? `DTSTART:${datePart}T${times.start}00` : `DTSTART;VALUE=DATE:${datePart}`;
@@ -36,16 +32,15 @@ function buildIcs(ev: Event): string {
     `UID:livslust-${ev.id}@livslusths.se`,
     `SUMMARY:${esc(ev.title)}`,
     dtstart, dtend,
-    ev.location    ? `LOCATION:${esc(ev.location)}`       : '',
-    ev.description ? `DESCRIPTION:${esc(ev.description)}` : '',
-    ev.external_url ? `URL:${ev.external_url}`             : '',
+    ev.location ? `LOCATION:${esc(ev.location)}` : '',
+    description ? `DESCRIPTION:${esc(stripHtml(description))}` : '',
     'END:VEVENT', 'END:VCALENDAR',
   ].filter(Boolean);
   return lines.join('\r\n');
 }
 
-function downloadIcs(ev: Event) {
-  const blob = new Blob([buildIcs(ev)], { type: 'text/calendar;charset=utf-8' });
+function downloadIcs(ev: Event, description: string) {
+  const blob = new Blob([buildIcs(ev, description)], { type: 'text/calendar;charset=utf-8' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
   a.href     = url;
@@ -76,14 +71,11 @@ export default function Offer() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `/cms/items/events?filter[language][_eq]=${lang}&filter[status][_eq]=published&sort=event_date&fields=*`
-    )
-      .then(r => r.json())
-      .then(d => setEvents(d.data ?? []))
+    fetchCalendarEvents()
+      .then(setEvents)
       .catch(() => setEvents([]))
       .finally(() => setLoading(false));
-  }, [lang]);
+  }, []);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -97,7 +89,7 @@ export default function Offer() {
   // Extract unique locations from events (simplified city names)
   const getSimplifiedLocation = (location: string | null): string => {
     if (!location) return '';
-    if (location.toLowerCase().includes('online')) return 'Online';
+    if (location.toLowerCase().includes('online') || /^https?:\/\//i.test(location)) return 'Online';
     if (location.toLowerCase().includes('östersund')) return 'Östersund';
     if (location.toLowerCase().includes('gevåg')) return 'Gevåg';
     if (location.toLowerCase().includes('skellefteå')) return 'Skellefteå';
@@ -212,21 +204,8 @@ export default function Offer() {
                 <div className="event-cards">
                   {visibleEvents.map(ev => {
                     const pastEvent = isPastEvent(ev.event_date);
-                    const cardClasses = `event-card${pastEvent ? ' event-card--past' : ''}${!ev.external_url ? ' event-card--no-link' : ''}`;
-                    
-                    return ev.external_url && !pastEvent ? (
-                      <a
-                        key={ev.id}
-                        href={ev.external_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cardClasses}
-                        aria-label={isEn ? `Read more about ${ev.title}` : `Läs mer om ${ev.title}`}
-                      >
-                        <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
-                      </a>
-                    ) : (
-                      <div key={ev.id} className={cardClasses}>
+                    return (
+                      <div key={ev.id} className={`event-card event-card--no-link${pastEvent ? ' event-card--past' : ''}`}>
                         <EventCardInner ev={ev} isEn={isEn} lang={lang} isPast={pastEvent} />
                       </div>
                     );
@@ -268,27 +247,20 @@ export default function Offer() {
 
 function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; lang: string; isPast: boolean }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  
+  const descriptionHtml = (isEn ? ev.descriptionHtmlEn : null) ?? ev.descriptionHtmlSv;
+  const descriptionText = stripHtml(descriptionHtml);
+
   return (
     <>
-      {(ev.badge || ev.partner || isPast) && (
+      {isPast && (
         <div className="event-card-header">
-          {isPast && (
-            <span className="event-badge event-badge--past">
-              {isEn ? 'Past event' : 'Tidigare händelse'}
-            </span>
-          )}
-          {ev.badge && !isPast && <span className="event-badge">{ev.badge}</span>}
-          {ev.partner && (
-            <span className="event-partner">
-              {isEn ? 'In cooperation with' : 'I samarbete med'} {ev.partner}
-            </span>
-          )}
+          <span className="event-badge event-badge--past">
+            {isEn ? 'Past event' : 'Tidigare händelse'}
+          </span>
         </div>
       )}
 
       <h3 className="event-title">{ev.title}</h3>
-      {ev.tagline && <p className="event-tagline">{ev.tagline}</p>}
 
       <ul className="event-meta">
         <li>
@@ -304,18 +276,15 @@ function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; 
             <span>{ev.location}</span>
           </li>
         )}
-        {ev.organizers && (
-          <li>
-            <span className="event-meta-icon" aria-hidden="true">👥</span>
-            <span>{ev.organizers}</span>
-          </li>
-        )}
       </ul>
 
-      {ev.description && (
+      {descriptionHtml && (
         <>
-          <p className={`event-description${isExpanded ? ' expanded' : ''}`}>{ev.description}</p>
-          {ev.description.length > 150 && (
+          <div
+            className={`event-description${isExpanded ? ' expanded' : ''}`}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(descriptionHtml) }}
+          />
+          {descriptionText.length > 150 && (
             <button
               className="event-expand-btn"
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsExpanded(!isExpanded); }}
@@ -328,27 +297,21 @@ function EventCardInner({ ev, isEn, lang, isPast }: { ev: Event; isEn: boolean; 
 
       <div className="event-card-footer">
         {!isPast && (
-          ev.external_url ? (
-            <span className="event-cta-link">
-              {isEn ? 'Sign up and read more' : 'Anmäl dig och läs mer'} &rarr;
-            </span>
-          ) : (
-            <a
-              href="mailto:info@livslusths.se"
-              className="event-email-btn"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                <polyline points="22,6 12,13 2,6"/>
-              </svg>
-              {isEn ? 'Register via email' : 'Anmäl dig via mail'}
-            </a>
-          )
+          <a
+            href="mailto:info@livslusths.se"
+            className="event-email-btn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            {isEn ? 'Register via email' : 'Anmäl dig via mail'}
+          </a>
         )}
         <button
           className="event-ical-btn"
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); downloadIcs(ev); }}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); downloadIcs(ev, descriptionHtml); }}
           aria-label={isEn ? `Add ${ev.title} to calendar` : `Lägg till ${ev.title} i kalendern`}
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
