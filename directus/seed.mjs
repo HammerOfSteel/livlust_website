@@ -196,7 +196,7 @@ async function ensurePublicPermission(token, collection, action) {
 
 const CONTENT_ITEMS = [
   { section: 'hero_title',    language: 'sv', body: 'Du är inte ensam i din sorg' },
-  { section: 'hero_subtitle', language: 'sv', body: 'Vi är en ideell förening som stödjer efterlevande efter självmord — anhöriga, vänner och närstående som förlorat någon de älskade.' },
+  { section: 'hero_subtitle', language: 'sv', body: 'Vi är en ideell förening som stödjer efterlevande efter suicid, anhöriga, vänner och närstående som förlorat någon de älskade.' },
   { section: 'about_heading', language: 'sv', body: 'Om oss' },
   { section: 'about_body',    language: 'sv', body: 'Livslust och hållbart stöd grundades av efterlevande, för efterlevande. Vi vet av erfarenhet hur överväldigande sorgen kan kännas, och hur viktigt det är att möta människor som verkligen förstår. Vår förening erbjuder en trygg plats att dela, läka och hitta vägen vidare — i din egen takt, utan krav.' },
   { section: 'offer_heading', language: 'sv', body: 'Vad vi erbjuder' },
