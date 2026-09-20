@@ -271,24 +271,64 @@ Functional checklist (compare against the live Kamatera site):
 
 ## Phase 6 — Cutover
 
-- [ ] Take one final fresh backup on Kamatera and restore it to the new
-      host, to capture any content changes made during the Phase 5 test
-      window.
-- [ ] Update the new host's `.env` / nginx config from `dev.livslusths.se`
-      to the real domains: `PUBLIC_URL`/`CORS_ORIGIN`/`VITE_CMS_URL` →
-      `https://livslusths.se`, nginx `server_name livslusths.se
-      www.livslusths.se`.
-- [ ] In simply.com, repoint `livslusths.se` (apex), `www.livslusths.se`,
-      and `newsletter.livslusths.se` A records to `85.190.107.67` only
-      (remove `45.248.37.221` from all three).
-- [ ] Certbot issue prod certs on the new host for `livslusths.se`,
-      `www.livslusths.se`, `newsletter.livslusths.se`.
-- [ ] Update the **existing** `deploy.yml` workflow's `DEPLOY_HOST` /
-      `DEPLOY_USER` / `DEPLOY_SSH_KEY` GitHub secrets to point at the new
-      host, so future pushes to `main` deploy to one.com instead of
-      Kamatera.
-- [ ] Monitor DNS propagation and smoke-test `https://livslusths.se` from
-      multiple networks/devices post-cutover.
+- [x] Took one final fresh backup on Kamatera (`.local-backups/backup.sh`)
+      and restored it to the new host (same drop/create/psql-restore +
+      uploads-volume procedure as Phase 4), capturing any content changes
+      made during the Phase 5 test window. Verified via real post slugs.
+      Deleted the local dump folder afterward (contains PII).
+- [x] Updated the new host's `/opt/livlust/.env`: removed the
+      `dev.livslusths.se`-pointing `PUBLIC_URL`/`CORS_ORIGIN`/
+      `VITE_CMS_URL` overrides entirely (backed up `.env` first), so the
+      host now falls back to `docker-compose.prod.yml`'s real-domain
+      defaults (`https://livslusths.se/...`) — matching exactly how
+      Kamatera's own `.env` is configured (no overrides needed there
+      either). Also fixed `DIRECTUS_ADMIN_PASSWORD` to match prod's real
+      password (the DB restore replaces `directus_users` wholesale, same
+      gotcha as the Phase 5 admin-login note — the dev-generated password
+      no longer matches once real data is restored).
+- [x] Updated the **existing** `deploy.yml` workflow's `DEPLOY_HOST` /
+      `DEPLOY_USER` / `DEPLOY_SSH_KEY` GitHub secrets (via `gh secret set`)
+      to point at the new host (`85.190.107.67` / `administrator` / the
+      `livlust_onecom_ci_deploy` key), so future pushes to `main` deploy
+      to one.com instead of Kamatera.
+- [x] Pre-staged the new host **before** flipping DNS: manually triggered
+      `deploy.yml` via `workflow_dispatch` twice. First run failed at
+      `directus-init` (bad admin password, fixed above); second run got
+      as far as installing the `livslusths.se` and
+      `newsletter.livslusths.se` nginx sites (port 80 only) and rebuilding
+      all containers with the new `.env`, then failed at the certbot step
+      exactly as expected — Let's Encrypt couldn't validate the HTTP-01
+      challenge yet since DNS still pointed at Kamatera. This meant only
+      the certbot step (a few seconds) remained once DNS was flipped,
+      minimizing the actual cutover window.
+- [x] Told the user exactly which simply.com A records to change
+      (`livslusths.se`, `www.livslusths.se`, `newsletter.livslusths.se` →
+      `85.190.107.67`, removing `45.248.37.221`); user updated them
+      manually in the simply.com dashboard (no working DNS API key was
+      available in `simply.com_DNS_API_keys.md` to automate this).
+- [x] Monitored DNS propagation across multiple public resolvers
+      (Cloudflare `1.1.1.1`, Google `8.8.8.8`, Quad9 `9.9.9.9`) — the
+      authoritative nameserver (`ns2.simply.com`) reflected the new IP
+      immediately, but Google's anycast resolver network took ~20-30 min
+      to fully converge (old records had a 3600s TTL, and different
+      Google edge PoPs expired their cached copies at different times,
+      causing it to flip-flop between old/new IP across repeated queries)
+      — Cloudflare/Quad9 converged much faster. Once Cloudflare/Quad9 were
+      consistent, re-ran `deploy.yml` and certbot succeeded immediately
+      (Let's Encrypt's own validation infra wasn't blocked by Google's
+      slower convergence).
+- [x] Certbot issued fresh prod certs on the new host for `livslusths.se`
+      + `www.livslusths.se` (one cert, SAN) and `newsletter.livslusths.se`
+      (separate cert) — verified via `openssl x509` on the host (issued
+      today, valid ~90 days) and via `curl --resolve` from the local
+      machine (bypassing any local DNS cache) — `SSL certificate verify
+      ok`, `HTTP 200` on all three.
+- [x] Smoke-tested `https://livslusths.se` end-to-end post-cutover:
+      homepage title/content correct, `/cms/server/health` → `ok`, real
+      posts returned via `/cms/items/posts`, `/resurskarta` → 200,
+      newsletter admin UI → 307 (login redirect, expected). Local DNS
+      cache was flushed (`dscacheutil -flushcache`) to confirm resolution
+      matches the new host from this machine too.
 
 ---
 
@@ -322,3 +362,20 @@ Functional checklist (compare against the live Kamatera site):
       `sshd_config`) on the host entirely.
 - [ ] Longer-term: move these credentials into a real secrets manager
       instead of local `.md` files.
+- [ ] Discovered during Phase 6: the Directus admin password
+      (`DIRECTUS_ADMIN_PASSWORD` in prod's `.env`) is the exact same
+      password as the simply.com account login in
+      `simply.com_DNS_API_keys.md` — password reuse across two unrelated
+      services. Recommend rotating one of them so a leak of one
+      credential set doesn't compromise both the DNS registrar account
+      and the CMS admin account.
+- [ ] `dev.livslusths.se` is now a stale/orphaned staging alias: its nginx
+      site + cert are still installed on the new host, and it still
+      resolves and serves *something*, but since the shared `.env` now has
+      no domain-specific overrides (points at `livslusths.se`), visiting
+      `dev.livslusths.se` will hit the same containers configured for the
+      real domain (CORS_ORIGIN/PUBLIC_URL mismatch for that hostname).
+      Decide whether to remove the `dev.livslusths.se` nginx site/cert and
+      the now-unused `DEV_DEPLOY_*` GitHub secrets + `deploy-dev.yml`
+      workflow, or repurpose it later for a real staging environment with
+      its own `.env` again.
