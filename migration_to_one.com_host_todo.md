@@ -117,23 +117,37 @@ The pipeline hardcoded `livslusths.se` in three places:
 
 ---
 
-## Phase 3 — First deploy to dev.livslusths.se
+## Phase 3 — First deploy to dev.livslusths.se — ✅ done 2026-09-20
 
 - [x] `DEV_DEPLOY_*` secrets added to the GitHub repo.
-- [ ] Push these commits to `main` (see note above), or otherwise get the
-      code onto the new host, then run the `deploy-dev.yml` workflow.
-- [ ] Before first deploy: create `/opt/livlust/.env` on the new host from
-      `.env.example` with dev values — fresh `DIRECTUS_KEY`/`DIRECTUS_SECRET`/
-      DB passwords (not copied from Kamatera's `.env`; real data comes via
-      Phase 4 restore) and
-      `PUBLIC_URL=https://dev.livslusths.se/cms` /
-      `CORS_ORIGIN=https://dev.livslusths.se` /
-      `VITE_CMS_URL=https://dev.livslusths.se/cms`.
-- [ ] Confirm nginx site + Certbot cert issued for `dev.livslusths.se` only.
-- [ ] Confirm all containers healthy: `db`, `directus`, `directus-init`,
-      `frontend`, `listmonk_db`, `listmonk`.
-- [ ] `https://dev.livslusths.se` loads (will show empty/seed content at
-      this point — real data comes in Phase 4).
+- [x] Pushed the Phase 2 commits to `main`; manually cloned the repo into
+      `/opt/livlust` on the new host and uploaded a hand-built `.env`
+      (fresh `DIRECTUS_KEY`/`DIRECTUS_SECRET`/DB/Listmonk passwords, real
+      Google Calendar API key reused from prod, `PUBLIC_URL`/`CORS_ORIGIN`/
+      `VITE_CMS_URL` all pointed at `https://dev.livslusths.se`).
+- [x] **Bug found and fixed along the way** (same class of issue as the
+      original Kamatera migration): `directus/seed.mjs`'s `waitForDirectus()`
+      polled `/server/health`, which also reports the **email transport's**
+      connection status — a false negative whenever SMTP auth fails, even
+      though Directus itself is fully booted and the REST API works fine
+      (matches the already-known local-dev quirk in repo memory). On the
+      new host this hung the deploy forever, because Brevo's SMTP relay
+      rejected the new one.com IP with `525 Unauthorized IP address` (not
+      yet allowlisted). Fixed `waitForDirectus()` to poll `/server/info`
+      instead (app+DB readiness only, no email dependency) — committed and
+      pushed, benefits the existing prod pipeline too. User then
+      authorized the new host's IP in Brevo's dashboard directly, so real
+      email now also works from the new host (`/server/health` →
+      `{"status":"ok"}` confirmed).
+- [x] Nginx site + Certbot cert issued for `dev.livslusths.se` (verified:
+      cert subject `CN=dev.livslusths.se`, valid to Dec 19 2026, auto-renews
+      via the certbot systemd timer).
+- [x] Confirmed all containers healthy: `db`, `directus`, `directus-init`
+      (ran to completion — full schema + seed content created), `frontend`,
+      `listmonk_db`, `listmonk`.
+- [x] `https://dev.livslusths.se` loads (200), `/cms/server/health` → 200.
+      Content at this point is `seed.mjs`'s default seed content, not the
+      real migrated data — that's Phase 4.
 
 ---
 
