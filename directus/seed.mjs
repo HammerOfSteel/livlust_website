@@ -17,10 +17,15 @@ async function waitForDirectus() {
   console.log('⏳ Waiting for Directus…');
   for (let i = 0; i < 80; i++) {
     try {
-      const res = await fetch(`${BASE}/server/health`);
+      // Use /server/info rather than /server/health — health also reports
+      // the email transport's status, which can be red (e.g. an
+      // unauthorized/un-allowlisted sending IP) even while Directus itself
+      // is fully booted and the REST API works fine. /server/info only
+      // requires the app + DB to be ready, so it's a truer readiness check.
+      const res = await fetch(`${BASE}/server/info`);
       if (res.ok) {
         const body = await res.json();
-        if (body.status === 'ok') { console.log('✓ Directus is ready.'); return; }
+        if (body?.data?.project) { console.log('✓ Directus is ready.'); return; }
       }
     } catch {}
     await sleep(3000);
