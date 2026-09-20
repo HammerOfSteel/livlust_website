@@ -39,6 +39,8 @@ postgres_data/
 
 # Secrets that must never be committed
 kamatera.api.keys.md
+one_host.md
+simply.com_DNS_API_keys.md
 super-secret-ssh.txt
 maingun.apikeys.md
 *.pem

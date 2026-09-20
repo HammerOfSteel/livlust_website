@@ -33,9 +33,9 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
-      PUBLIC_URL: "https://livslusths.se/cms"
+      PUBLIC_URL: "${PUBLIC_URL:-https://livslusths.se/cms}"
       CORS_ENABLED: "true"
-      CORS_ORIGIN: "https://livslusths.se"
+      CORS_ORIGIN: "${CORS_ORIGIN:-https://livslusths.se}"
       RATE_LIMITER_ENABLED: "true"
       RATE_LIMITER_POINTS: "250"
       RATE_LIMITER_DURATION: "15"
@@ -75,7 +75,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
       args:
-        VITE_CMS_URL: "https://livslusths.se/cms"
+        VITE_CMS_URL: "${VITE_CMS_URL:-https://livslusths.se/cms}"
         VITE_THEME: "${VITE_THEME:-ocean}"
         VITE_GOOGLE_CALENDAR_API_KEY: "${VITE_GOOGLE_CALENDAR_API_KEY}"
         VITE_GOOGLE_CALENDAR_ID: "${VITE_GOOGLE_CALENDAR_ID:-info@livslusths.se}"

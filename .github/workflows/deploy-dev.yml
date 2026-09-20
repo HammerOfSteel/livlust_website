@@ -1,0 +1,75 @@
+name: Deploy to Dev (one.com staging)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: SSH Deploy (dev.livslusths.se)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEV_DEPLOY_HOST }}
+          username: ${{ secrets.DEV_DEPLOY_USER }}
+          key: ${{ secrets.DEV_DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+
+            REPO_URL="https://github.com/HammerOfSteel/livlust_website.git"
+            DEPLOY_DIR="/opt/livlust"
+            DOMAIN="dev.livslusths.se"
+            NGINX_SITE="/etc/nginx/sites-available/${DOMAIN}"
+            NGINX_ENABLED="/etc/nginx/sites-enabled/${DOMAIN}"
+
+            # ── 1. Clone or pull latest code ────────────────────────────
+            if [ ! -d "${DEPLOY_DIR}/.git" ]; then
+              sudo git clone "${REPO_URL}" "${DEPLOY_DIR}"
+            else
+              cd "${DEPLOY_DIR}"
+              sudo git fetch origin main
+              sudo git reset --hard origin/main
+            fi
+
+            cd "${DEPLOY_DIR}"
+
+            # ── 2. Ensure dev .env exists ────────────────────────────────
+            if [ ! -f "${DEPLOY_DIR}/.env" ]; then
+              echo "ERROR: ${DEPLOY_DIR}/.env not found."
+              echo "Create it from .env.example with dev values (incl. PUBLIC_URL/CORS_ORIGIN/VITE_CMS_URL=https://dev.livslusths.se/...) before deploying."
+              exit 1
+            fi
+
+            # ── 3. Build and start containers ─────────────────────────────
+            sudo docker compose -f docker-compose.prod.yml up --build -d db directus frontend listmonk_db listmonk
+
+            # ── 3b. Re-run Directus schema/content seeding ────────────────
+            # directus-init is a one-shot service; once it has exited
+            # successfully, `up -d` will not re-run it even when seed.mjs
+            # has new schema/content changes, since the service config
+            # itself is unchanged. Force a fresh run on every deploy so
+            # schema migrations and content seeding always apply.
+            sudo docker compose -f docker-compose.prod.yml run --rm directus-init
+
+            # ── 4. Install nginx site config (first deploy only) ─────────
+            if [ ! -f "${NGINX_SITE}" ]; then
+              sudo cp "${DEPLOY_DIR}/deploy/nginx-dev.conf" "${NGINX_SITE}"
+              sudo ln -sf "${NGINX_SITE}" "${NGINX_ENABLED}"
+              sudo nginx -t
+              sudo systemctl reload nginx
+              echo "Nginx site installed."
+            fi
+
+            # ── 5. Obtain TLS certificate (once) ──────────────────────────
+            if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
+              ADMIN_EMAIL=$(sudo grep DIRECTUS_ADMIN_EMAIL "${DEPLOY_DIR}/.env" | cut -d= -f2)
+              sudo certbot --nginx -d "${DOMAIN}" --non-interactive --agree-tos --email "${ADMIN_EMAIL:-info@livslusths.se}"
+              echo "Certificate obtained for ${DOMAIN}."
+            fi
+
+            # ── 6. Remove dangling images ────────────────────────────────
+            sudo docker image prune -f
+
+            echo "Deployment complete: https://${DOMAIN}"
