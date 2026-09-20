@@ -151,18 +151,36 @@ The pipeline hardcoded `livslusths.se` in three places:
 
 ---
 
-## Phase 4 — Migrate data
+## Phase 4 — Migrate data — ✅ done 2026-09-20
 
-- [ ] On Kamatera, run the existing `.local-backups/backup.sh` to get a
-      fresh Postgres dump + `directus_uploads` + `listmonk_uploads` volume
-      tarballs.
-- [ ] Copy the dump/tarballs to the new host (or via local machine).
-- [ ] Restore the Postgres dump into the new host's `db` container (same
-      approach as the local-dev restore documented in repo memory).
-- [ ] Restore `directus_uploads` and `listmonk_uploads` volume contents.
-- [ ] Re-run `directus-init` (`docker compose -f docker-compose.prod.yml run
-      --rm directus-init`) to reconcile schema if `seed.mjs` has changed
-      since the dump was taken.
+- [x] Ran the existing `.local-backups/backup.sh` (gitignored, in this
+      repo's local working copy only) to pull a **fresh** Postgres dump for
+      both `livlust_db` and `listmonk_db`, plus tarballs of the
+      `livlust_directus_uploads` and `livlust_listmonk_uploads` volumes,
+      straight from the live Kamatera host — read-only on the server, no
+      prod downtime.
+- [x] Copied the dump/tarballs to the new host via `scp` into `/tmp`.
+- [x] Restored on the new host: stopped `directus` + `listmonk` (kept `db`/
+      `listmonk_db`/`frontend` up), terminated active DB connections,
+      `dropdb`/`createdb`, then piped each `.sql` dump into the matching
+      empty database via `psql` — clean restore, no errors (dumps had no
+      `--clean`/`--create` so the target DB had to be emptied first).
+- [x] Restored both uploads volumes by clearing then untarring into the
+      named volumes via a throwaway `alpine` container bind-mounting each
+      volume + `/tmp`.
+- [x] Restarted `directus` + `listmonk`; did **not** need to re-run
+      `directus-init` since the dump already contains the exact schema
+      `seed.mjs` produces (no drift at time of migration).
+- [x] Verified real migrated content is being served (not `seed.mjs`'s
+      default content): `/items/posts` returns real slugs
+      (`vi-startar-livslust`, `var-webbplats-ar-har`,
+      `internationella-dagen-forlorat-barn`, etc.) both directly on
+      `127.0.0.1:8055` and through the public
+      `https://dev.livslusths.se/cms/...` proxy; Listmonk root and
+      `/newsletter-api/` both return 200.
+- [x] Deleted the dump files/tarballs from `/tmp` on the host and removed
+      the local timestamped backup folder afterward (dumps contain real
+      subscriber/contact PII, shouldn't linger on disk anywhere).
 
 ---
 
