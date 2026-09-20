@@ -191,8 +191,17 @@ Functional checklist (compare against the live Kamatera site):
 - [ ] Homepage: all sections render (Header, Hero slideshow, About, Offer/
       events, Crisis, ContactForm, Footer), theme (`VITE_THEME`) correct
 - [ ] Language toggle SV/EN
-- [ ] "Kommande aktiviteter" pulls from Google Calendar correctly (calendar
-      API key referrer allows `dev.livslusths.se`)
+- [x] "Kommande aktiviteter" pulls from Google Calendar correctly (calendar
+      API key referrer allows `dev.livslusths.se`) — hit a real bug here:
+      dev showed "Inga kommande evenemang just nu" because the shared
+      Calendar API key's HTTP-referrer restriction didn't yet include
+      `dev.livslusths.se` (only `www.livslusths.se`/`livslusths.se`), so
+      the browser fetch got a silent `403 API_KEY_HTTP_REFERRER_BLOCKED`
+      and fell back to the empty state. User added
+      `https://dev.livslusths.se/*` (+ `http://` and `localhost:3000`) to
+      the key's website restrictions in Google Cloud Console — verified
+      fixed via direct API call with a `dev.livslusths.se` Referer header,
+      now returns 200 with real event data.
 - [ ] Contact form submits → new `contact_submissions` row in Directus
 - [ ] Newsletter signup (`/newsletter-api/api/public/subscription`) → new
       subscriber shows up in Listmonk admin
