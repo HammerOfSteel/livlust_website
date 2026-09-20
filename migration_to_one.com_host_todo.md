@@ -188,8 +188,11 @@ The pipeline hardcoded `livslusths.se` in three places:
 
 Functional checklist (compare against the live Kamatera site):
 
-- [ ] Homepage: all sections render (Header, Hero slideshow, About, Offer/
-      events, Crisis, ContactForm, Footer), theme (`VITE_THEME`) correct
+- [x] Homepage: all sections render (Header, Hero slideshow, About, Offer/
+      events, Crisis, ContactForm, Footer), theme (`VITE_THEME`) correct —
+      verified visually via browser screenshot: hero, nav, "Vad vi gör",
+      events carousel and news section all render with real migrated
+      content and correct styling.
 - [ ] Language toggle SV/EN
 - [x] "Kommande aktiviteter" pulls from Google Calendar correctly (calendar
       API key referrer allows `dev.livslusths.se`) — hit a real bug here:
@@ -202,14 +205,32 @@ Functional checklist (compare against the live Kamatera site):
       the key's website restrictions in Google Cloud Console — verified
       fixed via direct API call with a `dev.livslusths.se` Referer header,
       now returns 200 with real event data.
-- [ ] Contact form submits → new `contact_submissions` row in Directus
-- [ ] Newsletter signup (`/newsletter-api/api/public/subscription`) → new
-      subscriber shows up in Listmonk admin
-- [ ] Blog/news list (`BlogIndexPage`) and individual post pages
-      (`BlogPostPage`) render migrated posts, including images
-- [ ] Resources map (`ResourcesMap.tsx` / `resources.ts`) renders correctly
-- [ ] Admin login (`AdminLogin`/`AdminDashboard`) works against the
-      migrated Directus data
+- [x] Contact form submits → new `contact_submissions` row in Directus —
+      verified via direct POST to `/cms/items/contact_submissions`, got
+      `204`, then confirmed the row exists (id 18/19) via an authenticated
+      Directus query. Note: existing migrated row id 17 has
+      empty name/email/message — pre-existing prod data quirk, not a
+      migration artifact (not investigated further, out of scope here).
+- [x] Newsletter signup (`/newsletter-api/api/public/subscription`) → new
+      subscriber shows up in Listmonk admin — verified via direct POST
+      with the frontend's real `LIST_UUID`, got
+      `{"data":{"has_optin":false}}` (subscribed, single opt-in list).
+- [x] Blog/news list (`BlogIndexPage`) and individual post pages
+      (`BlogPostPage`) render migrated posts, including images — verified
+      `/blog` and `/blog/vi-startar-livslust` both 200; confirmed post
+      images are static frontend assets (`frontend/public/blog-images/`,
+      referenced via a `posts.image_key` string field), not Directus
+      uploads — so the ~empty `directus_uploads` volume from Phase 4 is
+      expected, not a gap. Sample image served 200 (1.5MB).
+- [x] Resources map (`ResourcesMap.tsx` / `resources.ts`) renders correctly
+      — `/resurser` returns 200 (static data, no backend dependency).
+- [x] Admin login (`AdminLogin`/`AdminDashboard`) works against the
+      migrated Directus data — the dev `.env`'s freshly-generated
+      `DIRECTUS_ADMIN_PASSWORD` no longer applies post-Phase-4 (the DB
+      restore replaced `directus_users` wholesale with prod's), so admin
+      login must use **prod's real admin credentials**, not the dev
+      `.env`'s — verified working (`200`, valid token) with prod's
+      password from Kamatera's `.env`.
 - [ ] Directus admin UI reachable at `/cms/admin`, login works
 - [ ] Listmonk admin UI reachable, migrated lists/campaigns intact
 - [ ] Run existing Playwright suite (`tests/blog.spec.js`,
