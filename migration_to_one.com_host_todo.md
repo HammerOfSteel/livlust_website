@@ -111,7 +111,9 @@ The pipeline hardcoded `livslusths.se` in three places:
 - Committed locally (not yet pushed — pushing to `main` triggers the
       *existing* `deploy.yml` prod workflow too, so confirm with the user
       before pushing even though the compose-file change is
-      backward-compatible).
+      backward-compatible). **Pushed and deployed 2026-09-20** — prod
+      `deploy.yml` run succeeded, smoke-tested `https://www.livslusths.se`
+      (homepage 200, `/cms/server/ping` 200) — no regression.
 
 ---
 
