@@ -95,6 +95,8 @@ export default function Offer() {
     if (location.toLowerCase().includes('skellefteå')) return 'Skellefteå';
     if (location.toLowerCase().includes('strömsund')) return 'Strömsund';
     if (location.toLowerCase().includes('ystad')) return 'Ystad';
+    if (location.toLowerCase().includes('bispgården')) return 'Bispgården';
+    if (location.toLowerCase().includes('hammarstrand')) return 'Hammarstrand';
     return location.split(',')[0].trim(); // fallback: first part before comma
   };
 
