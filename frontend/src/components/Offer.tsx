@@ -97,6 +97,7 @@ export default function Offer() {
     if (location.toLowerCase().includes('ystad')) return 'Ystad';
     if (location.toLowerCase().includes('bispgården')) return 'Bispgården';
     if (location.toLowerCase().includes('hammarstrand')) return 'Hammarstrand';
+    if (location.toLowerCase().includes('umeå')) return 'Umeå';
     return location.split(',')[0].trim(); // fallback: first part before comma
   };
 
